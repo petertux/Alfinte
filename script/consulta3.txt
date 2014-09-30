@@ -1,0 +1,2 @@
+para obtener las ventas historicas, por ejemplo si quiero comparar el precio del año(dias,meses,semanas,etc) actual a uno anterior
+es decir, como voy a saber cuando cambiaron los precios, o donde es que se lleva un registro de los cambios de los precios de los articulos
