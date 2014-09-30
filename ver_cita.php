@@ -3,6 +3,21 @@ include('libreria/motor.php');
 $cit=new cita();
 $emp=new empleado();
 
+	if(isset($_POST['boton'])){
+	
+	$cod_emp=$_POST['opcion_emp'];
+	$id_cit=$_POST['numerocitas'];
+	
+	$resp_update= $cit->actualizar_cita($cod_emp,5);
+	
+
+	
+	
+	}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +69,7 @@ $emp=new empleado();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin v1.0</a>
+                <a class="navbar-brand" href="index.html">ALFINTE SA DE CV</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -396,13 +411,10 @@ $emp=new empleado();
                                             <th>Cita</th>
 											<th>Fecha</th>
 											<th>Nombre</th>
-											<th>Apellido</th>
 											<th>Telefono</th>
                                             <th>Direccion</th>
                                             <th>Email</th>
                                             <th>Canal</th>
-                                            <th>Estado</th>
-											<th>Comentario</th>
 											<th>Editar</th>
                                         </tr>
                                     </thead>
@@ -415,38 +427,22 @@ $emp=new empleado();
 											<td>{$ci['id_cita']}</td>
 											<td>{$ci['fecha_creacion']}</td>
 											<td>{$ci['nombre']}</td>
-											<td>{$ci['apellido']}</td>
 											<td>{$ci['telefono']}</td>
 											<td>{$ci['direccion']}</td>
 											<td>{$ci['email']}</td>
 											<td>{$ci['descripcion']}</td>
-											<td>{$ci['valor']}</td>
-											<td>{$ci['comentario']}</td>
 											<td>"?>
 										            <div class="col-lg-6">
 																<div class="panel panel-default">
 																	<!-- /.panel-heading -->
 																	<!--<div class="panel-body">-->
 																		<!-- Button trigger modal -->
-																		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" >
-																			Editar
-																			<?php
-																			$id=$ci['id_cita'];
-																			echo $id;
-																			$recita= $cit->mostrar_byid($id);
-																			foreach($recita as $ci2){
-																			$cliente_id=$ci2['id_cita'];
-																			$cliente_nom=$ci2['nombre'];
-																			$cliente_ape=$ci2['apellido'];
-																			$cliente_tel=$ci2['telefono'];
-																			$cliente_dir=$ci2['direccion'];
-																			$cliente_ema=$ci2['email'];
-																			}
-																			echo $cliente_id;
-																			?>
+																		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"  >
+																			Asignar
+																			
 																		</button>
+																		
 																		<!-- Modal -->
-																		<input class="form-control" name="nombre" value="<?php echo $ci['id_cita']; ?>">
 																		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																			<div class="modal-dialog">
 																				<div class="modal-content">
@@ -455,49 +451,32 @@ $emp=new empleado();
 																						<h5 class="modal-title" id="myModalLabel">Formulario para Editar</h5>
 																					</div>
 																					<div class="modal-body">
-																						<form role="form" action="actualizar.php" method="POST">
+																						<form role="form" action="ver_cita.php" method="POST">
+																						<!--<input type='hidden'  name='numerocitas'><?//php echo $ci['id_cita'] ?></input>-->
 																									<div class="form-group">
-																										<label>Nombre</label>
-																										<input class="form-control" name="nombre" value="<?php echo $ci2['id_cita']; ?>">
-																										<?php echo $ci['id_cita']; ?>
-																										<p class="help-block">Ingrese el Nombre.</p>
-																									</div>
-																									<div class="form-group">
-																										<label>Apellido</label>
-																										<input class="form-control"name="apellido" value="<?php echo $cliente_ape ?>">
-																										<p class="help-block">Ingrese el Apellido.</p>
-																									</div>
-																									<div class="form-group">
-																										<label>Direcion</label>
-																										<input class="form-control" name="direccion" value="<?php echo $cliente_dir ?>">
-																										<p class="help-block">Ingrese la Direccion.</p>
-																									</div>
-																									<div class="form-group">
-																										<label>Telefono</label>
-																										<input class="form-control"name="telefono" value="<?php echo $cliente_tel ?>">
-																										<p class="help-block">Ingrese la Telefono.</p>
-																									</div>																									
-																									<div class="form-group">
-																										<label>Email</label>
-																										<input class="form-control" name="email" value="<?php echo $cliente_ema ?>">
-																										<p class="help-block">Ingrese el Email.</p>
-																									</div>
-																									<div class="form-group">
-																										<label>Cambiar Estado</label>
-																										<select class="form-control">
-																											<option value=1>Pendiente</option>
-																											<option value=2>En Proceso</option>
-																											<option value=3>En Construccion</option>
-																											<option value=4>En Revision</option>
-																											<option value=5>Entregado</option>
+																										<label>Asignar a:</label>
+																										<select class="form-control" name="opcion_emp">
+																										<?php
+																										
+																										$reemp= $emp->mostrar();
+																										foreach($reemp as $ci2){
+																										$id_empleado=$ci2['id_empleado'];
+																										$nombre=$ci2['nombre'];
+
+																										echo "
+																										<option value='".$id_empleado."'>".$nombre."</option>
+																										";
+																										};
+																										?>
 																										</select>
 																									</div>
+																									<div class="modal-footer">
+																						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+																						<button type="submit" class="btn btn-primary" name="boton">Guardar Cambios</button>
+																					</div>
 																						</form>
 																					</div>
-																					<div class="modal-footer">
-																						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-																						<button type="button" class="btn btn-primary">Guardar Cambios</button>
-																					</div>
+																					
 																				</div>
 																				<!-- /.modal-content -->
 																			</div>
@@ -566,7 +545,7 @@ $emp=new empleado();
 																	<!--<div class="panel-body">-->
 																		<!-- Button trigger modal -->
 																		<button class="btn btn-default" data-toggle="modal" data-target="#myModal1">
-																			Editar
+																			Asignar
 																		</button>
 																		<!-- Modal -->
 																		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">

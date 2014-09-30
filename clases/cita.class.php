@@ -31,6 +31,14 @@
     $result=mysql_query($query) or die ("Problema con query de Insertar");
      return $result;
     }
+	
+	
+	public function actualizar_cita($cod_emp,$id_cita){
+    $query="UPDATE  cita  SET id_empleado=".$cod_emp.",id_estado='2' where id_cita=".$id_cita."";
+echo $query;
+    $result=mysql_query($query) or die ("Problema con query de Insertar");
+     return $result;
+    }
 
         public function secqnos(){
         $query="SELECT siguiente from seqnos where tabla='cita'";
@@ -59,7 +67,6 @@
         $query="SELECT cita.`id_cita`,
 						`fecha_creacion`,
 						`nombre`,
-						`apellido`,
 						`telefono`,
 						`direccion`,
 						`email`,
@@ -68,7 +75,9 @@
 						`comentario`
 						FROM `cita`
 						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
-						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
+						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest 
+						where id_empleado=0
+						";
         $rs=mysql_query($query);
         $array=array();
         while($fila=mysql_fetch_assoc($rs)){
@@ -78,7 +87,7 @@
         }
 		
 		public function mostrar_byid($id){
-		echo $id;
+		
         $query="SELECT `id_cita`,
 						`nombre`,
 						`apellido`,
@@ -108,5 +117,63 @@
         $result=mysql_query($query) or die ("Problema con query de Actualizar");
      return $result;
 		}
+		
+		public function cantidad_citas(){
+		$query="SELECT count(id_cita) as numeroCita from cita where id_estado=1";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		
+		public function cantidad_asi(){
+		$query="SELECT count(id_cita) as numeroAsi from cita where id_estado=2";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		
+		public function cantidad_or(){
+		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_estado= 1";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		
+		public function cantidad_ins(){
+		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_estado= 3";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		
+		public function mostrar_mensaje(){
+        $query="SELECT cita.`id_cita`,
+						`fecha_creacion`,
+						concat(nombre,' ',apellido) as nombre
+						FROM `cita`
+						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
+						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest
+						and `cita`.id_empleado=0
+						ORDER BY fecha_creacion DESC";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
 }
 ?>
