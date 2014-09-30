@@ -1,5 +1,5 @@
 <?php
-include include('libreria/motor.php');
+include('libreria/motor.php');
 
 $cit=new cita();
 
@@ -505,7 +505,7 @@ function ConSoSinS($val, $sentence)
 								<?php
 										$rcate=$cit->cantidad_ins();
 											foreach($rcate as $ci){
-											$numeroi=$ci['numeroins'];
+											$numeroi=$ci['numeroOr'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
 											};
 									?>

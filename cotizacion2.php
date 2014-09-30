@@ -432,7 +432,7 @@ $art=new articulo();
 									<div class="col-xs-4">
 										<div class="form-group">
                                             <label>Categoria</label>
-											<select class="form-control" onchange="load(this.value)">
+											<select class="form-control" onchange="loadmedia(this.value)">
 												<option value="">Seleccione</option>
 											<?php  $categoria=$art->mostrar_categoria();
 													foreach($categoria as $cat){
@@ -449,6 +449,7 @@ $art=new articulo();
 											 <input class="form-control" placeholder="Enter text" type="text" id="articulo_nombre" onkeyup="loadXMLDoc()" required>
 										</div>
 										<!-- Aqui esta el DIV en el cual se va a cargar la pagina de cotizacion_articulo-->
+										
 										<div id="myDiv"></div>
 											<p></p>
 											<button type="submit" class="btn btn-primary">Agregar </button>
