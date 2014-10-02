@@ -13,6 +13,7 @@
     public $id_canal;
     public $id_estado;
     public $comentario;
+	public $id_empleado;
 
 
      public function agregar(){
@@ -27,8 +28,9 @@
                                         '{$this->email}',
                                         '{$this->id_canal}',
                                         '{$this->id_estado}',
-                                        '{$this->comentario}')";
-    $result=mysql_query($query) or die ("Problema con query de Insertar");
+                                        '{$this->comentario}',
+										'{$this->id_empleado}')";
+	$result=mysql_query($query) or die ("Problema con query de Insertar");
      return $result;
     }
 	
@@ -76,7 +78,7 @@ echo $query;
 						FROM `cita`
 						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
 						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest 
-						where id_empleado=0
+						where id_empleado=1
 						";
         $rs=mysql_query($query);
         $array=array();
