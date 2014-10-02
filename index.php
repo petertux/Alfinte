@@ -16,7 +16,7 @@ if( $usuario == false ) {
    // Aquí va el contenido de la pagina qu se mostrara en caso de que se haya iniciado sesion
 */
 $cit=new cita();
-
+$user=$sesion->get("usuario");
 
 function fechainteligente($timestamp) 
 {
@@ -443,7 +443,8 @@ function ConSoSinS($val, $sentence)
                                 </div>
                                 <div class="col-xs-9 text-right">
 									<?php
-										$rcate=$cit->cantidad_citas();
+										
+										$rcate=$cit->cantidad_citas_user($user);
 											foreach($rcate as $ci){
 											$numero=$ci['numeroCita'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
@@ -472,14 +473,15 @@ function ConSoSinS($val, $sentence)
                                 </div>
                                 <div class="col-xs-9 text-right">
 								<?php
-										$rcate=$cit->cantidad_asi();
+										
+										$rcate=$cit->cantidad_asi_user($user);
 											foreach($rcate as $ci){
 											$numero=$ci['numeroAsi'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
 											};
 									?>
                                     <div class="huge"><?php echo $numero; ?></div>
-                                    <div>Asiganciones!</div>
+                                    <div>Asignaciones!</div>
                                 </div>
                             </div>
                         </div>
