@@ -4,11 +4,11 @@ require_once("clases/sesion.class.php");
 if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario?
     include('libreria/motor.php'); //incluimos configuración
     //include('clases/login.class.php'); //incluimos las funciones
-    $Login=new Login();
+    $login=new Login();
     //si hace falta cambiamos las propiedades tabla, campo_usuario, campo_contraseña, metodo_encriptacion
 
     //verificamos el usuario y contraseña mandados
-    if ($Login->login($_POST['usuario'],$_POST['password'])) {
+    if ($login->login($_POST['usuario'],$_POST['password'])) {
         //acciones a realizar cuando un usuario se identifica
        //EJ: almacenar en memoria sus datos completos, registrar un acceso en una tabla mysql
          $usua=new usuario();
