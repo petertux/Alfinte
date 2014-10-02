@@ -139,7 +139,7 @@ echo $query;
 		}
 		
 		public function cantidad_or(){
-		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_estado= 1";
+		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_trabajo_estado= 1";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -149,7 +149,7 @@ echo $query;
 		}
 		
 		public function cantidad_ins(){
-		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_estado= 3";
+		$query="SELECT count(id_orden) as numeroIns from ORDEN_TRABAJO where id_trabajo_estado= 3";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){

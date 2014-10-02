@@ -3,59 +3,39 @@ $(function() {
     Morris.Area({
         element: 'morris-area-chart',
         data: [{
-            period: '2010 Q1',
-            iphone: 2666,
-            ipad: null,
-            itouch: 2647
+            period: '2014 Q1',
+            Cortinas: 1,
+            Alfombras: null,
+            Persianas: 3
         }, {
-            period: '2010 Q2',
-            iphone: 2778,
-            ipad: 2294,
-            itouch: 2441
+            period: '2014 Q2',
+            Cortinas: 2,
+            Alfombras: 3,
+            Persianas: 4
         }, {
-            period: '2010 Q3',
-            iphone: 4912,
-            ipad: 1969,
-            itouch: 2501
+            period: '2014 Q3',
+            Cortinas: 1,
+            Alfombras: 2,
+            Persianas: 3
         }, {
-            period: '2010 Q4',
-            iphone: 3767,
-            ipad: 3597,
-            itouch: 5689
+            period: '2014 Q4',
+            Cortinas: 2,
+            Alfombras: 3,
+            Persianas: 4
         }, {
-            period: '2011 Q1',
-            iphone: 6810,
-            ipad: 1914,
-            itouch: 2293
+            period: '2014 Q5',
+            Cortinas: 2,
+            Alfombras: 1,
+            Persianas: 5
         }, {
-            period: '2011 Q2',
-            iphone: 5670,
-            ipad: 4293,
-            itouch: 1881
-        }, {
-            period: '2011 Q3',
-            iphone: 4820,
-            ipad: 3795,
-            itouch: 1588
-        }, {
-            period: '2011 Q4',
-            iphone: 15073,
-            ipad: 5967,
-            itouch: 5175
-        }, {
-            period: '2012 Q1',
-            iphone: 10687,
-            ipad: 4460,
-            itouch: 2028
-        }, {
-            period: '2012 Q2',
-            iphone: 8432,
-            ipad: 5713,
-            itouch: 1791
+            period: '2014 Q6',
+            Cortinas: 3,
+            Alfombras: 4,
+            Persianas: 1
         }],
         xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iPhone', 'iPad', 'iPod Touch'],
+        ykeys: ['Cortinas', 'Alfombras', 'Persianas'],
+        labels: ['Cortinas', 'Alfombras', 'Persianas'],
         pointSize: 2,
         hideHover: 'auto',
         resize: true
@@ -64,13 +44,13 @@ $(function() {
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [{
-            label: "Download Sales",
+            label: "Nuevos Pedidos",
             value: 12
         }, {
-            label: "In-Store Sales",
+            label: "Ordenes En Proceso",
             value: 30
         }, {
-            label: "Mail-Order Sales",
+            label: "Ordenes Enviadas",
             value: 20
         }],
         resize: true
@@ -78,32 +58,16 @@ $(function() {
 
     Morris.Bar({
         element: 'morris-bar-chart',
-        data: [{
-            y: '2006',
-            a: 100,
-            b: 90
-        }, {
-            y: '2007',
+        data: [ {
+            y: 'Julio',
             a: 75,
             b: 65
         }, {
-            y: '2008',
+            y: 'Agosto',
             a: 50,
             b: 40
         }, {
-            y: '2009',
-            a: 75,
-            b: 65
-        }, {
-            y: '2010',
-            a: 50,
-            b: 40
-        }, {
-            y: '2011',
-            a: 75,
-            b: 65
-        }, {
-            y: '2012',
+            y: 'Septiembre',
             a: 100,
             b: 90
         }],

@@ -1,5 +1,5 @@
 <?php
-
+require_once("clases/sesion.class.php");
 
 if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario?
     include('libreria/motor.php'); //incluimos configuración
@@ -19,8 +19,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
              $usua->hora_ingreso=date("Y-m-d H:i:s");
              $usua->hora_fin=date("Y-m-d H:i:s");
            $usua->login_user();
+		   $usuario=$_POST['usuario'];
         //saltamos al inicio del área restringida
-        header('Location: index.html');
+		  $sesion=new Sesion();
+		   $sesion->set("usuario",$usuario);
+        header('Location: index.php');
         die();
     } else {
         //acciones a realizar en un intento fallido
@@ -75,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
                         <h3 class="panel-title">Por Favor Inicie Sesion</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="login_1.php" method="POST">
+                        <form role="form" action="login.php" method="POST">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Usuario" name="usuario" type="usuario" autofocus>

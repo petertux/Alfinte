@@ -85,6 +85,23 @@
              return $array;
         }
 		
+		public function mostrar_emp(){
+		
+        $query="SELECT  `empleado`.`id_empleado`,
+						concat(`empleado`.`nombre`,' ',`empleado`.`apellido`) as nombre,
+						`empleado`.`telefono`,
+						COUNT(`cita`.`id_cita`) as cita 
+						FROM (`empleado` INNER JOIN `cita` on `cita`.`id_empleado`=`empleado`.`id_empleado`)
+						GROUP BY  `empleado`.`id_empleado`
+						";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
 		public function mostrar_byid($id){
 		
         $query="SELECT `id_cita`,

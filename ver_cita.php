@@ -9,15 +9,7 @@ $emp=new empleado();
 	$id_cit=$_POST['numerocitas'];
 	
 	$resp_update= $cit->actualizar_cita($cod_emp,5);
-	
-
-	
-	
 	}
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -431,66 +423,17 @@ $emp=new empleado();
 											<td>{$ci['direccion']}</td>
 											<td>{$ci['email']}</td>
 											<td>{$ci['descripcion']}</td>
-											<td>"?>
-										            <div class="col-lg-6">
-																<div class="panel panel-default">
-																	<!-- /.panel-heading -->
-																	<!--<div class="panel-body">-->
-																		<!-- Button trigger modal -->
-																		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"  >
-																			Asignar
-																			
-																		</button>
-																		
-																		<!-- Modal -->
-																		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-																			<div class="modal-dialog">
-																				<div class="modal-content">
-																					<div class="modal-header">
-																						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																						<h5 class="modal-title" id="myModalLabel">Formulario para Editar</h5>
-																					</div>
-																					<div class="modal-body">
-																						<form role="form" action="ver_cita.php" method="POST">
-																						<!--<input type='hidden'  name='numerocitas'><?//php echo $ci['id_cita'] ?></input>-->
-																									<div class="form-group">
-																										<label>Asignar a:</label>
-																										<select class="form-control" name="opcion_emp">
-																										<?php
-																										
-																										$reemp= $emp->mostrar();
-																										foreach($reemp as $ci2){
-																										$id_empleado=$ci2['id_empleado'];
-																										$nombre=$ci2['nombre'];
-
-																										echo "
-																										<option value='".$id_empleado."'>".$nombre."</option>
-																										";
-																										};
-																										?>
-																										</select>
-																									</div>
-																									<div class="modal-footer">
-																						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-																						<button type="submit" class="btn btn-primary" name="boton">Guardar Cambios</button>
-																					</div>
-																						</form>
-																					</div>
-																					
-																				</div>
-																				<!-- /.modal-content -->
-																			</div>
-																			<!-- /.modal-dialog -->
-																		</div>
-
-																		<!-- /.modal -->
-																	<!--</div>-->
-																	<!-- .panel-body -->
-																</div>
-																<!-- /.panel -->
+											<td>";?>
+											
+											<div class="col-lg-6">
+												<section id="Options">
+													<div class="btn-group" style="margin: 9px 0 5px;">
+														<a  href="#updateit" data-toggle="modal" class="btn btn-warning" >Asignar</a>
 													</div>
-										<?php echo"
-										</td>
+												</section>
+												
+											</div>
+											<?php "</td>
 										</tr>";	
 									}
 									?>
@@ -507,7 +450,7 @@ $emp=new empleado();
                 <!-- /.col-lg-12 -->
             </div>
 			<div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-10">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Muestra el listado de los Vendedores con citas
@@ -520,7 +463,6 @@ $emp=new empleado();
                                         <tr>
                                             <th>No. Empleado</th>
 											<th>Nombre</th>
-											<th>Apellido</th>
 											<th>Telefono</th>
                                             <th>Citas Asignadas</th>
 											<th>Editar</th>
@@ -528,17 +470,16 @@ $emp=new empleado();
                                     </thead>
                                     <tbody>
 									<?php
-									$remp=$emp->mostrar();
+									$remp=$emp->mostrar_emp();
 									foreach($remp as $re){
 									echo "
 										<tr>
 											<td>{$re['id_empleado']}</td>
 											<td>{$re['nombre']}</td>
-											<td>{$re['apellido']}</td>
 											<td>{$re['telefono']}</td>
 											<td>{$re['cita']}</td>
 											
-										<td>"?>
+										<td>"; ?>
 										            <div class="col-lg-6">
 																<div class="panel panel-default">
 																	<!-- /.panel-heading -->
@@ -596,7 +537,15 @@ $emp=new empleado();
 
     </div>
     <!-- /#wrapper -->
+		    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+        <?php  include('footer.php'); ?>
+      </div>
+    </footer>
 
+	
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -609,11 +558,13 @@ $emp=new empleado();
     <!-- DataTables JavaScript -->
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script src="js/bootstrap-modal.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
     <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable();

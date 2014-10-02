@@ -23,7 +23,7 @@ class Login {
         //usuario y password tienen datos?
         if (empty($usuario)) return false;
         if (empty ($password)) return false;
-
+	 
         //2 - preparamos la consulta SQL a ejecutar utilizando sólo el usuario y evitando ataques de inyección SQL.
         $query='SELECT '.$this->campo_usuario.', '.$this->campo_clave.' FROM '.$this->tabla.' WHERE '.$this->campo_usuario.'="'.  mysql_real_escape_string($usuario).'" LIMIT 1 '; //la tabla y el campo se definen en los parametros globales
         $result = mysql_query($query);
@@ -54,7 +54,7 @@ class Login {
             //5 - comprobamos la contraseña
             if ($hash==$row[$this->campo_clave]) {
                 @session_start();
-                $_SESSION['USUARIO']=array('user'=>$row[$this->campo_usuario]); //almacenamos en memoria el usuario
+               // $_SESSION['USUARIO']=array('user'=>$row[$this->campo_usuario]); //almacenamos en memoria el usuario
                 // en este punto puede ser interesante guardar más datos en memoria para su posterior uso, como por ejemplo un array asociativo con el id, nombre, email, preferencias, ....
                 return true; //usuario y contraseña validadas
             } else {
@@ -68,7 +68,7 @@ class Login {
         }
 
     }
-    
+
     
 
 
@@ -97,6 +97,7 @@ class Login {
         session_write_close(); //nos asegurmos que se guarda y cierra la sesion
         return true;
     }
+	
     
     
 }
