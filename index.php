@@ -503,7 +503,7 @@ function ConSoSinS($val, $sentence)
                                 </div>
                                 <div class="col-xs-9 text-right">
 								<?php
-										$rcate=$cit->cantidad_or();
+										$rcate=$cit->cantidad_or_user($user);
 											foreach($rcate as $ci){
 											$numeroO=$ci['numeroOr'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";

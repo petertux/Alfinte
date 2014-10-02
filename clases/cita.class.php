@@ -130,12 +130,12 @@ echo $query;
 		}
 			return $array;
 		}
-		 
+		
+		//Cantidad de registros asignados por usuario(supervisor)		
 		public function cantidad_citas_user($user){
 		$query="SELECT count(id_cita) as numeroCita from cita,usuario
 				where cita.id_empleado=usuario.id_empleado
-				and usuario.usuario='".$user."'
-				and id_estado=1";
+				and usuario.usuario='".$user."'";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -143,12 +143,11 @@ echo $query;
 		}
 			return $array;
 		}
-		
+		//Cantidad de registros asignados por usuario(vendedor)
 		public function cantidad_asi_user($user){
 		$query="SELECT count(id_cita) as numeroAsi from cita,usuario
 				where cita.id_empleado=usuario.id_empleado
-				and usuario.usuario='".$user."'
-				and id_estado=2";
+				and usuario.usuario='".$user."'";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -159,6 +158,18 @@ echo $query;
 		
 		public function cantidad_asi(){
 		$query="SELECT count(id_cita) as numeroAsi from cita where id_estado=2";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		//Cantidad de registros asignados por usuario(taller)
+		public function cantidad_or_user($user){
+		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO,usuario
+				where orden_trabajo.id_empleado= usuario.id_empleado
+				and usuario.usuario='".$user."'";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
