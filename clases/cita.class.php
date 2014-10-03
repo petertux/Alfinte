@@ -185,7 +185,7 @@ echo $query;
 		
 				//Cantidad de registros cita pendiente por usuario(vendedor)
 		public function cantidad_cita_pendiente($user){
-		$query="SELECT count(id_cita) as numeroCP from cita,usuario
+		$query="SELECT count(id_cita) as numeroCita from cita,usuario
 				where cita.id_empleado=usuario.id_empleado
 				and usuario.usuario='".$user."'
 				and cita.id_estado=2";
@@ -200,7 +200,7 @@ echo $query;
 		
 				//Cantidad de registros cita confirmada por usuario(vendedor)
 		public function cantidad_cita_confirmada($user){
-		$query="SELECT count(id_cita) as numeroCP from cita,usuario
+		$query="SELECT count(id_cita) as numeroAsi from cita,usuario
 				where cita.id_empleado=usuario.id_empleado
 				and usuario.usuario='".$user."'
 				and cita.id_estado=3";

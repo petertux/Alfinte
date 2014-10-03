@@ -30,8 +30,8 @@ $user=$sesion->get("usuario");
 	}else if($cargo==3){
 		$mensaje1="Citas Pendientes";
 		$mensaje2="Citas Confirmadas";
-		$mensaje3="Crear Cotizacion";
-		$mensaje4="Mostrar Articulos";
+		$mensaje3="Cotizacion Pendientes";
+		$mensaje4="Recibos Provicionales";
 	
 	}
 	
@@ -460,8 +460,16 @@ function ConSoSinS($val, $sentence)
                                 </div>
                                 <div class="col-xs-9 text-right">
 									<?php
-										
-										$rcate=$cit->cantidad_citas_user($user);
+										if ($cargo==1)
+											{
+											
+											}
+											else if($cargo==2)
+											{
+												
+											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_pendiente($user);
+											}
 											foreach($rcate as $ci){
 											$numero=$ci['numeroCita'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
@@ -490,8 +498,17 @@ function ConSoSinS($val, $sentence)
                                 </div>
                                 <div class="col-xs-9 text-right">
 								<?php
+										if ($cargo==1)
+											{
+											$rcate=$cit->cantidad_asi_user($user);
+											}
+											else if($cargo==2)
+											{
+												$rcate=$cit->cantidad_asi_user($user);	
+											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_confirmada($user);
+											};
 										
-										$rcate=$cit->cantidad_asi_user($user);
 											foreach($rcate as $ci){
 											$numero=$ci['numeroAsi'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
@@ -520,6 +537,7 @@ function ConSoSinS($val, $sentence)
                                 </div>
                                 <div class="col-xs-9 text-right">
 								<?php
+										
 										$rcate=$cit->cantidad_or_user($user);
 											foreach($rcate as $ci){
 											$numeroO=$ci['numeroOr'];
