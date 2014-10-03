@@ -88,6 +88,32 @@ echo $query;
              return $array;
         }
 		
+		
+		public function mostrar_citas_pedientes_byuser($user){
+        $query="SELECT cita.`id_cita`,
+						`fecha_creacion`,
+						`nombre`,
+						`telefono`,
+						`direccion`,
+						`email`,
+						canal.`descripcion`,
+						cita_estado.`valor`,
+						`comentario`
+						FROM `cita`
+						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
+						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest
+						INNER JOIN	 `usuario` on `cita`.id_empleado = `usuario`.id_empleado
+						where `usuario`='".$user."'
+						";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
+		
 		public function mostrar_byid($id){
 		
         $query="SELECT `id_cita`,
@@ -156,6 +182,37 @@ echo $query;
 			return $array;
 		}
 		
+		
+				//Cantidad de registros cita pendiente por usuario(vendedor)
+		public function cantidad_cita_pendiente($user){
+		$query="SELECT count(id_cita) as numeroCP from cita,usuario
+				where cita.id_empleado=usuario.id_empleado
+				and usuario.usuario='".$user."'
+				and cita.id_estado=2";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		
+		
+				//Cantidad de registros cita confirmada por usuario(vendedor)
+		public function cantidad_cita_confirmada($user){
+		$query="SELECT count(id_cita) as numeroCP from cita,usuario
+				where cita.id_empleado=usuario.id_empleado
+				and usuario.usuario='".$user."'
+				and cita.id_estado=3";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
+		
+		
 		public function cantidad_asi(){
 		$query="SELECT count(id_cita) as numeroAsi from cita where id_estado=2";
 		$rs=mysql_query($query);
@@ -214,6 +271,20 @@ echo $query;
         }
              return $array;
         }
+		
+		
+        public function sabercargo($user){
+        $query="SELECT id_cargo FROM `empleado`,`usuario` where `empleado`.id_empleado = `usuario`.id_empleado and usuario.usuario='".$user."'";
+        $rs=mysql_query($query);
+        if (!$rs) {
+                   echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+                    exit;}
+        $fila = mysql_fetch_row($rs);
+        $num=$fila[0];
+         $num = (int)$num;
+             return $num;
+        }    
+        
 		
 }
 ?>

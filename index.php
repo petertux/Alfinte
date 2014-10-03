@@ -8,16 +8,33 @@ require_once("clases/sesion.class.php");
    if( $usuario == false )  {
       header("Location: login.php");
    }  else  {
-/*
-if( $usuario == false ) {
-   // si no se ha iniciado sesión redirecciona a la pagina login.php
-   header("Location: index.php");
-} else {
-   // Aquí va el contenido de la pagina qu se mostrara en caso de que se haya iniciado sesion
-*/
-$cit=new cita();
+
+   
+   $cit=new cita();
 $user=$sesion->get("usuario");
 
+	$cargo=$cit->sabercargo($user);
+	if ($cargo==1)
+	{
+		$mensaje1="Nuevos Pedidos";
+		$mensaje2="Asignadas";
+		$mensaje3="Nuevas Ordenes";
+		$mensaje4="Instalaciones";
+	}
+	else if($cargo==2)
+	{
+		$mensaje1="Nuevos Pedidos";
+		$mensaje2="Asignadas";
+		$mensaje3="Nuevas Ordenes";
+		$mensaje4="Instalaciones";
+	}else if($cargo==3){
+		$mensaje1="Citas Pendientes";
+		$mensaje2="Citas Confirmadas";
+		$mensaje3="Crear Cotizacion";
+		$mensaje4="Mostrar Articulos";
+	
+	}
+	
 function fechainteligente($timestamp) 
 {
 	if (!is_int($timestamp)) 
@@ -451,7 +468,7 @@ function ConSoSinS($val, $sentence)
 											};
 									?>
                                     <div class="huge"><?php echo $numero; ?></div>
-                                    <div>Nuevos Pedidos!</div>
+                                    <div><?php echo $mensaje1;?></div>
                                 </div>
                             </div>
                         </div>
@@ -481,7 +498,7 @@ function ConSoSinS($val, $sentence)
 											};
 									?>
                                     <div class="huge"><?php echo $numero; ?></div>
-                                    <div>Asignaciones!</div>
+                                    <div><?php echo $mensaje2;?></div>
                                 </div>
                             </div>
                         </div>
@@ -510,7 +527,7 @@ function ConSoSinS($val, $sentence)
 											};
 									?>
                                     <div class="huge"><?php echo $numeroO; ?></div>
-                                    <div>Nuevas Ordenes!</div>
+                                    <div><?php echo $mensaje3;?></div>
                                 </div>
                             </div>
                         </div>
@@ -540,7 +557,7 @@ function ConSoSinS($val, $sentence)
 									?>
                                     <div class="huge"><?php echo $numeroi; ?></div>
                                     <!--<div class="huge">13</div>-->
-                                    <div>Instalaciones!</div>
+                                    <div><?php echo $mensaje4;?></div>
                                 </div>
                             </div>
                         </div>
