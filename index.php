@@ -325,8 +325,17 @@ function ConSoSinS($val, $sentence)
                         <li>
                             <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i> Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="ver_cita.php">Citas</a>
+                               <li>
+                                    <a href="index.php">Cita <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="ver_categoria.php">Crear Cita</a>
+                                        </li>
+                                        <li>
+                                            <a href="ver_categoria.php">Confirmar Cita</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
                                 </li>
 								<li>
                                     <a href="ver_cita.php">Asignaciones</a>
@@ -480,9 +489,9 @@ function ConSoSinS($val, $sentence)
                                 </div>
                             </div>
                         </div>
-                        <a href="ver_pedidos.php">
+                        <a href="ver_cita.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Ver Pedidos</span>
+                                <span class="pull-left">Ver Citas Pendientes</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
