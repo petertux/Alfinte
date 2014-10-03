@@ -33,7 +33,6 @@ $res= $articulos->mostrar_articulo($q);
 					<tbody>
 					<?php
 						foreach($res as $art){
-						
 						echo"
 						<tr>
 							<td>".$art['id_articulo']."</td>

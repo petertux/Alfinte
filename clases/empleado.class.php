@@ -102,6 +102,50 @@
              return $array;
         }
 		
+		
+		public function mostrar_empleado_paginado($RegistroAEmpezar,$RegistroAMostrar){
+		
+        $query="SELECT  `empleado`.`id_empleado`,
+						concat(`empleado`.`nombre`,' ',`empleado`.`apellido`) as nombre,
+						`empleado`.`telefono`,
+						COUNT(`cita`.`id_cita`) as cita 
+						FROM (`empleado` INNER JOIN `cita` on `cita`.`id_empleado`=`empleado`.`id_empleado`)
+						GROUP BY  `empleado`.`id_empleado`
+						LIMIT".$RegistrosAEmpezar.",". $RegistrosAMostrar.";";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
+		 
+		 
+		 
+		 public function contar_filas(){
+		 $query="Select cout(id_empleado) from empleado";
+		 $rs=mysql_query($query);
+		  if ($row = mysql_fetch_row($rs)) {
+        $num = trim($row[0]);}
+         $num = (int)$num;
+		 return $num;
+		 }
+		 
+		
+		public function mostrar_emp2(){
+		
+        $query="SELECT  `empleado`.`id_empleado`,
+						concat(`empleado`.`nombre`,' ',`empleado`.`apellido`) as nombre
+						FROM `empleado` where id_cargo=3 ";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
 		public function mostrar_byid($id){
 		
         $query="SELECT `id_cita`,

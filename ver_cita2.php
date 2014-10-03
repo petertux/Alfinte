@@ -1,15 +1,5 @@
 <?php
-include('libreria/motor.php');
-$cit=new cita();
-$emp=new empleado();
-$art=new articulo();
-	if(isset($_POST['boton'])){
-	
-	$cod_emp=$_POST['opcion_emp'];
-	$id_cit=$_POST['numerocitas'];
-	
-	$resp_update= $cit->actualizar_cita($cod_emp,5);
-	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -387,170 +377,19 @@ $art=new articulo();
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra el listado de las citas mas recientes
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>Cita</th>
-											<th>Fecha</th>
-											<th>Nombre</th>
-											<th>Telefono</th>
-                                            <th>Direccion</th>
-                                            <th>Email</th>
-                                            <th>Canal</th>
-											<th>Editar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-									<?php
-									$rcitas=$cit->mostrar();
-									
-									foreach($rcitas as $ci){
-									$i = $ci['id_cita'];
-									
-									echo "
-										<tr>
-											<td><div id='id_cita$i'>{$ci['id_cita']}</div></td>
-											<td>{$ci['fecha_creacion']}</td>
-											<td>{$ci['nombre']}</td>
-											<td>{$ci['telefono']}</td>
-											<td>{$ci['direccion']}</td>
-											<td>{$ci['email']}</td>
-											<td>{$ci['descripcion']}</td>
-											<td>";?>
-												<div class="form-group">
-														<select class="form-control" onchange="loademp((this.value), <?php echo $ci['id_cita']; ?>)">
-															<option value="">Seleccione</option>
-																<?php  $empp=$emp->mostrar_emp2();
-																		foreach($empp as $empo){
-																	echo "<option value='".$empo['id_empleado']."'>".$empo['nombre']."</option>";
-																	};
-																?>
-														</select>
-												</div>
-											<?php "</td>
-										</tr>";	
-									}
-									?>
-                                    </tbody>
-                                </table>
-								<div id="myDiv"></div>
-                            </div>
-                            <!-- /.table-responsive -->
-						
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-			<div class="row">
-                <div class="col-lg-10">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra el listado de los Vendedores con citas
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>No. Empleado</th>
-											<th>Nombre</th>
-											<th>Telefono</th>
-                                            <th>Citas Asignadas</th>
-											<th>Editar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-									<?php
-									$remp=$emp->mostrar_emp();
-									foreach($remp as $re){
-									echo "
-										<tr>
-											<td>{$re['id_empleado']}</td>
-											<td>{$re['nombre']}</td>
-											<td>{$re['telefono']}</td>
-											<td>{$re['cita']}</td>
-											
-										<td>"; ?>
-										            <div class="col-lg-6">
-																<div class="panel panel-default">
-																	<!-- /.panel-heading -->
-																	<!--<div class="panel-body">-->
-																		<!-- Button trigger modal -->
-																		<button class="btn btn-default" data-toggle="modal" data-target="#myModal1">
-																			Asignar
-																		</button>
-																		<!-- Modal -->
-																		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-																			<div class="modal-dialog">
-																				<div class="modal-content">
-																					<div class="modal-header">
-																						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																						<h5 class="modal-title" id="myModalLabel">Formulario para Editar</h5>
-																					</div>
-																					<div class="modal-body">
-																						Formulario
-																					</div>
-																					<div class="modal-footer">
-																						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-																						<button type="button" class="btn btn-primary">Guardar Cambios</button>
-																					</div>
-																				</div>
-																				<!-- /.modal-content -->
-																			</div>
-																			<!-- /.modal-dialog -->
-																		</div>
-																		<!-- /.modal -->
-																	<!--</div>-->
-																	<!-- .panel-body -->
-																</div>
-																<!-- /.panel -->
-													</div>
-										<?php echo"
-										</td>
-										</tr>";	
-									}
-									?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
+				<div id="contenido">
+					<?php include('mostrar_cita.php')?>
+				</div>
+			</div>
 
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
  
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-		    <!-- Footer
-    ================================================== -->
-    <footer class="footer">
-      <div class="container">
-        <?php  include('footer.php'); ?>
-      </div>
-    </footer>
-
-	
+		
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
