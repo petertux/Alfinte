@@ -59,9 +59,32 @@
 						`cant_per_unit`,
                         `imagen`
 						FROM `articulo_ter`,`articulo_cat`
-						where  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_cateogoria`
+						where  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_categoria`
 						AND limit 10";
 						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
+		public function mostrar2($id){
+        $query="SELECT `id_articulo`,
+						`articulo_ter`.`descripcion`,
+						`min_stock`,
+						`articulo_ter`.`estado`,
+						`cant_per_unit`,
+                        `imagen`
+						FROM `articulo_ter`,`articulo_cat`
+						WHERE  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_categoria`
+						AND `id_articulo` =" . $id;
+						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
+
+		//echo $query;
+		//die();
+						
         $rs=mysql_query($query);
         $array=array();
         while($fila=mysql_fetch_assoc($rs)){
@@ -74,7 +97,7 @@
         $query="SELECT `id_articulo`,
 						`articulo_ter`.`descripcion`
 						FROM `articulo_ter`,`articulo_cat`
-						where  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_categoria`
+						WHERE  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_categoria`
 						AND `articulo_ter`.`id_categoria`=".$id." limit 10";
 						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
         $rs=mysql_query($query);

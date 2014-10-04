@@ -480,7 +480,7 @@ function ConSoSinS($val, $sentence)
                                             <th>Direccion</th>
                                             <th>Email</th>
                                             <th>Canal</th>
-											<th>Asignar</th>
+											<th>Editar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -543,6 +543,7 @@ function ConSoSinS($val, $sentence)
 											<th>Nombre</th>
 											<th>Telefono</th>
                                             <th>Citas Asignadas</th>
+											<th>Editar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -555,8 +556,46 @@ function ConSoSinS($val, $sentence)
 											<td>{$re['nombre']}</td>
 											<td>{$re['telefono']}</td>
 											<td>{$re['cita']}</td>
-										</tr>";
-									};
+											
+										<td>"; ?>
+										            <div class="col-lg-6">
+																<div class="panel panel-default">
+																	<!-- /.panel-heading -->
+																	<!--<div class="panel-body">-->
+																		<!-- Button trigger modal -->
+																		<button class="btn btn-default" data-toggle="modal" data-target="#myModal1">
+																			Asignar
+																		</button>
+																		<!-- Modal -->
+																		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+																			<div class="modal-dialog">
+																				<div class="modal-content">
+																					<div class="modal-header">
+																						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																						<h5 class="modal-title" id="myModalLabel">Formulario para Editar</h5>
+																					</div>
+																					<div class="modal-body">
+																						Formulario
+																					</div>
+																					<div class="modal-footer">
+																						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+																						<button type="button" class="btn btn-primary">Guardar Cambios</button>
+																					</div>
+																				</div>
+																				<!-- /.modal-content -->
+																			</div>
+																			<!-- /.modal-dialog -->
+																		</div>
+																		<!-- /.modal -->
+																	<!--</div>-->
+																	<!-- .panel-body -->
+																</div>
+																<!-- /.panel -->
+													</div>
+										<?php echo"
+										</td>
+										</tr>";	
+									}
 									?>
                                     </tbody>
                                 </table>

@@ -245,6 +245,7 @@ echo $query;
 			return $array;
 		}
 		
+		//Se necesitaba saber las cantidades de ordenes de trabajo hay
 		public function cantidad_ins(){
 		$query="SELECT count(id_orden) as numeroIns from ORDEN_TRABAJO where id_trabajo_estado= 3";
 		$rs=mysql_query($query);
@@ -255,14 +256,16 @@ echo $query;
 			return $array;
 		}
 		
-		public function mostrar_mensaje(){
+		//Se necesita saber cuales fueron las nuevas entradas de las citas
+		public function mostrar_mensaje($user){
         $query="SELECT cita.`id_cita`,
 						`fecha_creacion`,
 						concat(nombre,' ',apellido) as nombre
 						FROM `cita`
 						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
 						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest
-						and `cita`.id_empleado=0
+						INNER JOIN	`usuario` ON  `cita`.id_empleado=`usuario`.id_empleado
+						and `usuario`.usuario='".$user."'
 						ORDER BY fecha_creacion DESC";
         $rs=mysql_query($query);
         $array=array();
@@ -272,7 +275,7 @@ echo $query;
              return $array;
         }
 		
-		
+		//Se necesitaba saber el cargo del usuario
         public function sabercargo($user){
         $query="SELECT id_cargo FROM `empleado`,`usuario` where `empleado`.id_empleado = `usuario`.id_empleado and usuario.usuario='".$user."'";
         $rs=mysql_query($query);
@@ -284,7 +287,18 @@ echo $query;
          $num = (int)$num;
              return $num;
         }    
-        
+		
+						//Cantidad de citas Asignadas a usuario(vendedor)
+		public function cantidad_cita_asignada(){
+		$query="SELECT count(id_cita) as numeroAsi from cita
+				where cita.id_estado=2";
+		$rs=mysql_query($query);
+		$array=array();
+		while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+		}
+			return $array;
+		}
 		
 }
 ?>

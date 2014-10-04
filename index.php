@@ -11,13 +11,13 @@ require_once("clases/sesion.class.php");
 
    
    $cit=new cita();
-$user=$sesion->get("usuario");
-
-	$cargo=$cit->sabercargo($user);
+$art=new articulo();
+$materiales=new materia();
+	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
 		$mensaje1="Nuevos Pedidos";
-		$mensaje2="Asignadas";
+		$mensaje2="Total Asignadas";
 		$mensaje3="Nuevas Ordenes";
 		$mensaje4="Instalaciones";
 	}
@@ -128,7 +128,7 @@ function ConSoSinS($val, $sentence)
 					
                     <ul class="dropdown-menu dropdown-messages">
 						<?php
-					$com=$cit->mostrar_mensaje();
+					$com=$cit->mostrar_mensaje($usuario);
 						foreach($com as $co){
 							$hace=fechainteligente($co['fecha_creacion']);
 							echo"<li>
@@ -373,6 +373,22 @@ function ConSoSinS($val, $sentence)
                                 <li>
                                     <a href="ver_categoria.php">Consultar Articulos</a>
                                 </li>
+								<li>
+                            <a href="ver_categoria.php">Categoria de Articulos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+							<?php
+									$rcate=$materiales->mostrar_categoria();
+									foreach($rcate as $ci){
+									echo "
+										<li>
+											<a href='".$ci['url']."?id_categoria=".$ci['id_categoria']."'>".$ci['descripcion']."</a>
+
+										</li>";
+									}
+							?>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                                 <li>
                                     <a href="ver_materia.php">Consultar Materiales</a>
                                 </li>
@@ -471,14 +487,14 @@ function ConSoSinS($val, $sentence)
 									<?php
 										if ($cargo==1)
 											{
-											
+											$rcate=$cit->cantidad_citas_user($usuario);
 											}
 											else if($cargo==2)
 											{
-												
+												$rcate=$cit->cantidad_citas_user($usuario);
 											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_pendiente($user);
-											}
+												$rcate=$cit->cantidad_cita_pendiente($usuario);
+											};
 											foreach($rcate as $ci){
 											$numero=$ci['numeroCita'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
@@ -509,13 +525,13 @@ function ConSoSinS($val, $sentence)
 								<?php
 										if ($cargo==1)
 											{
-											$rcate=$cit->cantidad_asi_user($user);
+											$rcate=$cit->cantidad_cita_asignada();
 											}
 											else if($cargo==2)
 											{
-												$rcate=$cit->cantidad_asi_user($user);	
+												$rcate=$cit->cantidad_cita_asignada();	
 											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($user);
+												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
 										
 											foreach($rcate as $ci){
@@ -545,9 +561,18 @@ function ConSoSinS($val, $sentence)
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-								<?php
+								<?php	if ($cargo==1)
+											{
+											$rcate=$cit->cantidad_or();
+											}
+											else if($cargo==2)
+											{
+												$rcate=$cit->cantidad_or();	
+											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_confirmada($usuario);
+											};
 										
-										$rcate=$cit->cantidad_or_user($user);
+										$rcate=$cit->cantidad_or_user($usuario);
 											foreach($rcate as $ci){
 											$numeroO=$ci['numeroOr'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";

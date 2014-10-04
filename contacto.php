@@ -54,7 +54,6 @@
                            $cit->id_canal=1;
                            $cit->id_estado=1;
                            $cit->comentario=$cuerpo;
-						   $cit->id_empleado=1;
 
                            $result=$cit->agregar();
                            if($result>0){
