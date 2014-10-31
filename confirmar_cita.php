@@ -1,5 +1,4 @@
 <?php
-
 include('libreria/motor.php');
 require_once("clases/sesion.class.php");
 //$login=new Login();
@@ -13,6 +12,7 @@ require_once("clases/sesion.class.php");
    $cit=new cita();
 $art=new articulo();
 $materiales=new materia();
+$emp=new empleado();
 	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
@@ -65,52 +65,47 @@ function ConSoSinS($val, $sentence)
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>Sistema de Inventario</title>
+        <title>Modulo Ventas</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+        <!-- MetisMenu CSS -->
+        <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Timeline CSS -->
-    <link href="css/plugins/timeline.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript">
+            
+        </script>
+    </head>
 
-    <!-- Custom Fonts -->
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <body>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <div id="wrapper">
 
-</head>
-
-<body>
-
-    <div id="wrapper">
-
-        <!-- Navigation -->
+            <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -472,367 +467,157 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-		
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Panel de Control</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-									<?php
-										if ($cargo==1)
-											{
-											$rcate=$cit->cantidad_citas_user($usuario);
-											}
-											else if($cargo==2)
-											{
-												$rcate=$cit->cantidad_citas_user($usuario);
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_pendiente($usuario);
-											};
-											foreach($rcate as $ci){
-											$numero=$ci['numeroCita'];
-											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
-											};
-									?>
-                                    <div class="huge"><?php echo $numero; ?></div>
-                                    <div><?php echo $mensaje1;?></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href='<?php echo $url1; ?>'>
-                            <div class="panel-footer">
-                                <span class="pull-left">Ver Citas Pendientes</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+
+            <!-- Page Content -->
+            <div id="page-wrapper">
+			    <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" align=center>Confirmacion de Cita</h1>
                     </div>
+                    <!-- /.col-lg-12 -->
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-								<?php
-										if ($cargo==1)
-											{
-											$rcate=$cit->cantidad_cita_asignada();
-											}
-											else if($cargo==2)
-											{
-												$rcate=$cit->cantidad_cita_asignada();	
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
-											};
-										
-											foreach($rcate as $ci){
-											$numero=$ci['numeroAsi'];
-											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
-											};
-									?>
-                                    <div class="huge"><?php echo $numero; ?></div>
-                                    <div><?php echo $mensaje2;?></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href='<?php echo $url2; ?>'>
-                            <div class="panel-footer">
-                                <span class="pull-left">Ver Asignaciones</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-								<?php	if ($cargo==1)
-											{
-											$rcate=$cit->cantidad_or();
-											}
-											else if($cargo==2)
-											{
-												$rcate=$cit->cantidad_or();	
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
-											};
-										
-										$rcate=$cit->cantidad_or_user($usuario);
-											foreach($rcate as $ci){
-											$numeroO=$ci['numeroOr'];
-											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
-											};
-									?>
-                                    <div class="huge"><?php echo $numeroO; ?></div>
-                                    <div><?php echo $mensaje3;?></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Ver Detalles</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-								<?php
-										$rcate=$cit->cantidad_ins();
-											foreach($rcate as $ci){
-											$numeroi=$ci['numeroIns'];
-											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
-											};
-									?>
-                                    <div class="huge"><?php echo $numeroi; ?></div>
-                                    <!--<div class="huge">13</div>-->
-                                    <div><?php echo $mensaje4;?></div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">Ver Detalles</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-             <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Ejemplo de Graficas de Ventas
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Acciones
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Ver Ventas</a>
-                                        </li>
-                                        <li><a href="#">Ver Citas</a>
-                                        </li>
-                                        <li><a href="#">Ver Instalaciones</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Ver Asignaciones</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div id="morris-area-chart"></div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Ejemplo de Grafico de Barras Compras
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Actions
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Fecha</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2014</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2014</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2014</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2014</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2014</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-												<tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2014</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+				<div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
                                     </div>
-                                    <!-- /.table-responsive -->
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">10</div>
+                                        <div>Citas pendientes</div>
+                                    </div>
                                 </div>
-                                <!-- /.col-lg-4 (nested) -->
-                                <div class="col-lg-8">
-                                    <div id="morris-bar-chart"></div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Crear Cita</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <!-- /.col-lg-8 (nested) -->
+                            </a>
+                        </div>
+                    </div>
+					<div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">9</div>
+                                        <div>Citas confirmadas</div>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- /.row -->
+                            <a href="confirmar_cita.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Confirmar cita</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bell fa-fw"></i> Panel de Notificaciones
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> Nueva Cita
-                                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-twitter fa-fw"></i>Nuevas Peticiones
-                                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-envelope fa-fw"></i> Ultimo Mensaje
-                                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-tasks fa-fw"></i> Nueva Tarea
-                                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-upload fa-fw"></i> Estado del Servidor
-                                    <span class="pull-right text-muted small"><em>11:32 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-warning fa-fw"></i> Estado del Servidor
-                                    <span class="pull-right text-muted small"><em>10:57 AM</em>
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-shopping-cart fa-fw"></i> Nueva Orden
-                                    <span class="pull-right text-muted small"><em>9:49 AM</em>
-                                    </span>
-                                </a>
+					<div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">7</div>
+                                        <div>Crear Cotizaciones!</div>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">Ver Las Alertas</a>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Crear</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Productos Vendidos
-                        </div>
-                        <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
-                            <a href="#" class="btn btn-default btn-block">Ver Detalles</a>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
+				</div>
+                <!-- /.row -->
+				 <div class="row">
+					<div class="col-lg-8">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								Programacion de cita
+							</div>
+							<div class="panel-body">
+								<div class ="row">
+									<div class="col-lg-10">
+										<div class="form-group" action="">
+                                            <label>No.Cita</label>
+                                            <select class="form-control" name="seleccion_cita">
+                                                <option value="Seleccione Cita">Seleccione Cita</option>
+													<?php
+													$ncitas = $cit->mostrar_numero_cita_penditente();
+													foreach ($ncitas as $citaid) {																	
+																	echo "<option value='".$citaid['id_cita']."'>".$citaid['id_cita']."</option>";
+																	
+																	}
+													
+															/*$ncitas = $cit->mostrar_numero_cita_penditente();
+														
+																foreach ($ncitas as $citaid) {
+																		
+																		echo"    <option value = '" . $id_cita . "'>" . $id_cita . "</option>";
+																	};*/
+													?>
+                                            </select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-8">
+										<form role="form">
+											<fieldset disabled>
+												<div class="form-group">
+													<label for="disabledSelect">Disabled input</label>
+													<input class="form-control" id="disabledInput" type="text" value="<?php ?>" disabled>
+												</div>
+											</fieldset>
+										</form>
+                                </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				 </div>
+				
+            <!-- /#wrapper -->
         </div>
-        <!-- /#page-wrapper -->
+            <!-- jQuery Version 1.11.0 -->
+            <script src="js/jquery-1.11.0.js"></script>
 
-    </div>
-    <!-- /#wrapper -->
-    <!-- jQuery Version 1.11.0 -->
-    <script src="js/jquery-1.11.0.js"></script>
+            <!-- Bootstrap Core JavaScript -->
+            <script src="js/bootstrap.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+            <!-- Metis Menu Plugin JavaScript -->
+            <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+            <!-- Custom Theme JavaScript -->
+            <script src="js/sb-admin-2.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
-
-</body>
+            <!-- DataTables JavaScript -->
+            <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+            <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable();
+    });
+    </script>
+    
+    </body>
+    
 
 </html>
 <?php
