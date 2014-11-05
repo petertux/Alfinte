@@ -223,7 +223,7 @@
 		}
 		//Cantidad de registros asignados por usuario(taller)
 		public function cantidad_or_user($user){
-		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO,usuario
+		$query="SELECT count(id_orden) as numeroOr from orden_trabajo,usuario
 				where orden_trabajo.id_empleado= usuario.id_empleado
 				and usuario.usuario='".$user."'";
 		$rs=mysql_query($query);
@@ -235,7 +235,7 @@
 		}
 		
 		public function cantidad_or(){
-		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_trabajo_estado= 1";
+		$query="SELECT count(id_orden) as numeroOr from orden_trabajo where id_trabajo_estado= 1";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -246,7 +246,7 @@
 		
 		//Se necesitaba saber las cantidades de ordenes de trabajo hay
 		public function cantidad_ins(){
-		$query="SELECT count(id_orden) as numeroIns from ORDEN_TRABAJO where id_trabajo_estado= 3";
+		$query="SELECT count(id_orden) as numeroIns from orden_trabajo where id_trabajo_estado= 3";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -317,7 +317,7 @@
         }
              return $array;
         }
-public function mostrar_numero_cita_penditente2(){
+		public function mostrar_numero_cita_penditente2(){
         $query="SELECT id_cita, CONCAT(`id_cita`,' ',`nombre`,' ',`apellido`) as citNombre FROM cita WHERE id_estado=1 ";
         $rs=mysql_query($query);
         $array=array();
@@ -326,6 +326,50 @@ public function mostrar_numero_cita_penditente2(){
         }
              return $array;
         }
+		
+				/*************************************************************************/
+		public function agregar_cliente(){
+		$query="INSERT INTO cliente VALUES ('{$this->id_cliente}',
+                                        '{$this->nombre}',
+                                        '{$this->apellido}',
+                                        '{$this->direccion}',
+                                        '{$this->telefono}',
+										'{$this->nit}')";
+		$result=mysql_query($query) or die ("Problema con query de Insertar");
+		//echo $query;
+     return $result;
+	 }
+	     
+		 public function secqnos_cliente(){
+        $query="SELECT siguiente from seqnos where tabla='cliente'";
+        $rs=mysql_query($query);
+        if (!$rs) {
+                           echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+                    exit;}
+        $fila = mysql_fetch_row($rs);
+        $num=$fila[0];
+         $num = (int)$num;
+             return $num;
+        }
+
+        public function Upsecqnos_cliente(){
+        $query2="SELECT siguiente from seqnos where tabla='cliente'";
+        $rs=mysql_query($query2);
+        if ($row = mysql_fetch_row($rs)) {
+        $num = trim($row[0]);}
+         $num = (int)$num+1;
+      $query= "UPDATE seqnos set siguiente='".$num."'where tabla='cliente'";
+        $resultado = mysql_query($query) or die ("Problema con query");
+           return $resultado;
+		}
+		
+		
+		public function actualizar_cita_cotizacion($id_cita,$estado){
+			$query="UPDATE  cita  SET id_estado=".$estado." where id_cita=".$id_cita."";
+				$result=mysql_query($query) or die ("Problema con query de Insertar");
+			return $result;
+		}
+	/*************************************************************************/
 		
 }
 ?>

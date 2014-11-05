@@ -1,5 +1,6 @@
 <?php
 include('libreria/motor.php');
+
 require_once("clases/sesion.class.php");
 //$login=new Login();
    $sesion = new Sesion();
@@ -9,7 +10,7 @@ require_once("clases/sesion.class.php");
    }  else  {
 
    
-	$cit=new cita();
+   $cit=new cita();
 	$art=new articulo();
 	$materiales=new materia();
 	$emp=new empleado();
@@ -57,7 +58,24 @@ function ConSoSinS($val, $sentence)
 	if ($val > 1) return $val.str_replace(array('(s)','(es)'),array('s','es'), $sentence); 
 	else return $val.str_replace('(s)', '', $sentence);
 }
+// Captura la cita
+/********************************************************************/
+//cotizacion4.php?id_cita=2&&id_cotizacion=1
+$id_cita=$_GET['id_cita'];
+$id_cotizacion=$_GET['id_cotizacion'];
 
+	$info=$cit->mostrar_byid($id_cita);
+	foreach($info as $ci){
+	$id_cita = $ci['id_cita'];
+	$nombre=$ci['nombre'];
+	$apellido=$ci['apellido'];
+	$telefono=$ci['telefono'];
+	$direccion=$ci['direccion'];
+	$coment=$ci['comentario'];
+	}
+	
+
+/********************************************************************/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,6 +98,9 @@ function ConSoSinS($val, $sentence)
 
     <!-- DataTables CSS -->
     <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+	
+	<!-- Edit Table CCSS -->
+	<link href="js/edit_table/editablegrid.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
@@ -101,7 +122,7 @@ function ConSoSinS($val, $sentence)
     <div id="wrapper">
 
          <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -465,59 +486,173 @@ function ConSoSinS($val, $sentence)
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                <div class="col-lg-10">
+                    <h1 class="page-header">Cotizacion</h1>
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- /.col-lg-10 -->
             </div>
             <!-- /.row -->
 			<div class="row">
-				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
+				<form role="form">
+					<div class="col-lg-8">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								Panel de Cotizacion
+							</div>
+
+							<div class="panel-body">
+							
+							    <ul class="nav nav-pills">
+									<li class="active"><a href="#home-pills" data-toggle="tab">Informacion Cliente</a>
+									</li>
+									<li><a href="#profile-pills" data-toggle="tab">Informacion Cotizacion</a>
+									</li>
+									
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div class="tab-pane fade in active" id="home-pills">
+										<p>
+										<div class="col-xs-6">
+											<div class="form-group">
+													<input class="form-control" placeholder="Buscar Cliente">
+											</div>
+											<div class="form-group">
+											<input class="form-control" id="id_cita" value=<?php echo $id_cita; ?> type="hidden" >
+												<label>Nombre</label>
+													<input class="form-control" id="nombre" value=<?php echo $nombre; ?> >
+											</div>
+											<div class="form-group">
+												<label>Telefono</label>
+													<input class="form-control" id="telefono" value=<?php echo $telefono;?>>
+											</div>
+											
+										</div>
+										<div class="col-xs-6">
+												<div class="form-group">
+													<button type="submit" class="btn btn-primary">Buscar </button>
+												</div>
+											
+												<div class="form-group">
+													<label>Apellido</label>
+													<input class="form-control" id="apellido" value=<?php echo $apellido; ?>>
+												</div>
+												<div class="form-group">
+													<label>Direccion</label>
+													<input class="form-control" id="direccion" value=<?php echo $direccion; ?>>
+												</div>
+											</div>
+											<div class="col-lg-8">
+												<div class="form-group">
+													<label>Comentarios</label>
+													<textarea class="form-control" rows="2" id="coment" ><?php echo $coment; ?></textarea>
+												</div>
+											</div>
+									</div>
+									<div class="tab-pane fade" id="profile-pills">
+										<div class="col-xs-5">
+											<div class="form-group">
+												<label>Dias de Validez</label>
+													<select class="form-control" id="diaval">
+														<option value="5">5</option>
+														<option value="10">10</option>
+														<option value="15">15</option>
+														<option value="30">30</option>
+													</select>
+											</div>
+											<div class="form-group">
+													<label>Porcentaje de Anticipo</label>
+													<input class="form-control" id="porcentaje_an" >
+											</div>
+										</div>
+										<div class="col-xs-5">
+											<div class="form-group">
+												<label>Tiempo de Entrega</label>
+													<select class="form-control" id="timeen">
+														<option value="5">5</option>
+														<option value="10">10</option>
+														<option value="15">15</option>
+														<option value="30">30</option>
+													</select>
+											</div>
+											<div class="form-group">
+													<label>Porcentaje de Descuento</label>
+													<input class="form-control" id="porcentaje_des" >
+											</div>
+										</div>
+																				
+										<div class="col-lg-8">
+												<div class="form-group">
+													<label>Resumen</label>
+													<textarea class="form-control" rows="2" id="comment2"></textarea>
+												</div>
+										</div>
+									</div>
+								</div>
+                            </div>
+						</div>
 					</div>
 				</div>
-			</div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra los Articulos
-                        </div>
-                        <!-- /.panel-heading -->
-						
-                        <div class="panel-body">
-							
+					
+					<div class="col-lg-10">
+						<div class="panel panel-yellow">
+								<div class="panel-heading">
+									Cotizacion
+								</div>
+								<div class="panel-body">
+									<div class="col-xs-4">
+										<div class="form-group">
+                                            <label>Categoria</label>
+											<select class="form-control" onchange="load(this.value)">
+												<option value="">Seleccione</option>
+											<?php  $categoria=$art->mostrar_categoria();
+													foreach($categoria as $cat){
+													echo "
+															<option value='".$cat['id_categoria']."'>".$cat['descripcion']."</option>";
+															};
+											?>
+                                            </select>
+                                        </div>
+									</div>
+
+									<div class="col-xs-4">
+										<div class="form-group">
+											 <input class="form-control" placeholder="Enter text" type="text" id="articulo_nombre" onkeyup="loadXMLDoc()" >
+										</div>
+										<!-- Aqui esta el DIV en el cual se va a cargar la pagina de cotizacion_articulo-->
+										<div id="myDiv"></div>
+											<p></p>
+											<button  id="btnagregar" type="submit" class="btn btn-primary">Agregar </button>
+                                     </div>
+									
+									<div class="col-lg-12">
+										<div class="panel-body">
+											<!-- aqui va la tabla creada con js -->
+											<div id="tablecontent"></div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+									<input type="button" href="javascript:;" onclick="guardarTodo();" value="Guardar" class="btn btn-primary"/>
+									<br>
+									<span id="resultado"></span>
+									</div>
+										
+								</div>
 								
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-
-                                    </thead>
-                                    <tbody>
-                                       <div id="myDiv"></div>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+								<div class="panel-footer">
+									Panel Footer
+								</div>
+						</div>
+						<!-- /.col-lg-4 -->
+						
+					</div>
+					
+					
+				</form>
+			</div>
+			<div class="row">
+			
+			</div>
 
 		</div>
         <!-- /#page-wrapper -->
@@ -543,10 +678,211 @@ function ConSoSinS($val, $sentence)
 	
 	<!-- Ajax Customizado"-->
 	<script src="js/ajax.js"></script>
+	
+	<script src="js/edit_table/editablegrid.js"></script>
+	<script src="js/edit_table/editablegrid_charts.js"></script>
+	<script src="js/edit_table/editablegrid_renderers.js"></script>
+	<script src="js/edit_table/editablegrid_editors.js"></script>
+	<script src="js/edit_table/editablegrid_utils.js"></script>
+	<script src="js/edit_table/editablegrid_validators.js"></script>
+
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
+	var $myDiv, $btnAgregar;
+	var editableGrid; //variable con el editableGrid
+	
+	function agregarCotizacion(valorselec){
+		
+		$.ajax({
+			type: "GET",
+			url: "cotizacion_articulo.php",
+			data: { 'q' : valorselec, 'json': "1" },
+			success: function(data){
+				//console.log(data);
+				agregarTabla(data);
+			},
+			dataType: "json"
+		});
+
+	}
+
+	function agregarTabla(datonuevo){
+		var data = [];
+		
+		datagrid = editableGrid.data;
+		for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+			fila =  datagrid[i];
+			jfila = { "id": fila.columns[0], "values": {
+				"id_articulo": fila.columns[0],
+				"descripcion": fila.columns[1],
+				"cantidad": fila.columns[2],
+				"ancho": fila.columns[3],
+				"largo": fila.columns[4],
+				"alto": fila.columns[5],
+				"precio": fila.columns[6]
+				}
+			};
+			data.push(jfila);
+		}
+		
+		//console.log(fila);
+		//console.log(data.length);
+		
+		nuevafila = { "id": datonuevo.id_articulo, "values": {
+				"id_articulo": datonuevo.id_articulo,
+				"descripcion": datonuevo.descripcion,
+				"cantidad": 1,
+				"ancho": 0,				
+				"largo": 0,
+				"alto": 0,
+				"precio": datonuevo.precio
+			}
+		};
+		
+		data.push(nuevafila);
+		
+		//console.log(data);
+		//editableGrid.data = data;
+		editableGrid.load({"metadata": getMetaTable(), "data": data});
+		editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+	}
+	
+	function guardarTodo(){
+	var data = [];
+		
+		datagrid = editableGrid.data;
+		for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+			fila =  datagrid[i];
+			/*jfila = { "id": fila.columns[0], "values": {
+				"id_articulo": fila.columns[0],
+				"cantidad": fila.columns[1],
+				"ancho": fila.columns[2],
+				"largo": fila.columns[3],
+				"volumen": fila.columns[4],
+				"area": fila.columns[5],
+				"precio": fila.columns[6],
+				"total": fila.columns[7]
+				}*/
+				//alert(fila.columns[0]);
+				guardarDetalle(fila.columns[0],fila.columns[2],fila.columns[3],fila.columns[4],fila.columns[5],fila.columns[6]);
+			};
+			//data.push(jfila);
+			
+		guardarEncabezado();
+	
+	}
+	
+	function guardarEncabezado(){
+	//llamada a un ajax que son los valores fijos 
+	nombre= $('#nombre').val();
+	telefono=$('#telefono').val();
+	apellido=$('#apellido').val();
+	direccion=$('#direccion').val();
+	coment=$('#coment').val();
+	diaval=$('#diaval').val();
+	timeen=$('#timeen').val();
+	comment2=$('#comment2').val();
+	id_cita=$('#id_cita').val();
+	porcentaje_an=$('#porcentaje_an').val();
+	porcentaje_des=$('#porcentaje_des').val();
+	//alert(nombre);
+		
+		var parametros = {
+                "nombre" :   nombre,
+                "apellido" : apellido,
+				"telefono" : telefono,
+				"direccion": direccion,
+				"coment":   coment,
+				"diaval":	diaval,
+				"timeen":	timeen,
+				"comment2": comment2,
+				"id_cita": id_cita,
+				"porcentaje_an": porcentaje_an,
+				"porcentaje_des": porcentaje_des
+				
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'insertar_encabezado.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+						alert("Ingresado Correctamente");
+                },
+				error: function(response){
+					alert("error");
+				}
+        });
+	
+	}
+	
+	function guardarDetalle(id_articulo,cantidad,ancho,largo,alto,precio){
+	//alert(id_articulo,cantidad,ancho,largo,volumen,area,precio,total);
+	var parametros = {
+                "id_articulo" : id_articulo,
+                "cantidad" : cantidad,
+				"ancho" : ancho,
+				"largo" : largo,
+				"alto"	: alto,
+				"precio" : precio
+			
+				
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'insertar_detalle.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+                }
+        });
+
+	
+	}
+	
+	
+	function getMetaTable(){
+		var metadata = [];
+        metadata.push({name: "id_articulo", label: "Cod. Articulo", datatype: "integer", editable: false});
+        metadata.push({name: "descripcion", label: "Articulos", datatype: "string", editable: false});
+        metadata.push({name: "cantidad", label: "Cantidad", datatype: "integer", editable: true});
+		metadata.push({name: "ancho", label: "Ancho", datatype: "double", editable: true});
+		metadata.push({name: "largo", label: "Largo", datatype: "double", editable: true});
+		metadata.push({name: "alto", label: "Alto", datatype: "double", editable: true});
+		metadata.push({name: "precio", label: "Precio", datatype: "double", editable: false});
+		return metadata;
+	}
+	
+	function crearTabla() {
+        editableGrid = new EditableGrid("Tabla");
+        editableGrid.load({"metadata": getMetaTable(), "data": []});
+        editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+    }
+	
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
+		
+		$btnAgregar = $("button#btnagregar");
+		$myDiv = $("div#myDiv");
+		
+		crearTabla();
+		
+		$btnAgregar.click(function(){
+			//alert("esta es una alerta de prueba");
+			valorselec = $myDiv.find("select option:selected").val();
+			if(valorselec == undefined) return false;
+			
+			agregarCotizacion(valorselec);
+			
+			//alert(valorselec);
+			return false;
+		});
     });
     </script>
 
