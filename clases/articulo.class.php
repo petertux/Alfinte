@@ -91,6 +91,10 @@
              return $array;
         }
 		
+		
+		
+		
+		
 		public function mostrar2($id){
         $query="SELECT `id_articulo`,
 						`articulo_ter`.`descripcion`,
@@ -119,6 +123,24 @@
 						`articulo_ter`.`descripcion`
 						FROM `articulo_ter`,`articulo_cat`
 						WHERE  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_categoria`
+						AND `articulo_ter`.`id_categoria`=".$id." limit 10";
+						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		
+		public function mostrar_articulo2($id){
+        $query="SELECT `articulo_ter`.`id_articulo` ,
+						`articulo_ter`.`descripcion`
+						FROM `articulo_ter` , `articulo_cat` , `articulo_pre`
+						WHERE `articulo_ter`.`id_categoria` = `articulo_cat`.`id_categoria`
+						AND `articulo_ter`.`id_articulo` = `articulo_pre`.`id_articulo`
+						AND `articulo_pre`.`estado` = 'A'
+						AND `articulo_ter`.`estado` = 'A'
 						AND `articulo_ter`.`id_categoria`=".$id." limit 10";
 						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
         $rs=mysql_query($query);
@@ -294,18 +316,14 @@
         }
 		
 		public function mostrar3($id){
-        $query="SELECT `id_articulo`,
-						`articulo_ter`.`descripcion`,
+        $query="SELECT `articulo_ter`.`id_articulo` ,
+						`articulo_ter`.`descripcion` ,
 						`articulo_pre`.`precio` `precio`
-						FROM `articulo_ter`,`articulo_cat`,`articulo_pre`
-						WHERE  `articulo_ter`.`id_categoria` =`articulo_cat`.`id_categoria`
-						AND `articulo_ter`.`id_precio` = `articulo_pre`.`id_art_pre`
-						AND `id_articulo` =" . $id;
-						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
-
-		//echo $query;
-		//die();
-						
+				FROM `articulo_ter` , `articulo_cat` , `articulo_pre`
+				WHERE `articulo_ter`.`id_categoria` = `articulo_cat`.`id_categoria`
+				AND `articulo_ter`.`id_articulo` = `articulo_pre`.`id_articulo`
+				AND `articulo_pre`.`estado` = 'A'
+				AND `articulo_ter`.`id_articulo` =" . $id;	
         $rs=mysql_query($query);
         $array=array();
         while($fila=mysql_fetch_assoc($rs)){
@@ -376,7 +394,7 @@
 	/*****************************************************************************************/
 	public function actualizar_precio($id_articulo){
       $query= "UPDATE articulo_pre
-	  SET estado='V'
+	  SET estado='I'
 	  WHERE id_articulo='".$id_articulo."'
 	  AND estado='A'";
         $resultado = mysql_query($query) or die (mysql_error());
@@ -385,6 +403,28 @@
 	
 	/*****************************************************************************************/
 	
+	public function buscar_articulo($articulo){
+	$query="Select sucursal.id_sucursal,
+			sucursal.descripcion,
+			articulo_exi.cant_disponible cantidad,
+			articulo_ter.descripcion articulo
+			from articulo_ter,
+			articulo_exi,
+			ubicacion,
+			bodega,
+			sucursal
+			where articulo_exi.id_articulo=articulo_ter.id_articulo
+			and ubicacion.id_ubicacion=articulo_exi.id_ubicacion
+			and bodega.id_bodega=ubicacion.id_bodega
+			and bodega.id_sucursal=sucursal.id_sucursal
+			and `articulo_ter`.`id_articulo`='".$articulo."'";
+	$rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
 
 }
 ?>

@@ -111,7 +111,8 @@
         }
              return $array;
         }
-				public function mostrar_bodega(){
+		
+		public function mostrar_bodega(){
         $query="SELECT `descripcion`,
                         `id_bodega`
 						FROM `bodega`
@@ -140,7 +141,6 @@
         }
              return $array;
         }
-		
 		
 }
 ?>

@@ -1,12 +1,12 @@
 <?php
 include('libreria/motor.php');
-require_once("clases/sesion.class.php");
-//$login=new Login();
-   $sesion = new Sesion();
-   $usuario = $sesion->get("usuario");
-   if( $usuario == false )  {
+	require_once("clases/sesion.class.php");
+	//$login=new Login();
+	$sesion = new Sesion();
+	$usuario = $sesion->get("usuario");
+	if( $usuario == false )  {
       header("Location: login.php");
-   }  else  {
+	}  else  {
 
    
 	$cit=new cita();
@@ -57,7 +57,6 @@ function ConSoSinS($val, $sentence)
 	if ($val > 1) return $val.str_replace(array('(s)','(es)'),array('s','es'), $sentence); 
 	else return $val.str_replace('(s)', '', $sentence);
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,6 +86,8 @@ function ConSoSinS($val, $sentence)
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	    <!-- Bootstrap Form Helpers -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css" rel="stylesheet" media="screen">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -101,7 +102,7 @@ function ConSoSinS($val, $sentence)
     <div id="wrapper">
 
          <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -449,31 +450,14 @@ function ConSoSinS($val, $sentence)
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-11">
                     <h1 class="page-header">Muestra Los Articulos</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-			<div class="row">
-				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
-					</div>
-				</div>
-			</div>
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-11">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Muestra los Articulos
@@ -481,15 +465,152 @@ function ConSoSinS($val, $sentence)
                         <!-- /.panel-heading -->
 						
                         <div class="panel-body">
-                            <div id="myDiv"></div>
+										<div class="row">
+											<?php
+											$id_articulo=$_GET['id_articulo'];
+											//$id_articulo=1;
+											$articulo = $art->imagen_dato($id_articulo);
+											$ubica = $art->ubicacion_articulo($id_articulo);
+											foreach($articulo as $at){
+												$imagen=$at['imagen'];
+												$descripcion=$at['descripcion'];
+												$categoria=$at['categoria'];
+												$precio=$at['precio'];
+												$cantidad=$at['cant_disponible'];
+												$disponible=$at['disponible_web'];
+
+												
+											}
+											?>
+											<div class="media">
+												<a class="pull-left" href="#">
+													<img class="media-object" src="<?php echo $imagen; ?>" alt="...">
+												</a>
+												<div class="media-body">
+													<h4 class="media-heading"><?php echo $descripcion;?></h4>
+													<p>Categoria: <?php echo $categoria;?></p>
+													<div class="col-xs-4">
+														<div class="form-group">
+															<input class="form-control" id="id_articulo" value=<?php echo $id_articulo; ?> type="hidden" >
+															<input class="form-control" id="disponible" value=<?php echo $disponible; ?> type="hidden" >
+															<label>Precio: $</label>
+															<p><label>Cantidad en Stock<label></p>
+															<p>Disponible en la Web: <b><?php echo $disponible;?></p></b>
+															
+														</div>
+															 <div class='form-group'>
+                                                            <label class="control-label" for="inputSuccess">Fecha desde:</label>
+                                                            <input class='form-control' type='date' name='fecha_programada' required  <?php $year=date("Y");$month=date("m");$day=date("d"); min=$year-$month-$day max;?> '2015-12-31'>
+
+                                                        </div>
+														<div class="control-label" for="inputSuccess">
+															<label class="control-label" for="inputSuccess">Fecha desde:</label>
+															<input type="text" class="form-control" id="fecha_desde">
+														</div>
+														<div class="control-label" for="inputSuccess">
+															<label class="control-label" for="inputSuccess">Fecha hasta:</label>
+															<input type="text" class="form-control" id="fecha_hasta">
+														</div>
+
+													</div>
+													<div class="col-xs-5">
+														<div class="form-group">
+															<input class="form-control" id="precio" value=<?php echo $precio; ?>>	
+															<p><?php echo $cantidad;?> Unidades </p>
+														
+															<p>Ubicaciones Disponibles:</p>
+																<ul class='list-group'>
+																<?php
+																	foreach($ubica as $ubi){
+																		echo "
+																			<li class='list-group-item'>
+																				<span class='badge'>{$ubi['cant_disponible']}</span>
+																				<b>{$ubi['descripcion']}</b>
+																			</li>";
+																			};
+																?>
+																</ul>
+																<!--<div class="bfh-datepicker" data-min="01/15/2013" data-max="today" data-close="false">
+																</div>-->
+														</div>
+													</div>
+													<div class='col-xs-5'>
+														<button type='button' class='btn btn-default' id="btnActualizar" onclick="guardarTodo();">Actualizar</button>
+													</div>
+												</div>
+												
+											</div>
+										</div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
 
+            </div>
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Materiales Utilizados
+                        </div>
+                        <!-- .panel-heading -->
+                        <div class="panel-body">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Materiales</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse ">
+                                        <div class="panel-body">
+                                          <div class="col-lg-6">
+                                                  <div class="panel panel-default">
+                                                      <div class="panel-heading">
+                                                          Materiales Utilizados
+                                                      </div>
+                                                      <!-- /.panel-heading -->
+                                                      <div class="panel-body">
+                                                          <div class="table-responsive">
+                                                              <table class="table table-striped table-bordered table-hover">
+                                                                  <thead>
+                                                                      <tr>
+                                                                          <th>#</th>
+                                                                          <th>Materiales</th>
+                                                                          <th>Materiales</th>
+                                                                          <th>Materiales</th>
+                                                                      </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                      <tr>
+                                                                          <td>1</td>
+                                                                          <td>Tijera</td>
+                                                                          <td>Tela</td>
+                                                                          <td>3 Metros</td>
+                                                                      </tr>
+                                                                  </tbody>
+                                                              </table>
+                                                          </div>
+                                                          <!-- /.table-responsive -->
+                                                      </div>
+                                                      <!-- /.panel-body -->
+                                                  </div>
+                                                  <!-- /.panel -->
+                                              </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                  <!-- /.col-lg-12 -->
+             </div>
+            <!-- /.row -->
 		</div>
         <!-- /#page-wrapper -->
 
@@ -511,16 +632,50 @@ function ConSoSinS($val, $sentence)
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-	
-	<!-- Ajax Customizado"-->
-	<script src="js/ajax.js"></script>
+
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
+		//$('#myDiv');
+		
     });
-    </script>
+	
+	function guardarTodo(){
+	//alert($('#fecha_hasta').val(),$('#fecha_desde').val());
+	//alert("hace clic");
+		precio=$('#precio').val();
+		id_articulo=$('#id_articulo').val();
+		disponible=$('#disponible').val();
+		fecha_hasta=$('#fecha_hasta').val();
+		fecha_desde=$('#fecha_desde').val();
+	
+	var parametros = {
+                "id_articulo" : id_articulo,
+				"precio" : precio,
+				"disponible": disponible,
+				"fecha_desde": fecha_desde,
+				"fecha_hasta": fecha_hasta
+       };
+        $.ajax({
+                data:  parametros,
+                url:   'actualizar_precio_articulo.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+						alert(response);
+                }
+        });
 
+	
+	}
+    </script>
+<!-- Bootstrap Form Helpers -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js"></script>
+	
 </body>
 
 </html>

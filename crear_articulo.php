@@ -1,4 +1,5 @@
 <?php
+
 include('libreria/motor.php');
 require_once("clases/sesion.class.php");
 //$login=new Login();
@@ -9,10 +10,9 @@ require_once("clases/sesion.class.php");
    }  else  {
 
    
-	$cit=new cita();
-	$art=new articulo();
-	$materiales=new materia();
-	$emp=new empleado();
+   $cit=new cita();
+$art=new articulo();
+$materiales=new materia();
 	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
@@ -46,9 +46,9 @@ function fechainteligente($timestamp)
 	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
 	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
 	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' dÃ­a(s)');
 	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' aÃ±o(s)');
 }
 
 
@@ -58,7 +58,58 @@ function ConSoSinS($val, $sentence)
 	else return $val.str_replace('(s)', '', $sentence);
 }
 
+
+	$art_p=new articulo(); //Objeto para guardar los precios del articulo
+	$emp=new empleado();
+  if(isset($_POST['boton'])){
+    //Recopilacion de Datos
+    $descripcion = $_POST['descripcion'];
+    $estado = $_POST['estado'];
+    $cantidad = $_POST['cantidad'];
+    $disponible = $_POST['disponible'];
+    $categoria = $_POST['categoria'];
+    $precio = $_POST['precio'];
+    $fechad = $_POST['fecha_desde'];
+    $fechah = $_POST['fecha_hasta'];
+
+
+    //Ejecutar Metodos
+    //Trae el ultimo digito y le suma uno para agregar uno nuevo. Evitar Autonumerico
+    $id= $art->secqnos("articulo_ter");
+    //Asignacion de datos
+    $art->id_articulo=$id;
+    $art->descripcion=$descripcion;
+    $art->estado=$estado;
+    $art->cant_per_unit=$cantidad;
+    $art->disponible_web=$disponible;
+    $art->id_categoria=$categoria;
+    $art->min_stock=0;
+    $art->fecha_creacion=date("Y-m-d H:i:s");
+
+    $id_p=$art_p->secqnos("articulo_pre");
+    $art_p->id_art_precio=$id_p;
+    $art_p->precio=$precio;
+    $art_p->fecha_desde=$fechad;
+    $art_p->fecha_hasta=$fechah;
+    $art_p->id_articulo=$id;
+    //Metodo para agregar a la tabla de articulos
+    $re_articulo=$art->agregar();
+    $re_precio=$art_p->agregar_precio();
+
+    //Si el resultado es mayor a 0 o es TRUE
+    if ($re_articulo >0 && $re_precio>0){
+                //Se tiene que actualizar la tabla de seqnos
+                  $art->Upsecqnos("articulo_ter");
+                  $art_p->Upsecqnos("articulo_pre");
+				  $result = '<div class="result_ok">Registro Ingresado Correctamente <img src="http://web.tursos.com/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley"> </div>';
+				   header("Location: ver_articulo.php?id_articulo='".$id."'");
+                }else{
+                     $result = '<div class="result_fail">Hubo un error Ingresar el Registro <img src="http://web.tursos.com/wp-includes/images/smilies/icon_sad.gif" alt=":(" class="wp-smiley"> </div>';
+                     }
+
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +121,7 @@ function ConSoSinS($val, $sentence)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>Sistema de Inventario</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -78,11 +129,14 @@ function ConSoSinS($val, $sentence)
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -100,8 +154,8 @@ function ConSoSinS($val, $sentence)
 
     <div id="wrapper">
 
-         <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -446,56 +500,109 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+		
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                <div class="col-lg-10">
+                    <h1 class="page-header">Articulos</h1>
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- /.col-lg-10 -->
             </div>
-            <!-- /.row -->
-			<div class="row">
-				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
+			<div class="col-lg-10">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						Creacion de un Articulo
+					</div>
+					<div class="panel-body">
+						 <form role="form" action="" method="POST">
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label>Descripcion</label>
+										<input class="form-control" name="descripcion">
+										<!--<p class="help-block">Escriba la Descripcion del Articulo</p>-->
+									</div>
+									<div class="form-group">
+										<label>Estado</label>
+										<select class="form-control" name="estado">
+											<option>Seleccionar Estado</option>
+											<option value="A">HABILITADO</option>
+											<option value="I">DESHABILITADO</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Cantidad Por Unidad</label>
+										<input class="form-control" name="cantidad">
+										<!-- <p class="help-block">Escriba la Cantidad por Unidad.</p>-->
+									</div>
+									<div class="form-group">
+										<label>Subir Imagen</label>
+										<input type="file" name="imagen">
+									</div>
+									<div class="form-group">
+										<label>Disponible Web</label>
+										<select class="form-control" name="disponible">
+											<option value="SI">SI</option>
+											<option value="NO">NO</option>
+										</select>
+									</div>
+								</div>
+								
+									<div class="col-xs-5">
+										<div class="form-group">
+											<label>Categoria</label>
+											<select class="form-control" name="categoria">
+															<?php
+															$artic= $art->mostrar_categoria();
+															foreach($artic as $ci){
+																echo "
+																	<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";	
+																}
+															?>
+											</select>
+										</div>
+										<label>Precio</label>
+										<div class="form-group input-group">
+											<span class="input-group-addon">$</span>
+											<input type="text" class="form-control" name="precio">
+										</div>
+										<div class="form-group">
+											<label>Fecha Desde</label>
+												<div class='input-group date' id='datetimepicker5'>
+													<input type='text' class="form-control" data-date-format="YYYY/MM/DD" name="fecha_desde"/>
+													<span class="input-group-addon">
+													<span class="glyphicon glyphicon-calendar"></span>
+													</span>
+												</div>
+										</div>
+										<div class="form-group">
+											<label>Fecha Hasta</label>
+											<div class='input-group date' id='datetimepicker5'>
+												<input type='text' class="form-control" data-date-format="YYYY/MM/DD" name="fecha_hasta"/>
+												<span class="input-group-addon">
+												<span class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+									</div>														
+							</div>
+							<div class="row">
+								<div class="col-xs-5">
+									<button type="submit" class="btn btn-primary" name="boton">Crear Articulo</button>
+									<button type="reset" class="btn btn-warning" name="clean">Limpiar</button>
+									<?php if(isset($result)) { echo $result; } ?>
+								</div>
+								
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra los Articulos
-                        </div>
-                        <!-- /.panel-heading -->
-						
-                        <div class="panel-body">
-                            <div id="myDiv"></div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-
-		</div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -504,22 +611,8 @@ function ConSoSinS($val, $sentence)
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-	
-	<!-- Ajax Customizado"-->
-	<script src="js/ajax.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
-    </script>
 
 </body>
 

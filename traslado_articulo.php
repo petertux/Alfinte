@@ -21,7 +21,7 @@ if(isset($json) && $json != "" && $json == "1"){
 
 } else {
 
-	$res= $articulos->mostrar_articulo2($q);
+	$res= $articulos->mostrar_articulo($q);
 	//$res=mysql_query("select * from pais where cod_cont=".$q."",$con);
 
 	?>

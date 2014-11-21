@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript">
+</script>
+    <script type="text/javascript">
+//<![CDATA[
+    $(document).ready(function(){ /** * Funcion para añadir una nueva columna en la tabla */ 
+		$("#add").click(function(){ // Obtenemos el numero de filas (td) que tiene la primera columna // (tr) del id "tabla"
+			var tds=$("#tabla tr:first td").length; // Obtenemos el total de columnas (tr) del id "tabla"
+			var trs=$("#tabla tr").length;
+			var nuevaFila="<tr>"; for(var i=0;i<tds;i++){ // añadimos las columnas
+					nuevaFila+="<td>columna "+(i+1)+" Añadida con jquery<\/td>"; 
+			} 
+			nuevaFila+="<td>"+(trs+1)+" columnas";
+			nuevaFila+="<\/tr>"; $("#tabla").append(nuevaFila);
+		});
+
+		$("#del").click(function(){
+							var trs=$("#tabla tr").length; if(trs>1) {
+								$("#tabla tr:last").remove(); 
+							} 
+		
+		}); 
+	}); 
+    //]]>
+    </script>
+    <style type="text/css">
+
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div id="add">
+      pulsa aquí para añadir una nueva fila desde jquery
+    </div>
+    <div id="del">
+      pulsa aquí para eliminar la ultima fila desde jquery
+    </div>
+    <p></p>
+    <table id="tabla" border="1">
+      <tr>
+        <td>
+          primera columma
+        </td>
+        <td>
+          segundo columna
+        </td><!-- podemos añadir tantas columnas como deseemos --><!--<td>tercera columna</td>-->
+      </tr>
+    </table>
+    <p></p>
+  </body>
+</html>
+
+
+
+jQuery(document).ready(function($) {
+
+							$("#enableBtn").click(function() {
+								$("#clearBtn").removeAttr("disabled");
+								$("#buscar").removeAttr("disabled");
+								$("#birthday").removeAttr("disabled");
+								$("#tipo").removeAttr("disabled");
+								$("#bodegaO").removeAttr("disabled");
+								$("#bodegaD").removeAttr("disabled");
+								$("#direccion").removeAttr("disabled");
+								$("#coment").removeAttr("disabled");
+							}); // click()
+						}); // ready()
+						

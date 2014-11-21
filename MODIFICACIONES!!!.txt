@@ -1,0 +1,145 @@
+1. se creo la clase inventario
+2. se modifico la clase motor linea 11
+3. se creo la pagina insertar_encabezado_traslado.php
+4. se creo la pagina insertar_detalle_traslado.php
+5. se creo la pagina traslado.php
+6. se modifico la base de datos (tabla seqnos)
+7. se modifico la tabla traslado inv articulo
+
+
+
+*********************************************
+1. Se modifico la pagina ver_categoria.php
+2. se creo la pagina  ver_articulo_categoria.php
+3. se modifico el JS AJAX.js en la carpeta js
+4. se modifico la clase de articulo.class
+5. Se modifico el metodo agregar_precio linea 230
+6. Se modifico la linea 171 metodo mostrar_imagen
+7. Se modifico la linea 137 metodo mostrar articulo media
+8  se modifico la base de datos la tabla articulo_pre
+9. se modifico el metodo imagen dato linea 248
+10.se modifico la linea 230 metodo agregar precio
+11.se modifico el metodo mostrar_imagen linea 173
+12.se modifico el metodo mostrar_articulo_media se le agrego el estado y ordenado
+13. se modifico la parte del menu del archivo
+
+************************************************
+
+1. Se modifico la pagina ver_mod_articulo.php
+2. en la cual por ajax enviara a actualizar el precio de los articulo
+3. se creo la pagina actualizar_precio_articulo.php
+4. se creo la tabla log_usuario_mov
+5. se creo el metodo para insertar los movimientos del usuario
+
+*******************************************************
+1. Se modifico la pagina actualizar_precio_articulo.php
+2. se reciben los parametros de la pagina ver_mod_articulo.php
+3. Se guardan en el metodo agregar_precio de la clase articulo
+4. Se actualiza la tabla de precios para poder desactivar el estado de la fecha anterior linea 38
+
+
+
+**********************************************************
+1. Se agrego a la carpeta CSS/ el archivo :bootstrap-formhelpers.css
+2. Se agrego a la carpeta CSS/ el archivo :bootstrap-formhelpers.min.css
+3. Se agrego a la carpeta JS/ el archivo:  bootstrap-formhelpers.js
+4. Se agrego a la carpeta JS/ el archivo:  bootstrap-formhelpers.min.js
+
+
+********************************************************************
+1. Se crea el archivo crear_articulo.php
+2. se modifico crear articulo la parte del menu 
+
+
+********************************************************************
+1. se modifico la pagina ver_materia.php
+
+
+
+*******************************************************************
+1. Se modifico el archivo de cotizacion.php
+
+
+*******************************************************************
+1. Se modifico el archivo de ver_articulo.php
+
+
+**********************************************************************
+1. Se creo la pagina ver_estado_articulo.php
+2. se creo la pagina ver_estado.php
+3. se modifico el archivo js/ajax.php agregandole la parte de ver el estado de articulo
+4. se agrego loadest 113 linea
+
+
+****************************
+1. se creo la pagina para crear la orden de trabajo
+2. se creara el metodo mostrar_cot_aprobada($usuario)
+
+
+
+
+********************************************************************
+18/11/2014
+1. Se modifico la clase de articulo.class.php
+2. Linea 296 agregandole al metodo y corrigiendole:
+public function mostrar3($id){
+        $query="SELECT `articulo_ter`.`id_articulo` ,
+						`articulo_ter`.`descripcion` ,
+						`articulo_pre`.`precio` `precio`
+				FROM `articulo_ter` , `articulo_cat` , `articulo_pre`
+				WHERE `articulo_ter`.`id_categoria` = `articulo_cat`.`id_categoria`
+				AND `articulo_ter`.`id_articulo` = `articulo_pre`.`id_articulo`
+				AND `articulo_pre`.`estado` = 'A'
+				AND `articulo_ter`.`id_articulo` =" . $id;	
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+3. Se modifico la clase articulo.class.php
+public function mostrar_articulo2($id){
+        $query="SELECT `articulo_ter`.`id_articulo` ,
+						`articulo_ter`.`descripcion`
+						FROM `articulo_ter` , `articulo_cat` , `articulo_pre`
+						WHERE `articulo_ter`.`id_categoria` = `articulo_cat`.`id_categoria`
+						AND `articulo_ter`.`id_articulo` = `articulo_pre`.`id_articulo`
+						AND `articulo_pre`.`estado` = 'A'
+						AND `articulo_ter`.`estado` = 'A'
+						AND `articulo_ter`.`id_categoria`=".$id." limit 10";
+						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+4. Se modifico la pagina cotizacion_articulo.php linea 24
+	$res= $articulos->mostrar_articulo2($q);
+
+
+5. Creo el archivo ajuste_articulo.php
+
+
+******************************************************************************
+19/11/2014
+1. Verificar el Menu
+	Index
+	Panel de Control
+	Ventas
+	Taller
+	Inventario
+		Consultar Articulos -->Listo
+		Consultar Materiales -- Trabajar
+		Ajustes
+			Ajustes de Materiales --Trabajar
+			Ajustes de Articulos --Trabajar
+		Traslados
+			Traslado de Materiales --Trabajar 
+			Traslado de Articulos --Trabajar
+		Solicitar Materiales
+			Verificar Existencia -- Pensarlo como hacerlo --
+			Solicitar Material -- Esto no me toca a mi
+	Administrar.

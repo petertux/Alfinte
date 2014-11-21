@@ -14,6 +14,8 @@
     public $id_estado;
     public $comentario;
 	public $id_empleado;
+	public $nit;
+	public $id_cliente;
 
 
      public function agregar(){
@@ -37,6 +39,7 @@
 	
 	public function actualizar_cita($cod_emp,$id_cita){
     $query="UPDATE  cita  SET id_empleado=".$cod_emp.",id_estado='2' where id_cita=".$id_cita."";
+echo $query;
     $result=mysql_query($query) or die ("Problema con query de Insertar");
      return $result;
     }
@@ -114,13 +117,14 @@
 		
 		
 		public function mostrar_byid($id){
-		
+		//se agrego el campo comentario
         $query="SELECT `id_cita`,
 						`nombre`,
 						`apellido`,
 						`telefono`,
 						`direccion`,
-						`email`
+						`email`,
+						`comentario`
 						FROM `cita`
 						where `id_cita`='".$id."'";
         $rs=mysql_query($query);
@@ -223,7 +227,7 @@
 		}
 		//Cantidad de registros asignados por usuario(taller)
 		public function cantidad_or_user($user){
-		$query="SELECT count(id_orden) as numeroOr from orden_trabajo,usuario
+		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO,usuario
 				where orden_trabajo.id_empleado= usuario.id_empleado
 				and usuario.usuario='".$user."'";
 		$rs=mysql_query($query);
@@ -235,7 +239,7 @@
 		}
 		
 		public function cantidad_or(){
-		$query="SELECT count(id_orden) as numeroOr from orden_trabajo where id_trabajo_estado= 1";
+		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_trabajo_estado= 1";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -246,7 +250,7 @@
 		
 		//Se necesitaba saber las cantidades de ordenes de trabajo hay
 		public function cantidad_ins(){
-		$query="SELECT count(id_orden) as numeroIns from orden_trabajo where id_trabajo_estado= 3";
+		$query="SELECT count(id_orden) as numeroIns from ORDEN_TRABAJO where id_trabajo_estado= 3";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -298,36 +302,8 @@
 		}
 			return $array;
 		}
-                public function mostrar_cita_asgi_vend($user){
-        $query="SELECT cita.`id_cita`, `fecha_creacion`, concat(`nombre`,' ',`apellido`) as nombre, `telefono`, `direccion`, `email`, canal.`descripcion`, cita_estado.`valor`, `comentario` FROM `cita` INNER JOIN `canal` ON `cita`.id_canal = `canal`.id_canal INNER JOIN `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest INNER JOIN usuario ON cita.`id_empleado`=usuario.`id_empleado` where (SELECT cargo.`id_cargo` FROM `cargo` WHERE cargo.`id_cargo`=3) AND usuario.`usuario`='".$user."'";
-        $rs=mysql_query($query);
-        $array=array();
-        while($fila=mysql_fetch_assoc($rs)){
-          $array[]=$fila;
-        }
-             return $array;
-        }
 		
-		        public function mostrar_numero_cita_penditente(){
-        $query="SELECT id_cita FROM cita WHERE id_estado=1";
-        $rs=mysql_query($query);
-        $array=array();
-        while($fila=mysql_fetch_assoc($rs)){
-          $array[]=$fila;
-        }
-             return $array;
-        }
-		public function mostrar_numero_cita_penditente2(){
-        $query="SELECT id_cita, CONCAT(`id_cita`,' ',`nombre`,' ',`apellido`) as citNombre FROM cita WHERE id_estado=1 ";
-        $rs=mysql_query($query);
-        $array=array();
-        while($fila=mysql_fetch_assoc($rs)){
-          $array[]=$fila;
-        }
-             return $array;
-        }
-		
-				/*************************************************************************/
+		/*************************************************************************/
 		public function agregar_cliente(){
 		$query="INSERT INTO cliente VALUES ('{$this->id_cliente}',
                                         '{$this->nombre}',
@@ -370,6 +346,30 @@
 			return $result;
 		}
 	/*************************************************************************/
+	
+	
+	/**************************************************************************/
 		
+		public function mostrar_cot_aprobada($usuario){
+		$query="SELECT cita.`id_cita`,
+						`fecha_creacion`,
+						concat(nombre,' ',apellido) as nombre,
+						`fecha_programada`,
+						`estado`
+						FROM `cita`
+						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
+						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest
+						INNER JOIN	`usuario` ON  `cita`.id_empleado=`usuario`.id_empleado
+						and `usuario`.usuario='".$usuario."'
+						ORDER BY fecha_creacion DESC";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+		}
+	
+	/**************************************************************************/
 }
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 include('libreria/motor.php');
 require_once("clases/sesion.class.php");
 //$login=new Login();
@@ -9,10 +10,10 @@ require_once("clases/sesion.class.php");
    }  else  {
 
    
-	$cit=new cita();
-	$art=new articulo();
-	$materiales=new materia();
-	$emp=new empleado();
+   $cit=new cita();
+$art=new articulo();
+$materiales=new materia();
+$emp = new empleado();
 	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
@@ -46,9 +47,9 @@ function fechainteligente($timestamp)
 	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
 	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
 	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' dÃ­a(s)');
 	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' aÃ±o(s)');
 }
 
 
@@ -59,6 +60,7 @@ function ConSoSinS($val, $sentence)
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +72,7 @@ function ConSoSinS($val, $sentence)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>Sistema de Inventario</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -78,11 +80,14 @@ function ConSoSinS($val, $sentence)
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -100,8 +105,8 @@ function ConSoSinS($val, $sentence)
 
     <div id="wrapper">
 
-         <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -446,42 +451,76 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+		
         <div id="page-wrapper">
-            <div class="row">
+			<div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                    <h2 class="page-header">Cotizaciones Aprobadas</h2>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
 			<div class="row">
-				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
-					</div>
-				</div>
-			</div>
-            <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-10">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Muestra los Articulos
+                            Muestra las Cotizaciones Aprobadas por Empleado
                         </div>
                         <!-- /.panel-heading -->
-						
                         <div class="panel-body">
-                            <div id="myDiv"></div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>No Cita</th>
+											<th>Nombre Completo</th>
+											<th>Fecha Creacion</th>
+                                            <th>Fecha Programada</th>
+											<th>Estado</th>
+											<th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<?php
+									$resp=$cit->mostrar_cot_aprobada($usuario); //mostrar cotizaciones aprobadas
+									foreach($resp as $re){
+									echo "
+										<tr>
+											<td>{$re['id_cita']}</td>
+											<td>{$re['nombre']}</td>
+											<td>{$re['fecha_creacion']}</td>
+											<td>{$re['fecha_programada']}</td>
+											<td>{$re['estado']}</td>
+											<td>";?>
+											<button class="btn btn-primary btn" data-toggle="modal" data-target="#myModal">Crear Orden</button>
+													<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+														<div class="modal-dialog">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																	<h4 class="modal-title" id="myModalLabel">Formulario</h4>
+																</div>
+																<div class="modal-body">
+																	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+																	<button type="button" class="btn btn-primary" id="btn-save">Save changes</button>
+																</div>
+															</div>
+															<!-- /.modal-content -->
+														</div>
+														<!-- /.modal-dialog -->
+													</div>											
+											<?php echo"</td>
+										</tr>";
+									};
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+						<div id="ajax-cont"></div>
+						
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -489,38 +528,35 @@ function ConSoSinS($val, $sentence)
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-
-		</div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
-
+	<script type="text/javascript">
+		$(function(){
+			$("#btn-show-modal").click(function(e){
+				e.preventDefault();
+				$("#dialog-example").modal('show');
+				});
+			$("#btn-save").click(function(e){
+					e.preventDefault();
+					alert("Saved");
+					$("#dialog-example").modal('hide');
+				});
+			});
+	</script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- DataTables JavaScript -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-	
-	<!-- Ajax Customizado"-->
-	<script src="js/ajax.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
-    </script>
-
 </body>
 
 </html>

@@ -478,12 +478,7 @@ function ConSoSinS($val, $sentence)
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-
-                                    </thead>
-                                    <tbody>
+                            
 										<div class="row">
 										<?php
 										$id_articulo=$_GET['id_articulo'];
@@ -521,10 +516,8 @@ function ConSoSinS($val, $sentence)
 										}
 										?>
 											</div>
-                                    </tbody>
-                                </table>
                             </div>
-                            <!-- /.table-responsive -->
+                           
 
                         </div>
                         <!-- /.panel-body -->

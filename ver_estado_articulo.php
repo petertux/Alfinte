@@ -1,4 +1,5 @@
 <?php
+
 include('libreria/motor.php');
 require_once("clases/sesion.class.php");
 //$login=new Login();
@@ -9,10 +10,9 @@ require_once("clases/sesion.class.php");
    }  else  {
 
    
-	$cit=new cita();
-	$art=new articulo();
-	$materiales=new materia();
-	$emp=new empleado();
+   $cit=new cita();
+$art=new articulo();
+$materiales=new materia();
 	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
@@ -46,9 +46,9 @@ function fechainteligente($timestamp)
 	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
 	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
 	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' dÃ­a(s)');
 	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' aÃ±o(s)');
 }
 
 
@@ -59,6 +59,7 @@ function ConSoSinS($val, $sentence)
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +71,7 @@ function ConSoSinS($val, $sentence)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>Sistema de Inventario</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -78,11 +79,14 @@ function ConSoSinS($val, $sentence)
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -100,8 +104,8 @@ function ConSoSinS($val, $sentence)
 
     <div id="wrapper">
 
-         <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -446,56 +450,192 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+		
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                    <h1 class="page-header">Panel de Control</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+									<?php
+										if ($cargo==1)
+											{
+											$rcate=$cit->cantidad_citas_user($usuario);
+											}
+											else if($cargo==2)
+											{
+												$rcate=$cit->cantidad_citas_user($usuario);
+											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_pendiente($usuario);
+											};
+											foreach($rcate as $ci){
+											$numero=$ci['numeroCita'];
+											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
+											};
+									?>
+                                    <div class="huge"><?php echo $numero; ?></div>
+                                    <div><?php echo $mensaje1;?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="ver_cita.php">
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Citas Pendientes</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+								<?php
+										if ($cargo==1)
+											{
+											$rcate=$cit->cantidad_cita_asignada();
+											}
+											else if($cargo==2)
+											{
+												$rcate=$cit->cantidad_cita_asignada();	
+											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_confirmada($usuario);
+											};
+										
+											foreach($rcate as $ci){
+											$numero=$ci['numeroAsi'];
+											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
+											};
+									?>
+                                    <div class="huge"><?php echo $numero; ?></div>
+                                    <div><?php echo $mensaje2;?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Asignaciones</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+								<?php	if ($cargo==1)
+											{
+											$rcate=$cit->cantidad_or();
+											}
+											else if($cargo==2)
+											{
+												$rcate=$cit->cantidad_or();	
+											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_confirmada($usuario);
+											};
+										
+										$rcate=$cit->cantidad_or_user($usuario);
+											foreach($rcate as $ci){
+											$numeroO=$ci['numeroOr'];
+											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
+											};
+									?>
+                                    <div class="huge"><?php echo $numeroO; ?></div>
+                                    <div><?php echo $mensaje3;?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+								<?php
+										$rcate=$cit->cantidad_ins();
+											foreach($rcate as $ci){
+											$numeroi=$ci['numeroIns'];
+											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
+											};
+									?>
+                                    <div class="huge"><?php echo $numeroi; ?></div>
+                                    <!--<div class="huge">13</div>-->
+                                    <div><?php echo $mensaje4;?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">Ver Detalles</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
 			<div class="row">
 				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
-					</div>
+							<div class="form-group">
+                                <label>Ingresar Codigo de Comprobante</label>
+								<input class="form-control" placeholder="Enter text" id="codigo">
+                            </div>
+				</div>
+				<div class="col-xs-4">
+							<div class="form-group">
+								<label>Buscar</label>
+                            </div>
+							<div class="form-group">
+								<input type="button"  id="boton" href="javascript:;" onclick="buscarTodo();" value="Buscar" class="btn btn-primary"/>
+							</div>
 				</div>
 			</div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra los Articulos
-                        </div>
-                        <!-- /.panel-heading -->
-						
-                        <div class="panel-body">
-                            <div id="myDiv"></div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-
-		</div>
+            <!-- /.row -->
+			<div class="row">
+			<!-- Aqui esta el DIV en el cual se va a cargar la pagina de cotizacion_articulo-->
+			<div id="myDiv"></div>
+			
+			</div>
+			
+        </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -505,22 +645,57 @@ function ConSoSinS($val, $sentence)
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- DataTables JavaScript -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+  
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-	
 	<!-- Ajax Customizado"-->
 	<script src="js/ajax.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
-    </script>
+	<script>
+			var $myDiv, $btnBoton;
+			function consultarEstado(valorselec){
+		
+		$.ajax({
+			type: "GET",
+			url: "ver_estado.php",
+			data: { 'q' : valorselec, 'json': "1" },
+			success: function(data){
+				//console.log(data);
+				agregarTabla(data);
+			},
+			dataType: "json"
+		});
 
+	}
+
+			 $(document).ready(function() {
+
+				$btnBoton = $("button#boton");
+				$codigo = $("input#myDiv");
+		
+		$btnBoton.click(function(){
+			//alert("esta es una alerta de prueba");
+			valorselec = $myDiv.find("#codigo").val();
+			if(valorselec == undefined) return false;
+			
+			consultarEstado(valorselec);
+			
+			//alert(valorselec);
+			return false;
+		});
+    });
+			
+			
+			
+			
+			function buscarTodo(){
+			codigo= $('#codigo').val();
+			loadest(codigo);
+	
+		};
+
+	</script>
+	
 </body>
 
 </html>

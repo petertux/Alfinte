@@ -1,4 +1,5 @@
 <?php
+
 include('libreria/motor.php');
 require_once("clases/sesion.class.php");
 //$login=new Login();
@@ -9,10 +10,9 @@ require_once("clases/sesion.class.php");
    }  else  {
 
    
-	$cit=new cita();
-	$art=new articulo();
-	$materiales=new materia();
-	$emp=new empleado();
+   $cit=new cita();
+$art=new articulo();
+$materiales=new materia();
 	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
@@ -46,9 +46,9 @@ function fechainteligente($timestamp)
 	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
 	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
 	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' dÃ­a(s)');
 	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' aÃ±o(s)');
 }
 
 
@@ -59,6 +59,7 @@ function ConSoSinS($val, $sentence)
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,19 +71,28 @@ function ConSoSinS($val, $sentence)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>Sistema de Inventario</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- DataTables CSS -->
+	
+	 <!-- DataTables CSS -->
     <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+	<!-- Edit Table CCSS -->
+	<link href="js/edit_table/editablegrid.css" rel="stylesheet">
+	
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -100,8 +110,8 @@ function ConSoSinS($val, $sentence)
 
     <div id="wrapper">
 
-         <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -446,56 +456,53 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+		
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                    <h1 class="page-header">Consultar Existencias</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-			<div class="row">
-				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
-					</div>
-				</div>
-			</div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra los Articulos
+            <div class="col-lg-12">
+                    <div class="panel panel-success">
+						<!--Encabezado-->
+							<div class="panel-heading">
+								Success Panel	
+							</div>
+						<!--Cuerpo-->
+							<div class="panel-body">
+								<div class="col-xs-3">
+									<div class="form-group">
+										<input class="form-control" placeholder="Buscar Articulo" id="articulo">
+									</div>
+								</div>
+								<div class="col-xs-3">
+									<div class="form-group">
+										<button id="btnagregar" type="submit"  class="btn btn-primary">Buscar</button>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<!-- aqui va la tabla creada con js -->
+									<div id="tablecontent"></div>
+								</div>
+							</div>
+						<!--Pie-->
+                        <div class="panel-footer">
+                            Panel Footer
                         </div>
-                        <!-- /.panel-heading -->
-						
-                        <div class="panel-body">
-                            <div id="myDiv"></div>
-                        </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+					
+             </div>
+		   
+               
 
-		</div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -504,8 +511,8 @@ function ConSoSinS($val, $sentence)
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
-
-    <!-- DataTables JavaScript -->
+	
+	<!-- DataTables JavaScript -->
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
@@ -514,14 +521,112 @@ function ConSoSinS($val, $sentence)
 	
 	<!-- Ajax Customizado"-->
 	<script src="js/ajax.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+	
+	<script src="js/edit_table/editablegrid.js"></script>
+	<script src="js/edit_table/editablegrid_charts.js"></script>
+	<script src="js/edit_table/editablegrid_renderers.js"></script>
+	<script src="js/edit_table/editablegrid_editors.js"></script>
+	<script src="js/edit_table/editablegrid_utils.js"></script>
+	<script src="js/edit_table/editablegrid_validators.js"></script>
+ 
+</body>
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
+	var $myDiv, $btnAgregar, iptArticulo;
+	var editableGrid; //variable con el editableGrid
+	
+	function agregarExistencia(valorselec){
+		
+		$.ajax({
+			type: "GET",
+			url: "ver_existencias_articulo.php",
+			data: { 'q' : valorselec, 'json': "1" },
+			success: function(data){
+				//console.log(data);
+				agregarTabla(data);
+			},
+			dataType: "json"
+		});
+
+	}
+
+	function agregarTabla(datonuevo){
+		var data = [];
+		for (n=0; n<datonuevo.data; n++){
+
+				datagrid = editableGrid.data;
+				for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+					fila =  datagrid[n];
+						jfila = { "id": fila.columns[0], "values": {
+								   "id_sucursal": fila.columns[0],
+									"descripcion": fila.columns[1],
+									"cantidad": fila.columns[2],
+									"articulo": fila.columns[3],
+									}
+								};
+						data.push(jfila);
+			}
+		}
+		//console.log(fila);
+		//console.log(data.length);
+		
+		nuevafila = { "id": datonuevo.id_sucursal, "values": {
+				"id_sucursal": datonuevo.id_sucursal,
+				"descripcion": datonuevo.descripcion,
+				"cantidad": datonuevo.cantidad,
+				"articulo": datonuevo.articulo,
+			}
+		};
+		
+		data.push(nuevafila);
+		
+		//console.log(data);
+		//editableGrid.data = data;
+		editableGrid.load({"metadata": getMetaTable(), "data": data});
+		editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+	}
+	
+	
+	
+	
+	function getMetaTable(){
+		var metadata = [];
+        metadata.push({name: "id_sucursal", label: "No. Sucursal", datatype: "integer", editable: false});
+        metadata.push({name: "descripcion", label: "Sucursal", datatype: "string", editable: false});
+        metadata.push({name: "cantidad", label: "Cantidad", datatype: "integer", editable: false});
+		metadata.push({name: "articulo", label: "Articulo", datatype: "string", editable: false});
+		return metadata;
+	}
+	
+	function crearTabla() {
+        editableGrid = new EditableGrid("Tabla");
+        editableGrid.load({"metadata": getMetaTable(), "data": []});
+        editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+    }
+	
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
+		
+		$btnAgregar = $("button#btnagregar");
+		$iptArticulo = $("input#articulo");
+		
+		//$myDiv = $("div#myDiv");
+		valorselec = $iptArticulo.val();
+		crearTabla();
+		
+		$btnAgregar.click(function(){
+			valorselec = $iptArticulo.val();
+			//alert("esta es una alerta de prueba");
+			//valorselec = $myDiv.find("select option:selected").val();
+			if(valorselec == undefined) return false;
+			
+			agregarExistencia(valorselec);
+			
+			//alert(valorselec);
+			return false;
+		});
     });
     </script>
-
-</body>
 
 </html>
 <?php

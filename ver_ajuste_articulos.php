@@ -1,4 +1,5 @@
 <?php
+
 include('libreria/motor.php');
 require_once("clases/sesion.class.php");
 //$login=new Login();
@@ -9,10 +10,9 @@ require_once("clases/sesion.class.php");
    }  else  {
 
    
-	$cit=new cita();
-	$art=new articulo();
-	$materiales=new materia();
-	$emp=new empleado();
+   $cit=new cita();
+$art=new articulo();
+$materiales=new materia();
 	$cargo=$cit->sabercargo($usuario);
 	if ($cargo==1)
 	{
@@ -46,9 +46,9 @@ function fechainteligente($timestamp)
 	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
 	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
 	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' d�a(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
 	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' a�o(s)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
 }
 
 
@@ -59,6 +59,7 @@ function ConSoSinS($val, $sentence)
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,7 +71,7 @@ function ConSoSinS($val, $sentence)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>Sistema de Inventario</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -78,15 +79,26 @@ function ConSoSinS($val, $sentence)
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- DataTables CSS -->
-    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+	
+	
+	<!-- Custom -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	
+	
+	
+	
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -100,8 +112,8 @@ function ConSoSinS($val, $sentence)
 
     <div id="wrapper">
 
-         <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -369,6 +381,22 @@ function ConSoSinS($val, $sentence)
                                 <li>
                                     <a href="ver_categoria.php">Consultar Articulos</a>
                                 </li>
+								<li>
+                            <a href="ver_categoria.php">Categoria de Articulos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+							<?php
+									$rcate=$materiales->mostrar_categoria();
+									foreach($rcate as $ci){
+									echo "
+										<li>
+											<a href='".$ci['url']."?id_categoria=".$ci['id_categoria']."'>".$ci['descripcion']."</a>
+
+										</li>";
+									}
+							?>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                                 <li>
                                     <a href="ver_materia.php">Consultar Materiales</a>
                                 </li>
@@ -376,10 +404,10 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Ajustes <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_ajuste_materiales.php">Ajustes de Materiales</a>
+                                            <a href="ver_categoria.php">Ajustes de Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="ver_ajuste_articulos.php">Ajustes de Articulos</a>
+                                            <a href="ver_categoria.php">Ajustes de Articulos</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -388,10 +416,10 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Traslados <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_traslado_materiales.php">Traslados Materiales</a>
+                                            <a href="ver_categoria.php">Traslados Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="ver_traslado_articulos.php">Traslados Articulos</a>
+                                            <a href="ver_categoria.php">Traslados Articulos</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -400,13 +428,13 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Verificar Existencia</a>
+                                            <a href="ver_categoria.php">Verificar Existencia</a>
                                         </li>
                                         <li>
-                                            <a href="#">Ubicaciones</a>
+                                            <a href="ver_categoria.php">Ubicaciones</a>
                                         </li>
                                         <li>
-                                            <a href="#">Sucursales</a>
+                                            <a href="ver_categoria.php">Sucursales</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -418,19 +446,19 @@ function ConSoSinS($val, $sentence)
                             <a href="index.php"><i class="fa fa-files-o fa-fw"></i> Administrar<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Mantenimiento Sucursales</a>
+                                    <a href="index.php">Mantenimiento Sucursales</a>
                                 </li>
                                 <li>
-                                    <a href="#">Mantenimiento Bodegas </a>
+                                    <a href="index.php">Mantenimiento Bodegas </a>
                                 </li>
 								<li>
-                                    <a href="#">Mantemiento Paises <span class="fa arrow"></span></a>
+                                    <a href="index.php">Mantemiento Paises <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Mantenimiento Ciudades</a>
+                                            <a href="ver_categoria.php">Mantenimiento Ciudades</a>
                                         </li>
                                         <li>
-                                            <a href="#">Mantenimiento Provincias</a>
+                                            <a href="ver_categoria.php">Mantenimiento Provincias</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -446,81 +474,441 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+		
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                    <h2 class="page-header">Traslado entre Bodegas </h2>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-			<div class="row">
-				<div class="col-xs-3">
-					<div class="form-group">
-						<label>Seleccionar Categoria</label>
-							<select class="form-control" onchange="loadcat(this.value)">
-							<option value=" " selected> Seleccionar</option>
-						<?php
-								$rcate=$materiales->mostrar_categoria();
-								foreach($rcate as $ci){
-								echo "
-								<option value='".$ci['id_categoria']."'>".$ci['descripcion']."</option>";
-								}
-						?>
-						</select>
-					</div>
-				</div>
-			</div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra los Articulos
-                        </div>
-                        <!-- /.panel-heading -->
-						
-                        <div class="panel-body">
-                            <div id="myDiv"></div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
+                <div class="row ">
+                    <div class="col-md-4"></div>
+                     <div class="col-md-4 col-md-offset-4"><button type="button" class="btn btn-primary" id="enableBtn">Nuevo Movimiento</button></div>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
 
-		</div>
+            <!-- /.row -->
+            <div class="row">
+               <form role="form"  >
+
+					<div class="col-lg-8">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								Informacion del Traslado
+							</div>
+
+							<div class="panel-body">
+								<div class="col-xs-6">
+										<div class="form-group">
+											<label>Fecha</label>
+											 <input type="text" id="input_campo_date" class="form-control"/>
+										</div>
+										<div class="form-group">
+											<label>Tipo Movimiento</label>
+												<select class="form-control" id="tipo">
+														<option value="">Seleccione</option>
+													<?php  $moV=$materiales->mostrar_movimiento();
+															foreach($moV as $cat){
+															echo "
+																	<option value='".$cat['id_movimiento']."'>".$cat['descripcion']."</option>";
+																	};
+													?>
+												</select>
+										</div>
+
+								</div>
+
+
+								<div class="col-xs-6">
+										<div class="form-group">
+											<label>Bodega Origen</label>
+												<select class="form-control" id="bodegaO">
+														<option value="">Seleccione</option>
+													<?php  $boO=$materiales->mostrar_bodega();
+															foreach($boO as $cat){
+															echo "
+																	<option value='".$cat['id_bodega']."'>".$cat['descripcion']."</option>";
+																	};
+													?>
+												</select>
+										</div>
+										<div class="form-group">
+											<label>Bodega Destino</label>
+											<select class="form-control" id="bodegaD">
+														<option value="">Seleccione</option>
+													<?php  $bodD=$materiales->mostrar_bodega();
+															foreach($bodD as $cat){
+															echo "
+																	<option value='".$cat['id_bodega']."'>".$cat['descripcion']."</option>";
+																	};
+													?>
+												</select>
+
+										</div>
+								</div>
+								<div class="col-lg-8">
+										<div class="form-group">
+                                            <label>Comentarios</label>
+                                            <textarea class="form-control" rows="2" id="coment"></textarea>
+                                        </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-10">
+						<div class="panel panel-green">
+								<div class="panel-heading">
+									Traslado
+								</div>
+								<div class="panel-body">
+									<div class="col-xs-4">
+										<div class="form-group">
+                                            <label>Categoria</label>
+											<select class="form-control" onchange="load(this.value)">
+												<option value="">Seleccione</option>
+											<?php  $categoria=$art->mostrar_categoria();
+													foreach($categoria as $cat){
+													echo "
+															<option value='".$cat['id_categoria']."'>".$cat['descripcion']."</option>";
+															};
+											?>
+                                            </select>
+                                        </div>
+									</div>
+
+									<div class="col-xs-4">
+										<div class="form-group">
+											 <input class="form-control" placeholder="Enter text" type="text" id="articulo_nombre" onkeyup="loadXMLDoc()" >
+										</div>
+										<!-- Aqui esta el DIV en el cual se va a cargar la pagina de cotizacion_articulo-->
+										<div id="myDiv"></div>
+											<p></p>
+											<button  id="btnagregar" type="submit" class="btn btn-primary">Agregar </button>
+                                     </div>
+									
+									<div class="col-lg-12">
+										<div class="panel-body">
+											<!-- aqui va la tabla creada con js -->
+											<div id="tablecontent"></div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+									<input type="button" href="javascript:;" onclick="guardarTodo();" value="Guardar" class="btn btn-primary"/>
+									<br>
+									<span id="resultado"></span>
+									</div>
+										
+								</div>
+								
+								<div class="panel-footer">
+									Panel Footer
+								</div>
+						</div>
+						<!-- /.col-lg-4 -->
+						
+					</div>
+					
+               </form>
+              
+               
+             </div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
+		<!-- Ajax Customizado"-->
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+			$("#buscar").attr("disabled", "disabled");
+			$("#input_campo_date").attr("disabled", "disabled");
+			$("#tipo").attr("disabled", "disabled");
+			$("#bodegaO").attr("disabled", "disabled");
+			$("#bodegaD").attr("disabled", "disabled");
+			$("#direccion").attr("disabled", "disabled");
+			$("#coment").attr("disabled", "disabled");
 
+	$("#enableBtn").click(function() {
+						$("#clearBtn").removeAttr("disabled");
+						$("#buscar").removeAttr("disabled");
+						$("#input_campo_date").removeAttr("disabled");
+						$("#tipo").removeAttr("disabled");
+						$("#bodegaO").removeAttr("disabled");
+						$("#bodegaD").removeAttr("disabled");
+						$("#direccion").removeAttr("disabled");
+						$("#coment").removeAttr("disabled");
+			});
+	$(function() {
+			
+			//Array para dar formato en español
+			$.datepicker.regional['es'] =
+			{
+			closeText: 'Cerrar',
+			prevText: 'Previo',
+			nextText: 'Próximo',
+			
+			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+			'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+			monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+			'Jul','Ago','Sep','Oct','Nov','Dic'],
+			monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
+			dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+			dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
+			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+			dateFormat: 'dd/mm/yy', firstDay: 0,
+			initStatus: 'Selecciona la fecha', isRTL: false};
+			$.datepicker.setDefaults($.datepicker.regional['es']);
+			
+			//miDate: fecha de comienzo D=días | M=mes | Y=año
+			//maxDate: fecha tope D=días | M=mes | Y=año
+			$( "#datepicker" ).datepicker({ minDate: "-1D", maxDate: "+1M +10D" });
+			});
+			
+			
+			
+		
+		}); // ready()	
+		</script>
+		
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- DataTables JavaScript -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 	
+	<!-- DataTables JavaScript -->
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+	
 	<!-- Ajax Customizado"-->
 	<script src="js/ajax.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
+	<script src="js/edit_table/editablegrid.js"></script>
+	<script src="js/edit_table/editablegrid_charts.js"></script>
+	<script src="js/edit_table/editablegrid_renderers.js"></script>
+	<script src="js/edit_table/editablegrid_editors.js"></script>
+	<script src="js/edit_table/editablegrid_utils.js"></script>
+	<script src="js/edit_table/editablegrid_validators.js"></script>
+	<script>
+		var $myDiv, $btnAgregar;
+	var editableGrid; //variable con el editableGrid
+	
+	function agregarCotizacion(valorselec){
+		
+		$.ajax({
+			type: "GET",
+			url: "ajuste_articulo.php",
+			data: { 'q' : valorselec, 'json': "1" },
+			success: function(data){
+				//console.log(data);
+				agregarTabla(data);
+			},
+			dataType: "json"
+		});
+
+	}
+
+	function agregarTabla(datonuevo){
+		var data = [];
+		
+		datagrid = editableGrid.data;
+		for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+			fila =  datagrid[i];
+			jfila = { "id": fila.columns[0], "values": {
+				"id_articulo": fila.columns[0],
+				"descripcion": fila.columns[1],
+				"cantidad": fila.columns[2],
+				"ancho": fila.columns[3],
+				"largo": fila.columns[4],
+				"alto": fila.columns[5],
+				"precio": fila.columns[6]
+				}
+			};
+			data.push(jfila);
+		}
+		
+		//console.log(fila);
+		//console.log(data.length);
+		
+		nuevafila = { "id": datonuevo.id_articulo, "values": {
+				"id_articulo": datonuevo.id_articulo,
+				"descripcion": datonuevo.descripcion,
+				"cantidad": 1,
+				"ancho": 0,				
+				"largo": 0,
+				"alto": 0,
+				"precio": datonuevo.precio
+			}
+		};
+		
+		data.push(nuevafila);
+		
+		//console.log(data);
+		//editableGrid.data = data;
+		editableGrid.load({"metadata": getMetaTable(), "data": data});
+		editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+	}
+	
+	function guardarTodo(){
+	var data = [];
+		
+		datagrid = editableGrid.data;
+		for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+			fila =  datagrid[i];
+			/*jfila = { "id": fila.columns[0], "values": {
+				"id_articulo": fila.columns[0],
+				"cantidad": fila.columns[1],
+				"ancho": fila.columns[2],
+				"largo": fila.columns[3],
+				"volumen": fila.columns[4],
+				"area": fila.columns[5],
+				"precio": fila.columns[6],
+				"total": fila.columns[7]
+				}*/
+				//alert(fila.columns[0]);
+				guardarDetalle(fila.columns[0],fila.columns[2],fila.columns[3],fila.columns[4],fila.columns[5],fila.columns[6]);
+			};
+			//data.push(jfila);
+			
+		guardarEncabezado();
+	
+	}
+	
+	function guardarEncabezado(){
+	//llamada a un ajax que son los valores fijos 
+	/*nombre= $('#nombre').val();
+	telefono=$('#telefono').val();
+	apellido=$('#apellido').val();
+	direccion=$('#direccion').val();
+	coment=$('#coment').val();
+	diaval=$('#diaval').val();
+	timeen=$('#timeen').val();
+	comment2=$('#comment2').val();
+	id_cita=$('#id_cita').val();
+	porcentaje_an=$('#porcentaje_an').val();
+	porcentaje_des=$('#porcentaje_des').val();*/
+	//alert(nombre);
+		
+		var parametros = {
+               /* "nombre" :   nombre,
+                "apellido" : apellido,
+				"telefono" : telefono,
+				"direccion": direccion,
+				"coment":   coment,
+				"diaval":	diaval,
+				"timeen":	timeen,
+				"comment2": comment2,
+				"id_cita": id_cita,
+				"porcentaje_an": porcentaje_an,
+				"porcentaje_des": porcentaje_des*/
+				
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'insertar_encabezado.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+						alert("Ingresado Correctamente");
+                },
+				error: function(response){
+					alert("error");
+				}
+        });
+	
+	}
+	
+	function guardarDetalle(id_articulo,cantidad,ancho,largo,alto,precio){
+	//alert(id_articulo,cantidad,ancho,largo,volumen,area,precio,total);
+	var parametros = {
+                "id_articulo" : id_articulo,
+                "cantidad" : cantidad,
+				"ancho" : ancho,
+				"largo" : largo,
+				"alto"	: alto,
+				"precio" : precio
+			
+				
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'insertar_detalle_traslado.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+                }
+        });
+
+	
+	}
+	
+	
+	function getMetaTable(){
+		var metadata = [];
+        metadata.push({name: "id_articulo", label: "Cod. Articulo", datatype: "integer", editable: false});
+        metadata.push({name: "descripcion", label: "Articulos", datatype: "string", editable: false});
+        metadata.push({name: "cantidad", label: "Cantidad", datatype: "integer", editable: true});
+		metadata.push({name: "ancho", label: "Ancho", datatype: "double", editable: true});
+		metadata.push({name: "largo", label: "Largo", datatype: "double", editable: true});
+		metadata.push({name: "alto", label: "Alto", datatype: "double", editable: true});
+		metadata.push({name: "precio", label: "Precio", datatype: "double", editable: false});
+		return metadata;
+	}
+	
+	function crearTabla() {
+        editableGrid = new EditableGrid("Tabla");
+        editableGrid.load({"metadata": getMetaTable(), "data": []});
+        editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+    }
+	
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
+		
+		$btnAgregar = $("button#btnagregar");
+		$myDiv = $("div#myDiv");
+		
+		crearTabla();
+		
+		$btnAgregar.click(function(){
+			//alert("esta es una alerta de prueba");
+			valorselec = $myDiv.find("select option:selected").val();
+			if(valorselec == undefined) return false;
+			
+			agregarCotizacion(valorselec);
+			
+			//alert(valorselec);
+			return false;
+		});
     });
-    </script>
-
+	</script>
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script src="js/ui.datepicker-es-MX.js"></script>
+	<script>
+		$(function() {
+		$.datepicker.setDefaults($.datepicker.regional['es-MX']);
+		$('#input_campo_date').datepicker({
+							'setDate': '25/02/2013'
+							, altField: '#fecha_texto'
+							, altFormat: "DD, d 'de' MM 'de' yy"
+						});
+		});
+	</script>
+	
 </body>
 
 </html>
