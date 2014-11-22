@@ -469,7 +469,7 @@ function ConSoSinS($val, $sentence)
                     <div class="panel panel-success">
 						<!--Encabezado-->
 							<div class="panel-heading">
-								Success Panel	
+								Success Panel	BOnito
 							</div>
 						<!--Cuerpo-->
 							<div class="panel-body">
