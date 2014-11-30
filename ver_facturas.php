@@ -1,5 +1,6 @@
 <?php
-
+include('libreria/motor.php');
+$fac=new ccfactura();     
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">ALFINTE SA DE CV</a>
+                <a class="navbar-brand" href="index.html">Admin v1.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -373,23 +374,69 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Mostrar Citas</h1>
+                    <h1 class="page-header">Facturas</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+            <!-- /.row -->
             <div class="row">
-				<div id="contenido">
-					<?php include('mostrar_cita.php')?>
-				</div>
-			</div>
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Lista de Facturas
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Numero Factura</th>
+											<th>Fecha</th>
+											<th>Cliente</th>
+											<th>Estado</th>
+											<th>Forma Pago</th>
+                                            <th>Tipo Documento</th>
+                                            <th>Total</th>
+                                            <th>Ver</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<?php
+									$rfactura=$fac->mostrar();
+									foreach($rfactura as $fau){
+									echo "
+										<tr>
+											<td>{$fau['Id_Factura']}</td>
+											<td>{$fau['Fecha_Factura']}</td>
+											<td>{$fau['cliente']}</td>
+											<td>{$fau['estado']}</td>
+											<td>{$fau['forma_pago']}</td>
+											<td>{$fau['tipo_documento']}</td>
+											<td>{$fau['total']}</td>
+                      <td><a href='factura.php?id_factura={$fau['Id_Factura']}'>Consultar</a></td>
+										</tr>";
+									}
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
 
- 
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-		
+
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -402,15 +449,11 @@
     <!-- DataTables JavaScript -->
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script src="js/bootstrap-modal.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 
-		<!-- Ajax Customizado"-->
-	<script src="js/ajax.js"></script>
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-	
     <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable();

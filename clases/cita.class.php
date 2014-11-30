@@ -371,5 +371,20 @@ echo $query;
 		}
 	
 	/**************************************************************************/
+			public function ver_cotizaciones_aprobadas(){
+        $query="Select cotizacion.id_cotizacion,
+				cotizacion.fecha_creacion,
+				concat(cita.nombre,' ',cita.apellido) as nombre,
+				cotizacion.total
+				from cotizacion,cita
+				where cotizacion.id_cita=cita.id_cita
+				and cita.id_estado=4";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
 }
 ?>

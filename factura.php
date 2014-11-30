@@ -1,71 +1,16 @@
 <?php
 include('libreria/motor.php');
-require_once("clases/sesion.class.php");
-//$login=new Login();
-   $sesion = new Sesion();
-   $usuario = $sesion->get("usuario");
-   if( $usuario == false )  {
-      header("Location: login.php");
-   }  else  {
-   
-   	if(isset($_POST['boton'])){
-	
-	$cod_emp=$_POST['opcion_emp'];
-	$id_cit=$_POST['numerocitas'];
-	
-	$resp_update= $cit->actualizar_cita($cod_emp,5);
-	}
+$fac=new ccfactura();
 
-   $emp=new empleado();
-$art=new articulo();
-   $cit=new cita();
+if(!empty($_GET['id_factura']))
+  $id_factura= $fac->id_factura=$_GET['id_factura'];
+  else
+  $id_factura ="";
 
-	$cargo=$cit->sabercargo($usuario);
-	if ($cargo==1)
-	{
-		$mensaje1="Nuevos Pedidos";
-		$mensaje2="Total Asignadas";
-		$mensaje3="Nuevas Ordenes";
-		$mensaje4="Instalaciones";
-	}
-	else if($cargo==2)
-	{
-		$mensaje1="Nuevos Pedidos";
-		$mensaje2="Asignadas";
-		$mensaje3="Nuevas Ordenes";
-		$mensaje4="Instalaciones";
-	}else if($cargo==3){
-		$mensaje1="Citas Pendientes";
-		$mensaje2="Citas Confirmadas";
-		$mensaje3="Cotizacion Pendientes";
-		$mensaje4="Recibos Provicionales";
-	
-	}
-	
-function fechainteligente($timestamp) 
-{
-	if (!is_int($timestamp)) 
-	{
-		$timestamp=strtotime($timestamp, 0);
-	}
-	$diff = time() - $timestamp;
-	if ($diff <= 0) return 'Ahora';
-	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
-	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
-	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
-	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
-}
-
-
-function ConSoSinS($val, $sentence) 
-{
-	if ($val > 1) return $val.str_replace(array('(s)','(es)'),array('s','es'), $sentence); 
-	else return $val.str_replace('(s)', '', $sentence);
-}
+$arrfac = $fac->encabezado($id_factura);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -77,7 +22,7 @@ function ConSoSinS($val, $sentence)
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -116,7 +61,7 @@ function ConSoSinS($val, $sentence)
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Alfinte S.A de CV</a>
+                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -125,34 +70,46 @@ function ConSoSinS($val, $sentence)
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-
-					
-					
-					
                     <ul class="dropdown-menu dropdown-messages">
-						<?php
-					$com=$cit->mostrar_mensaje($usuario);
-						foreach($com as $co){
-							$hace=fechainteligente($co['fecha_creacion']);
-							echo"<li>
-									<a href='ver_citas.php?id_cita=".$co['id_cita']."'>
-										<div>
-											<strong>{$co['nombre']}</strong>
-											<span class='pull-right text-muted'>
-											<em>.$hace.</em>
-											</span>
-										</div>
-										<div> Ha recibido un nuevo mensaje de cita</div>
-									</a>
-								</li>
-								 <li class='divider'></li>";
-						
-						};
-					?>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">
-                                <strong>Leer Todos</strong>
+                                <strong>Read All Messages</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -169,7 +126,7 @@ function ConSoSinS($val, $sentence)
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Tareas 1</strong>
+                                        <strong>Task 1</strong>
                                         <span class="pull-right text-muted">40% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -185,7 +142,7 @@ function ConSoSinS($val, $sentence)
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Tarea 2</strong>
+                                        <strong>Task 2</strong>
                                         <span class="pull-right text-muted">20% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -201,7 +158,7 @@ function ConSoSinS($val, $sentence)
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Tarea 3</strong>
+                                        <strong>Task 3</strong>
                                         <span class="pull-right text-muted">60% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -217,7 +174,7 @@ function ConSoSinS($val, $sentence)
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Tarea 4</strong>
+                                        <strong>Task 4</strong>
                                         <span class="pull-right text-muted">80% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -231,7 +188,7 @@ function ConSoSinS($val, $sentence)
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">
-                                <strong>Ver Todas las Tareas</strong>
+                                <strong>See All Tasks</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -243,7 +200,7 @@ function ConSoSinS($val, $sentence)
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-					<ul class="dropdown-menu dropdown-alerts">
+                    <ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="#">
                                 <div>
@@ -304,12 +261,12 @@ function ConSoSinS($val, $sentence)
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> <?php echo $sesion->get("usuario"); ?> Profile</a>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -321,99 +278,82 @@ function ConSoSinS($val, $sentence)
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-
-                        <li>
-                            <a class="active" href="index.php"><i class="fa fa-dashboard fa-fw"></i> Panel de Control</a>
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i> Ventas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                               <li>
-                                    <a href="index.php">Cita <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="ver_categoria.php">Crear Cita</a>
-                                        </li>
-                                        <li>
-                                            <a href="ver_categoria.php">Confirmar Cita</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-								<li>
-                                    <a href="ver_cita.php">Asignaciones</a>
-                                </li>
-								<li>
-                                    <a href="cotizacion.php">Cotizaciones</a>
-                                </li>
-                                <li>
-                                    <a href="facturas.php">Facturas</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-						<li>
-                            <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i>Taller<span class="fa arrow"></span></a>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="orden_trabajo.php">Orden de Trabajo</a>
+                                    <a href="flot.html">Flot Charts</a>
                                 </li>
-								<li>
-                                    <a href="orden_trabajo.php">Consultar Orden de Trabajo</a>
-                                </li>
-								<li>
-                                    <a href="solicitar_materiales.php">Materiales</a>
-                                </li>
-								<li>
-                                    <a href="instalaciones.php">Instalaciones</a>
+                                <li>
+                                    <a href="morris.html">Morris.js Charts</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-sitemap fa-fw"></i>Inventario<span class="fa arrow"></span></a>
+                            <a class="active" href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        </li>
+                        <li>
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="ver_categoria.php">Consultar Articulos</a>
+                                    <a href="panels-wells.html">Panels and Wells</a>
                                 </li>
                                 <li>
-                                    <a href="ver_materia.php">Consultar Materiales</a>
-                                </li>
-								<li>
-                                    <a href="index.php">Ajustes <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="ver_categoria.php">Ajustes de Materiales</a>
-                                        </li>
-                                        <li>
-                                            <a href="ver_categoria.php">Ajustes de Articulos</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-								<li>
-                                    <a href="index.php">Traslados <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="ver_categoria.php">Traslados Materiales</a>
-                                        </li>
-                                        <li>
-                                            <a href="ver_categoria.php">Traslados Articulos</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+                                    <a href="buttons.html">Buttons</a>
                                 </li>
                                 <li>
-                                    <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
+                                    <a href="notifications.html">Notifications</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html">Typography</a>
+                                </li>
+                                <li>
+                                    <a href="grid.html">Grid</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_categoria.php">Verificar Existencia</a>
+                                            <a href="#">Third Level Item</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Ubicaciones</a>
+                                            <a href="#">Third Level Item</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Sucursales</a>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -422,179 +362,136 @@ function ConSoSinS($val, $sentence)
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-files-o fa-fw"></i> Administrar<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="index.php">Mantenimiento Sucursales</a>
+                                    <a href="blank.html">Blank Page</a>
                                 </li>
                                 <li>
-                                    <a href="index.php">Mantenimiento Bodegas </a>
-                                </li>
-								<li>
-                                    <a href="index.php">Mantemiento Paises <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="ver_categoria.php">Mantenimiento Ciudades</a>
-                                        </li>
-                                        <li>
-                                            <a href="ver_categoria.php">Mantenimiento Provincias</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+                                    <a href="login.html">Login Page</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
-                        </li>
-						 <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
-		</nav>
+        </nav>
+
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="page-header">Mostrar Nuevas Citas</h2>
+                    <h1 class="page-header">FACTURA</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
+            </div>              
+            <div class="row">
+                    <form>
+                    <button type="button"  onclick="realizaProceso();return false;"class="btn btn-primary">Anular</button>
+                    <button type="button"  onclick="realizaProceso();return false;"class="btn btn-primary">Anular</button>
+                    </form> 
+			</div>
+                <div class="row" id="resultado">
+				</div>
+                <div class="row">           
+				
+				</div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Muestra el listado de las citas mas recientes
+                            Datos Generales
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                        <tr>
-                                            <th>Cita</th>
-											<th>Fecha</th>
-											<th>Nombre</th>
-											<th>Telefono</th>
-                                            <th>Direccion</th>
-                                            <th>Email</th>
-                                            <th>Canal</th>
-											<th>Editar</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-									<?php
-									$rcitas=$cit->mostrar();
-									
-									foreach($rcitas as $ci){
-									$i = $ci['id_cita'];
-									
-									echo "
-										<tr>
-											<td><div id='id_cita$i'>{$ci['id_cita']}</div></td>
-											<td>{$ci['fecha_creacion']}</td>
-											<td>{$ci['nombre']}</td>
-											<td>{$ci['telefono']}</td>
-											<td>{$ci['direccion']}</td>
-											<td>{$ci['email']}</td>
-											<td>{$ci['descripcion']}</td>
-											<td>";?>
-												<div class="form-group">
-														<select class="form-control" onchange="loademp((this.value), <?php echo $ci['id_cita']; ?>)">
-															<option value="">Seleccione</option>
-																<?php  $empp=$emp->mostrar_emp2();
-																		foreach($empp as $empo){
-																	echo "<option value='".$empo['id_empleado']."'>".$empo['nombre']."</option>";
-																	};
-																?>
-														</select>
-												</div>
-											<?php "</td>
-										</tr>";	
-									}
-									?>
-                                    </tbody>
-                                </table>
-								<div id="myDiv"></div>
+                          <div class="panel-body" >
+                            <div class="col-lg-6">
+                                 <div class="form-group">
+                                     <label>COD. FACTURA: <?php foreach($arrfac as $ci){ echo " {$ci['Id_Factura']} " ; };  ?></label>
+                                     <input type="hidden" id="myidfact" value="<?php foreach($arrfac as $ci){ echo " {$ci['Id_Factura']} " ; };  ?>">
+                                 </div>
+                                   <div class="form-group">
+                                     <label>ESTADO:<?php foreach($arrfac as $ci){ echo " {$ci['estado']} " ; };  ?></label>
+
+                                 </div>
+                                 <div class="form-group">
+                                     <label>CLIENTE:<?php foreach($arrfac as $ci){ echo " {$ci['cliente']} " ; };  ?></label>
+
+                                 </div>
+                                 <div class="form-group">
+                                     <label>NIT:<?php foreach($arrfac as $ci){ echo " {$ci['nit']} " ; };  ?></label>
+                                 </div>
+                                  <div class="form-group">
+                                     <label>GIRO:<?php foreach($arrfac as $ci){ echo " {$ci['giro']} " ; };  ?></label>
+
+                                 </div>
+                                  <div class="form-group">
+                                     <label>TIPO DOCUMENTO:<?php foreach($arrfac as $ci){ echo " {$ci['tipo_documento']} " ; };  ?></label>
+                                 </div>
                             </div>
-                            <!-- /.table-responsive -->
-						
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-			<div class="row">
-                <div class="col-lg-10">
-                    <div class="panel panel-default">
+							<div class="col-lg-6">
+								<div class="form-group">
+                                    <label>FECHA:<?php foreach($arrfac as $ci){ echo " {$ci['Fecha_Factura']} " ; };  ?></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>ORDEN DE TRABAJO:<?php foreach($arrfac as $ci){ echo " {$ci['Id_Orden']} " ; };  ?></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>DIRECCION:<?php foreach($arrfac as $ci){ echo " {$ci['direccion']} " ; };  ?></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>NRC:<?php foreach($arrfac as $ci){ echo " {$ci['NCR']} " ; };  ?></label>
+                                </div>
+                                 <div class="form-group">
+                                    <label>FORMA PAGO:<?php foreach($arrfac as $ci){ echo " {$ci['forma_pago']} " ; };  ?></label>
+                                 </div>
+                            </div>
+
+						</div>
+					</div>
+             </div>
+            <!-- /.row -->
+            <div class="row">
+                    <div class="panel panel-yellow">
                         <div class="panel-heading">
-                            Muestra el listado de los Vendedores con citas
+                            Detalle de Articulos
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>No. Empleado</th>
-											<th>Nombre</th>
-											<th>Telefono</th>
-                                            <th>Citas Asignadas</th>
-											<th>Editar</th>
+                                            <th>#</th>
+                                            <th>Articulo</th>
+                                            <th>Descripcion</th>
+                                            <th>Medidas</th>
+                                            <th>Sentido</th>
+                                            <th>Cubres</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-									<?php
-									$remp=$emp->mostrar_emp();
-									foreach($remp as $re){
+                                       <?php
+									$arrdet=$fac->detalle($id_factura);
+                                    $contador=1;
+									foreach($arrdet as $de){
 									echo "
 										<tr>
-											<td>{$re['id_empleado']}</td>
-											<td>{$re['nombre']}</td>
-											<td>{$re['telefono']}</td>
-											<td>{$re['cita']}</td>
-											
-										<td>"; ?>
-										            <div class="col-lg-6">
-																<div class="panel panel-default">
-																	<!-- /.panel-heading -->
-																	<!--<div class="panel-body">-->
-																		<!-- Button trigger modal -->
-																		<button class="btn btn-default" data-toggle="modal" data-target="#myModal1">
-																			Asignar
-																		</button>
-																		<!-- Modal -->
-																		<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
-																			<div class="modal-dialog">
-																				<div class="modal-content">
-																					<div class="modal-header">
-																						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																						<h5 class="modal-title" id="myModalLabel">Formulario para Editar</h5>
-																					</div>
-																					<div class="modal-body">
-																						Formulario
-																					</div>
-																					<div class="modal-footer">
-																						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-																						<button type="button" class="btn btn-primary">Guardar Cambios</button>
-																					</div>
-																				</div>
-																				<!-- /.modal-content -->
-																			</div>
-																			<!-- /.modal-dialog -->
-																		</div>
-																		<!-- /.modal -->
-																	<!--</div>-->
-																	<!-- .panel-body -->
-																</div>
-																<!-- /.panel -->
-													</div>
-										<?php echo"
-										</td>
-										</tr>";	
+											<td>{$contador}</td>
+											<td>{$de['id_articulo']}</td>
+											<td>{$de['DESCRIPCION']}</td>
+											<td>{$de['medidas']}</td>
+											<td>{$de['sentido']}</td>
+											<td>{$de['CUBRES']}</td>
+											<td>{$de['CANTIDAD']}</td>
+											<td>{$de['PRECIO']}</td>
+											<td>{$de['TOTAL']}</td>
+										</tr>";
+
+                                        $contador=$contador+1;
 									}
 									?>
                                     </tbody>
@@ -602,20 +499,26 @@ function ConSoSinS($val, $sentence)
                             </div>
                             <!-- /.table-responsive -->
 
+
+                             <div class="panel-footer" style="font-size: 110%;">
+                                             <label>SUB TOTAL: $ <?php foreach($arrfac as $ci){ echo " {$ci['Sub_Total']} " ; };  ?></label>
+
+                                            &nbsp;&nbsp; &nbsp;&nbsp;<label>DESCUENTO: $ <?php foreach($arrfac as $ci){ echo " {$ci['Descuento']} " ; };  ?></label>
+
+                                             &nbsp;&nbsp; &nbsp;&nbsp;<label>TOTAL: $ <?php foreach($arrfac as $ci){ echo " {$ci['total']} " ; };  ?></label>
+                       
+                            </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
- 
+			</div>
         </div>
-        <!-- /#page-wrapper -->
+                <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-	
+
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -628,24 +531,30 @@ function ConSoSinS($val, $sentence)
     <!-- DataTables JavaScript -->
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-	<script src="js/bootstrap-modal.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 
-		<!-- Ajax Customizado"-->
-	<script src="js/ajax.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-	
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
-    </script>
+  <script>
+
+	function realizaProceso(){
+       var parametros = {
+	            "fac" : $("#myidfact").val()                
+	        };
+	        $.ajax({
+                data:  parametros,
+	                url:   'Acc_Factura.php',
+	                type:  'post',
+                beforeSend: function () {
+	                        $("#resultado").html("Procesando, espere por favor...");
+	                },
+	                success:  function (response) {
+                        $("#resultado").html(response);
+	                }
+	        });
+	}
+	</script>
 
 </body>
 
 </html>
-<?php
-};
-?>

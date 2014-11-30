@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-11-2014 a las 00:34:47
+-- Tiempo de generación: 30-11-2014 a las 04:06:13
 -- Versión del servidor: 5.5.20
 -- Versión de PHP: 5.3.9
 
@@ -615,6 +615,13 @@ CREATE TABLE IF NOT EXISTS `factura` (
   PRIMARY KEY (`id_factura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`id_factura`, `fecha_factura`, `fecha_creacion`, `direccion_factura`, `direccion_instalacion`, `nit`, `ncr`, `giro`, `sub_total`, `descuento`, `monto_descuento`, `total`, `fa_estado`, `id_cliente`, `id_tipo_doc`, `id_orden`, `id_forma_pago`) VALUES
+(1, '2014-11-25', '2014-11-25', 'direccion', 'otra direccion', '345677', '899', '2345234', 200, 0, 0, 200, 3, 3, 1, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -645,6 +652,15 @@ CREATE TABLE IF NOT EXISTS `factura_estado` (
   PRIMARY KEY (`id_estado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `factura_estado`
+--
+
+INSERT INTO `factura_estado` (`id_estado`, `descripcion`) VALUES
+(1, 'Normal'),
+(2, 'Instalada'),
+(3, 'Anulada');
+
 -- --------------------------------------------------------
 
 --
@@ -656,6 +672,13 @@ CREATE TABLE IF NOT EXISTS `forma_pago` (
   `descripcion` varchar(20) NOT NULL,
   PRIMARY KEY (`id_forma_pago`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `forma_pago`
+--
+
+INSERT INTO `forma_pago` (`id_forma_pago`, `descripcion`) VALUES
+(1, 'Contado');
 
 -- --------------------------------------------------------
 
@@ -688,7 +711,7 @@ CREATE TABLE IF NOT EXISTS `log_usuario` (
   `hora_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `hora_fin` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id_usuario_log`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
 
 --
 -- Volcado de datos para la tabla `log_usuario`
@@ -762,7 +785,8 @@ INSERT INTO `log_usuario` (`id_usuario_log`, `id_usuario`, `usuario`, `fecha_ing
 (65, 1, 'admin', '2014-11-18 00:00:00', '2014-11-18 23:09:18', '2014-11-18 23:09:18'),
 (66, 1, 'admin', '2014-11-18 00:00:00', '2014-11-18 23:14:33', '2014-11-18 23:14:33'),
 (67, 1, 'admin', '2014-11-18 00:00:00', '2014-11-18 23:59:29', '2014-11-18 23:59:29'),
-(68, 1, 'admin', '2014-11-18 00:00:00', '2014-11-19 00:11:52', '2014-11-19 00:11:52');
+(68, 1, 'admin', '2014-11-18 00:00:00', '2014-11-19 00:11:52', '2014-11-19 00:11:52'),
+(69, 1, 'admin', '2014-11-22 00:00:00', '2014-11-22 10:19:04', '2014-11-22 10:19:04');
 
 -- --------------------------------------------------------
 
@@ -1110,6 +1134,13 @@ CREATE TABLE IF NOT EXISTS `tipo_documento` (
   `descripcion` varchar(20) NOT NULL,
   PRIMARY KEY (`id_tipo_documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tipo_documento`
+--
+
+INSERT INTO `tipo_documento` (`id_tipo_documento`, `descripcion`) VALUES
+(1, 'Factura');
 
 -- --------------------------------------------------------
 

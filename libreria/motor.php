@@ -9,6 +9,7 @@ include('clases/materia.class.php');
 include('clases/articulo.class.php');
 include('clases/empleado.class.php');
 include('clases/inventario.class.php');
+include('clases/factura.class.php');
 //include('clases/search.php');
 
 //include('clases/include-pagina-restringida.php');

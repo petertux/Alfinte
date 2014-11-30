@@ -1,10 +1,3 @@
-<?php
-include('libreria/motor.php');
-$materiales=new materia();
-$emp=new empleado();
-$art=new articulo();
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,16 +9,13 @@ $art=new articulo();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sistema de Administracion</title>
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- DataTables CSS -->
-    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
@@ -46,7 +36,7 @@ $art=new articulo();
 
     <div id="wrapper">
 
-         <!-- Navigation -->
+        <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -55,7 +45,7 @@ $art=new articulo();
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin v1.0</a>
+                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -260,7 +250,7 @@ $art=new articulo();
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login_1.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -284,28 +274,28 @@ $art=new articulo();
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Panel de Control</a>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Graficas<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="flot.html">Reportes Pedidos</a>
+                                    <a href="flot.html">Flot Charts</a>
                                 </li>
                                 <li>
-                                    <a href="morris.html">Reportes Clientes</a>
+                                    <a href="morris.html">Morris.js Charts</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="articulos.php"><i class="fa fa-table fa-fw"></i> Articulos</a>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
                         </li>
                         <li>
-                            <a class ="active" href="ver_materia.php"><i class="fa fa-edit fa-fw"></i>Materiales</a>
+                            <a class="active" href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i>Traslados<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="panels-wells.html">Panels and Wells</a>
@@ -326,18 +316,32 @@ $art=new articulo();
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="ver_categoria.php"><i class="fa fa-sitemap fa-fw"></i>Categoria de Articulos<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-							<?php
-									$rcate=$materiales->mostrar_categoria();
-									foreach($rcate as $ci){
-									echo "
-										<li>
-											<a href='".$ci['url']."?id_categoria=".$ci['id_categoria']."'>".$ci['descripcion']."</a>
-
-										</li>";
-									}
-							?>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -362,169 +366,69 @@ $art=new articulo();
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-10">
-                    <h1 class="page-header">Cotizacion</h1>
+                <div class="col-lg-12">
+                    <h1 class="page-header">Recibo Provisional</h1>
                 </div>
-                <!-- /.col-lg-10 -->
+                <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-			<div class="row">
-				<form role="form">
-					<div class="col-lg-8">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								Informacion del Cliente
-							</div>
-
-							<div class="panel-body">
-								<div class="col-xs-6">
-										<div class="form-group">
-												<input class="form-control" placeholder="Enter text">
-										</div>
-										<div class="form-group">
-											<label>Nombre</label>
-												<input class="form-control">
-										</div>
-										<div class="form-group">
-											<label>Telefono</label>
-												<input class="form-control">
-										</div>
-										
-								</div>
-
-								
-								<div class="col-xs-6">
-										<div class="form-group">
-										<button type="submit" class="btn btn-primary">Buscar </button>
-										
-										<p></p>
-										</div>
-										
-										<div class="form-group">
-											<label>Apellido</label>
-											<input class="form-control">
-										</div>
-										<div class="form-group">
-											<label>Direccion</label>
-											<input class="form-control">
-											
-										</div>
-								</div>
-								<div class="col-lg-8">
-										<div class="form-group">
-                                            <label>Comentarios</label>
-                                            <textarea class="form-control" rows="2"></textarea>
+            <div class="row">
+            <form role="form">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Datos del Recibo
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                     <div class="form-group input-group">
+                                            <label>Cotizacion:</label>
+                                            <input id="id_cot" type="text" class="form-control">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
                                         </div>
-								</div>
-							</div>
-							<div class="panel-footer">
-								Panel Footer
-							</div>
-						</div>
-					</div>
-					
-					<div class="col-lg-10">
-						<div class="panel panel-yellow">
-								<div class="panel-heading">
-									Cotizacion
-								</div>
-								<div class="panel-body">
-									<div class="col-xs-4">
-										<div class="form-group">
-                                            <label>Categoria</label>
-											<select class="form-control" onchange="loadmedia(this.value)">
-												<option value="">Seleccione</option>
-											<?php  $categoria=$art->mostrar_categoria();
-													foreach($categoria as $cat){
-													echo "
-															<option value='".$cat['id_categoria']."'>".$cat['descripcion']."</option>";
-															};
-											?>
-                                            </select>
+                                        <div class="form-group">
+                                            <label>Cliente:</label>
+                                            <input class="form-control">
+                                        </div>                                          
+                                         <div class="form-group">
+                                            <label>Fecha Recibo:</label>
+                                            <input id="fecha_rec" class="form-control">
                                         </div>
-									</div>
-
-									<div class="col-xs-4">
-										<div class="form-group">
-											 <input class="form-control" placeholder="Enter text" type="text" id="articulo_nombre" onkeyup="loadXMLDoc()" required>
-										</div>
-										<!-- Aqui esta el DIV en el cual se va a cargar la pagina de cotizacion_articulo-->
-										
-										<div id="myDiv"></div>
-											<p></p>
-											<button type="submit" class="btn btn-primary">Agregar </button>
-                                     </div>
-									
-									<div class="col-lg-12">
-										<div class="panel-body">
-											<div class="table-responsive">
-												<table class="table table-striped table-bordered table-hover">
-													<thead>
-														<th>No</th>
-														<th>Cod. Articulo</th>
-														<th>Articulos</th>
-														<th>Cantidad</th>
-														<th>Precio</th>
-														<th>Ancho</th>
-														<th>Largo</th>
-														<th>Volumen</th>
-														<th>Total</th>
-														<th>	 </th>
-														
-													</thead>
-													<tbody>
-														<tr>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="panel-footer">
-									Panel Footer
-								</div>
-						</div>
-						<!-- /.col-lg-4 -->
-						
-					</div>
-					
-					
-				</form>
-			</div>
-			<div class="row">
-			
-			</div>
-
-		</div>
+                                         <div class="form-group">
+                                            <label>Monto:</label>
+                                            <input id="monto" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Observacion:</label>
+                                            <textarea id="observacion" class="form-control" rows="3"></textarea>
+                                        </div>
+                                         <button type="button"  onclick="realizaProceso();return false;"class="btn btn-primary">Guardar</button>
+                                         <button type="button" class="btn btn-warning">Limpiar</button>
+                                 </div>                                        
+                                <!-- /.col-lg-6 (nested) -->                                     
+                                </form>
+                            </div>
+                            <!-- /.row (nested) -->
+                             <div class="row">
+                                <div id="resultado">
+                                </div>
+                              </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -534,22 +438,33 @@ $art=new articulo();
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- DataTables JavaScript -->
-    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
-	
-	<!-- Ajax Customizado"-->
-	<script src="js/ajax.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable();
-    });
-    </script>
+
+   	<script>
+
+	function realizaProceso(){
+       var parametros = {
+	            "fecha_recibo" : $("#fecha_rec").val(),
+                "id_cotizacion" : $("#id_cot").val(),
+                "monto" : $("#monto").val(),
+                "descripcion" : $("#observacion").val(),
+                "accion" : "crear"
+	        };
+	        $.ajax({
+                data:  parametros,
+	                url:   'Acc_Recibo.php',
+	                type:  'post',
+                beforeSend: function () {
+	                        $("#resultado").html("Procesando, espere por favor...");
+	                },
+	                success:  function (response) {
+                        $("#resultado").html(response);
+	                }
+	        });
+	}
+	</script>
 
 </body>
 
