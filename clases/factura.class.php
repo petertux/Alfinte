@@ -46,8 +46,10 @@
         inner join
         forma_pago on  factura.ID_FORMA_PAGO=forma_pago.id_forma_pago
         inner join
-        tipo_documento on  factura.id_tipo_doc =  tipo_documento.Id_Tipo_Documento ";
-        $rs=mysql_query($query);
+        tipo_documento on  factura.id_tipo_doc =  tipo_documento.Id_Tipo_Documento ";           
+
+         $rs=mysql_query($query);
+         echo $rs;
         $array=array();
         while($fila=mysql_fetch_assoc($rs)){
           $array[]=$fila;
