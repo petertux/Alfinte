@@ -637,6 +637,7 @@ CREATE TABLE IF NOT EXISTS `factura_detalle` (
   `precio` decimal(10,0) NOT NULL,
   `total` decimal(10,0) NOT NULL,
   `id_factura` int(11) NOT NULL,
+  `id_articulo` int(11) NOT NULL,
   PRIMARY KEY (`id_detalle_factura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
