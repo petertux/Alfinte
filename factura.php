@@ -389,7 +389,10 @@ $arrfac = $fac->encabezado($id_factura);
             </div>              
             <div class="row">
                     <form>
-                    <button type="button"  onclick="realizaProceso();return false;"class="btn btn-primary">Anular</button>
+                    <?php 
+                     $url = "Rep_Factura.php?id_factura=". $_GET['id_factura'];
+                     echo "<a href='".$url."'>Imprimir</a>"; 
+                      ?>
                     <button type="button"  onclick="realizaProceso();return false;"class="btn btn-primary">Anular</button>
                     </form> 
 			</div>
