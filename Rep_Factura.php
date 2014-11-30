@@ -21,7 +21,7 @@ function CreateData($header, $data)
 {
 
     $fac = new ccfactura;
-    $arrfac = $fac->encabezado("1");
+    $arrfac = $fac->encabezado($_GET['id_factura']);
 
     $borde=3;
     foreach($arrfac as $ci){
