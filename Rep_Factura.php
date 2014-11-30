@@ -9,13 +9,13 @@ class PDF extends FPDF
 function LoadData($file)
 {
     // Leer las líneas del fichero
-    $id="1";
+    $id=$_GET['id_factura'];
     $data = array();
     $fac = new ccfactura;
     $data= $fac->detalle($id);
     return $data;
 }
-
+                   
 // Impresion Documento
 function CreateData($header, $data)
 {
