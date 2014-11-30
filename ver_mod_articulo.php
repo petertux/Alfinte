@@ -500,7 +500,7 @@ function ConSoSinS($val, $sentence)
 														</div>
 															 <div class='form-group'>
                                                             <label class="control-label" for="inputSuccess">Fecha desde:</label>
-                                                            <input class='form-control' type='date' name='fecha_programada' required  <?php $year=date("Y");$month=date("m");$day=date("d"); min=$year-$month-$day max;?> '2015-12-31'>
+                                                            <input class='form-control' type='date' name='fecha_programada' required >
 
                                                         </div>
 														<div class="control-label" for="inputSuccess">
