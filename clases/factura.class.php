@@ -10,7 +10,7 @@
         , factura.nit,
         factura.direccion_instalacion direccion, factura.NCR, factura.giro,
         forma_pago.descripcion as forma_pago, tipo_documento.descripcion as tipo_documento,
-        Sub_Total, Descuento,total
+        Sub_Total, Descuento,total,id_orden
         from factura
         inner join
         factura_estado as estado on factura.fa_estado= estado.ID_ESTADO
