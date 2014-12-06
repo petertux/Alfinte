@@ -279,8 +279,7 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 
 INSERT INTO `cargo` (`id_cargo`, `valor`) VALUES
 (1, 'Administra'),
-(2, 'Supervisor'),
-(3, 'Vendedor'),
+(2, 'Vendedor'),
 (4, 'SupTaller'),
 (5, 'Tecnico');
 
@@ -293,8 +292,8 @@ INSERT INTO `cargo` (`id_cargo`, `valor`) VALUES
 CREATE TABLE IF NOT EXISTS `cita` (
   `id_cita` int(11) NOT NULL,
   `fecha_creacion` datetime NOT NULL,
-  `fecha_programada` datetime DEFAULT NULL,
-  `hora` timestamp NULL DEFAULT NULL,
+  `fecha_programada` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
   `nombre` varchar(64) NOT NULL,
   `apellido` varchar(64) NOT NULL,
   `telefono` varchar(10) NOT NULL,
@@ -312,10 +311,13 @@ CREATE TABLE IF NOT EXISTS `cita` (
 --
 
 INSERT INTO `cita` (`id_cita`, `fecha_creacion`, `fecha_programada`, `hora`, `nombre`, `apellido`, `telefono`, `direccion`, `email`, `id_canal`, `id_estado`, `comentario`, `id_empleado`) VALUES
-(1, '2014-08-27 18:29:50', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'usuario1', 'usuarioap', 's', 's', 's@s.com', 1, 4, 'd', 2),
-(2, '2014-09-03 00:00:00', NULL, '2014-09-03 20:27:19', 'Rodrigo', 'Amaya', '22120543', 'Citibank', 'rodrigo.amaya@citi.com', 1, 2, 'Cortinas Bonitas', 2),
-(3, '2014-09-03 00:00:00', '2014-09-15 12:00:00', '2014-09-03 20:29:45', 'William', 'Linarez', '21251413', 'Pinares', 'william.linarez@citi.com', 1, 1, 'Cortinas Blancas', 1);
+(1, '2014-08-27 18:29:50', '2014-11-19', '12:20:00', 'Raul', 'Lopez', 's', 'Callle las palmeras block F #45', 'raul.lopez@hotmail.com', 1, 2, 'd', 3),
+(2, '2014-09-03 00:00:00', NULL, NULL, 'Rodrigo', 'Amaya', '22120543', 'Citibank', 'rodrigo.amaya@citi.com', 1, 1, 'Cortinas azules', 3),
 
+(3, '2014-09-03 00:00:00', NULL, NULL, 'William', 'Linarez', '21251413', 'Pinares', 'william.linarez@citi.com', 1, 1, 'Cortinas Blancas', 4),
+(4, '2014-10-18 07:38:00', '2014-11-12', '08:30:00', 'Ana', 'Garcia', '2267-0976', 'Resd.bosques de suiza pol. G #87', 'anagarcia10@yahoo.com', 1, 2, 'Solicito informacion sobre cortinas', 4),
+(5, '2014-10-18 07:54:43', NULL, NULL, 'Jorge', 'Luna', '2256-8980', 'san salvador', 'tucorreo@gmail.com', 1, 1, 'prueba 2', 4),
+(6, '2014-10-26 00:06:20', '2014-10-26', '10:30:00', 'karen', 'ramos', '23456732', 'mejicanos', 'aramos@hotmail.com', 1, 2, 'hola', 3);
 -- --------------------------------------------------------
 
 --
@@ -334,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `cita_estado` (
 
 INSERT INTO `cita_estado` (`id_citaest`, `valor`) VALUES
 (1, 'Pendiente'),
-(2, 'En Revision');
+(2, 'Confirmada');
 
 -- --------------------------------------------------------
 
@@ -379,12 +381,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `primer_nombre`, `primer_apellido`, `direccion`, `telefono`, `nit`) VALUES
-('1', 'Pedro', 'Sanchez', 'Sabana', '456468', '654226'),
-('3', 'a', 'a', 'a', 'a', '00000000001'),
-('4', 'a', 'a', 'a', 'a', '00000000001'),
-('5', 'a', 'a', 'a', 'a', '00000000001'),
-('6', 'a', 'a', 'a', 'a', '00000000001'),
-('7', 'a', 'a', 'a', '1', '00000000001');
+('100411', 'Pedro', 'Miguel', 'Sabana', '456468', '654226');
 
 -- --------------------------------------------------------
 
@@ -577,6 +574,7 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   `fecha_creacion` datetime NOT NULL,
   `id_cargo` int(11) NOT NULL,
   `codigo_emp` varchar(9) NOT NULL,
+  `id_sucursal` int(11) NOT NULL,
   PRIMARY KEY (`id_empleado`),
   UNIQUE KEY `codigo_emp` (`codigo_emp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
