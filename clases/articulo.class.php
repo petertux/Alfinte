@@ -35,8 +35,6 @@
 	public $fecha_hasta_antes;
 	/**********************Cotizacion**********************************/
 	
-
-
      public function agregar(){
     $query="INSERT INTO articulo_ter VALUES ('{$this->id_articulo}',
                                         '{$this->descripcion}',
@@ -158,13 +156,9 @@
 				`disponible_web` ,
 				`articulo_ter`.`descripcion` ,
 				`articulo_pre`.`precio` ,
-
 				`articulo_ter`.`id_articulo`
 				FROM `articulo_ter` , `articulo_pre` , `articulo_cat`
 				WHERE `articulo_ter`.`id_articulo` = `articulo_pre`.`id_articulo`
-
-
-
 				AND `articulo_ter`.`id_categoria` = `articulo_cat`.`id_categoria`
 				AND `articulo_ter`.`id_categoria`=".$id." 
 				AND articulo_pre.estado='A'
@@ -204,7 +198,6 @@
 				AND `articulo_ter`.`id_categoria` = `articulo_cat`.`id_categoria`
 				AND articulo_pre.estado='A'
 				ORDER BY `articulo_ter`.`id_articulo` ASC LIMIT 10 ";
-
 						//INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest limit 9";
         $rs=mysql_query($query);
         $array=array();
@@ -269,7 +262,6 @@
 										'{$this->id_articulo}',
 										'A')";
      $result=mysql_query($query) or die (mysql_error());
-
      return $result;
     }
 
@@ -410,6 +402,76 @@
 		}
 	
 	/*****************************************************************************************/
+	
+	public function buscar_articulo($articulo){
+	$query="Select sucursal.id_sucursal,
+			sucursal.descripcion,
+			articulo_exi.cant_disponible cantidad,
+			articulo_ter.descripcion articulo
+			from articulo_ter,
+			articulo_exi,
+			ubicacion,
+			bodega,
+			sucursal
+			where articulo_exi.id_articulo=articulo_ter.id_articulo
+			and ubicacion.id_ubicacion=articulo_exi.id_ubicacion
+			and bodega.id_bodega=ubicacion.id_bodega
+			and bodega.id_sucursal=sucursal.id_sucursal
+			and `articulo_ter`.`id_articulo`='".$articulo."'";
+	$rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
+		/************************************************/
+		public function verificar_existencias($id_articulo){
+			$query="select cant_disponible
+					from articulo_exi
+					where id_articulo=".$id_articulo ."
+					and id_ubicacion=1";
+			$rs=mysql_query($query);
+			$array=array();
+			while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+			}
+             return $array;
+		}
+		
+		public function insertar_notificaciones(){
+		$query="INSERT INTO notificacion VALUES ('{$this->id_empleado}',
+                                        '{$this->descripcion}',
+                                        '{$this->estado}',
+										'{$this->fecha_creacion}')";
+     $result=mysql_query($query) or die ("Problemas con el insert");
+     return $result;
+    }
+	
+		public function actualizar_articulo_existencia($id_articulo,$cant,$id_ubicacion){
+		$query="UPDATE articulo_exi
+				set cant_disponible=".$cant."
+				where id_articulo=".$id_articulo."
+				and id_ubicacion=".$id_ubicacion;
+     $result=mysql_query($query) or die ("Problemas con el update");
+     return $result;
+    }
+	public function insertar_orden_trabajo(){
+		$query="INSERT INTO orden_trabajo VALUES ('{$this->id_orden}',
+                                        '{$this->fecha_orden}',
+                                        '{$this->id_trabajo_tipo}',
+										'{$this->materiales_adicionales}',
+										'{$this->observaciones}',
+										'{$this->fecha_creacion}',
+										'{$this->id_trabajo_estado}',
+										'{$this->id_tipo_cortina}',
+										'{$this->id_tipo_documento}',
+										'{$this->id_cotizacion}',
+										'{$this->id_cliente}',
+										'{$this->id_empleado}')";
+     $result=mysql_query($query) or die ("Problemas con el insert");
+     return $result;
+    }
 	
 
 }
