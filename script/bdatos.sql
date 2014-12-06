@@ -586,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `empleado` (
 INSERT INTO `empleado` (`id_empleado`, `nombre`, `apellido`, `telefono`, `fecha_creacion`, `id_cargo`, `codigo_emp`) VALUES
 (1, 'Pedro', 'Sanchez', '76386841', '2014-09-03 00:00:00', 1, 'SD100411'),
 (2, 'Daysi', 'Najera', '61425952', '2014-09-03 00:00:00', 3, 'nm100312'),
-(3, 'Jorge', 'Luna', '22151684', '2014-09-03 00:00:00', 3, 'JL101010'),
+(3, 'Jorge', 'Luna', '22151684', '2014-09-03 00:00:00', 2, 'JL101010'),
 (4, 'Josue', 'Lainez', '2222-2222', '2014-10-18 19:15:33', 4, 'XX000000'),
 (5, 'Tecnico1', 'Juan', '3333-3333', '2014-10-21 12:10:53', 5, 'WW800888'),
 (6, 'Tecnico2', 'Jose', '4444-4444', '2014-10-20 12:11:13', 5, 'YY0909090');

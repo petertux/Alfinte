@@ -641,7 +641,7 @@ function ConSoSinS($val, $sentence)
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Telefono</label>
-                                                            <input class="form-control" type="number"name="telefono" required="Ingrese el telefono" placeholder="7xxx-xxx o 2xxx-xxxx" pattern="\d{4}[\-]\d{4}" min="2000">
+                                                            <input class="form-control" type="number"name="telefono" required="Ingrese el telefono" placeholder="7xxx-xxx o 2xxx-xxxx" >
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Email</label>
