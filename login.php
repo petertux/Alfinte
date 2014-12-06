@@ -1,13 +1,13 @@
 <?php
 require_once("clases/sesion.class.php");
 
-if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario?
-    include('libreria/motor.php'); //incluimos configuración
+if ($_SERVER['REQUEST_METHOD']=='POST') { // ï¿½Nos mandan datos por el formulario?
+    include('libreria/motor.php'); //incluimos configuraciï¿½n
     //include('clases/login.class.php'); //incluimos las funciones
     $Login=new Login();
-    //si hace falta cambiamos las propiedades tabla, campo_usuario, campo_contraseña, metodo_encriptacion
+    //si hace falta cambiamos las propiedades tabla, campo_usuario, campo_contraseï¿½a, metodo_encriptacion
 
-    //verificamos el usuario y contraseña mandados
+    //verificamos el usuario y contraseï¿½a mandados
     if ($Login->login($_POST['usuario'],$_POST['password'])) {
         //acciones a realizar cuando un usuario se identifica
        //EJ: almacenar en memoria sus datos completos, registrar un acceso en una tabla mysql
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
              $usua->hora_fin=date("Y-m-d H:i:s");
            $usua->login_user();
 		   $usuario=$_POST['usuario'];
-        //saltamos al inicio del área restringida
+        //saltamos al inicio del ï¿½rea restringida
 		  $sesion=new Sesion();
 		   $sesion->set("usuario",$usuario);
         header('Location: index.php');
@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
 
         //preparamos un mensaje de error y continuamos para mostrar el formulario
         $mensaje='Usuario o contrasena incorrecto.';
+        echo $mensaje;
     }
 } //fin if post
 ?>
@@ -45,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Alfinte Intranet</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -81,10 +82,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
                         <form role="form" action="login.php" method="POST">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Usuario" name="usuario" type="usuario" autofocus>
+                                    <input class="form-control" placeholder="Usuario" name="usuario" type="usuario" autofocus required="Ingrese Usuario">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" required="Ingrese Usuario">
                                 </div>
                                 <!--<div class="checkbox">
                                     <label>
@@ -94,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') { // ¿Nos mandan datos por el formulario
                                 <!-- Change this to a button or input when using this as a form -->
 								<input type="submit" value="Entrar" class="btn btn-lg btn-success btn-block" />
                                 <!--<a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>-->
+								<a href="password_forget.php" >si olvido su contraseÃ±a , contactar al administrador</a>
                             </fieldset>
                         </form>
                     </div>

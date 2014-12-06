@@ -17,7 +17,7 @@ $materiales=new materia();
 	if ($cargo==1)
 	{
 		$mensaje1="Nuevos Pedidos";
-                $mensaje1_1="Ver citas pendientes";
+        $mensaje1_1="Ver citas pendientes";
 		$mensaje2="Total Asignadas";
 		$mensaje3="Nuevas Ordenes";
 		$mensaje4="Instalaciones";

@@ -14,15 +14,51 @@ require_once("clases/sesion.class.php");
 $art=new articulo();
 $materiales=new materia();
 	$cargo=$cit->sabercargo($usuario);
+	
 	if ($cargo==1)
 	{
 		$mensaje1="Nuevos Pedidos";
+		$mensaje1_1="Nuevos Pedidos";
 		$mensaje2="Total Asignadas";
 		$mensaje3="Nuevas Ordenes";
 		$mensaje4="Instalaciones";
 		$url1="modulo_ventas_supervisor.php";
 		$url2="citas_asignadas_vendedores.php";
 		$url4="instalaciones_ver.php";
+		$mensaje1="Citas Pendientes";
+                $mensaje1_3="Ver Citas";
+		$mensaje2="Citas Confirmadas";
+                $mensaje2_3="Ver Citas Confirmadas";
+		$mensaje3="Cotizacion Pendientes";
+		$mensaje4="Recibos Provicionales";
+		$url1="Modulo_Ventas/modulo_ventas.php";
+		$url2="Modulo_Ventas/citas_programadas.php";
+                $urlasig="index.php";
+                $envio="Cita";
+                $urlasig2="Modulo_Ventas/crear_cita_local.php";
+                $urlasig3="Modulo_Ventas/citas_asignadas.php";
+                $urlasig4="Modulo_Ventas/cancelar_cita.php";
+                $urlasig5="index.php";
+                $urlasig6="Modulo_Ventas/citas_programadas.php";
+                $urlasig7="Modulo_Ventas/consultar_cotizacion.php";
+                $urlasig8="Modulo_Ventas/consultar_recibo_provisional.php";
+                $urlasig9="Modulo_Ventas/consultar_orden_trabajo.php";
+                $urlasig10="index.php";
+                $urlasig11="Modulo_Ventas/crear_cotizacion.php";
+                $urlasig12="Modulo_Ventas/crear_recibo_provisional.php";
+                $urlasig13="Modulo_Ventas/crear_factura.php";
+                $envio2="Crear Cita";
+                $envio3="Confrmar Cita";
+                $envio4="Cancelar Cita";
+                $envio5="Consultas";
+                $envio6="Citas Programadas";
+                $envio7="Cotizacion";
+                $envio8="Recibo Provisional";
+                $envio9="Orden de Trabajo";
+                $envio10="Procesos";
+                $envio11="Crear Cotizacion";
+                $envio12="Crear Recibo Provisional";
+                $envio13="Crear Factura";
 	}
 	else if($cargo==2)
 	{
@@ -339,8 +375,9 @@ function ConSoSinS($val, $sentence)
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> <?php echo $sesion->get("usuario"); ?> Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>Cambiar Contraseña</a></li>
+
+                        <li><a href="manuales/manuales.php"><i class="fa fa-gear fa-fw"></i> Ayuda</a></li>
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
@@ -362,26 +399,170 @@ function ConSoSinS($val, $sentence)
                             <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i> Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="index.php">Cita <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="ver_categoria.php">Crear Cita</a>
-                                        </li>
-                                        <li>
-                                            <a href="ver_categoria.php">Confirmar Cita</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-								<li>
-                                    <a href="ver_cita.php">Asignaciones</a>
-                                </li>
-								<li>
-                                    <a href="cotizacion.php">Cotizaciones</a>
-                                </li>
-                                <li>
-                                    <a href="facturas.php">Facturas</a>
-                                </li>
+
+                                   <?php
+										if ($cargo==1)
+											{
+												$url_asignada=$urlasig;
+                                                $ir_a=$envio;
+												$url_asignada=$urlasig;
+                                                                                            $ir_a=$envio;
+                                                                                            $url_asignada2=$urlasig2;
+                                                                                            $url_asignada3=$urlasig3;
+                                                                                            $url_asignada4=$urlasig4;
+                                                                                            $url_asignada5=$urlasig5;
+                                                                                            $url_asignada6=$urlasig6;
+                                                                                            $url_asignada7=$urlasig7;
+                                                                                            $url_asignada8=$urlasig8;
+                                                                                            $url_asignada9=$urlasig9;
+                                                                                            $url_asignada10=$urlasig10;
+                                                                                            $url_asignada11=$urlasig11;
+                                                                                            $url_asignada12=$urlasig12;
+                                                                                            $url_asignada13=$urlasig13;
+                                                                                            $ir_a2=$envio2;
+                                                                                            $ir_a3=$envio3;
+                                                                                            $ir_a4=$envio4;
+                                                                                            $ir_a5=$envio5;
+                                                                                            $ir_a6=$envio6;
+                                                                                            $ir_a7=$envio7;
+                                                                                            $ir_a8=$envio8;
+                                                                                            $ir_a9=$envio9;
+                                                                                            $ir_a10=$envio10;
+                                                                                            $ir_a11=$envio11;
+                                                                                            $ir_a12=$envio12;
+                                                                                            $ir_a13=$envio13;
+                                                                                            echo"<a href='".$url_asignada."'>".$ir_a."<span class='fa arrow'></span></a> 
+                                                                                            <ul class='nav nav-third-level'>
+                                                                                                <li>
+
+                                                                                                    <a href='".$url_asignada2."'>".$ir_a2."</a>
+                                                                                                </li>
+                                                                                                <li>
+
+                                                                                                    <a href='".$url_asignada3."'>".$ir_a3."</a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href='".$url_asignada4."'>".$ir_a4."</a>
+                                                                                                </li>
+                                                                                            </ul>
+
+                                                                                            </li>
+                                                                                            <li>
+
+                                                                                                <a href='".$url_asignada5."'>".$ir_a5."<span class='fa arrow'></span></a> 
+                                                                                                <ul class='nav nav-third-level'>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada6."'>".$ir_a6."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+
+                                                                                                        <a href='".$url_asignada7."'>".$ir_a7."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+
+                                                                                                        <a href='".$url_asignada8."'>".$ir_a8."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada9."'>".$ir_a9."</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href='".$url_asignada10."'>".$ir_a10."<span class='fa arrow'></span></a> 
+                                                                                                <ul class='nav nav-third-level'>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada11."'>".$ir_a11."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada12."'>".$ir_a12."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada13."'>".$ir_a13."</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>";
+                                                                                        
+											}
+											else if($cargo==2)
+											{
+                                                                                            $url_asignada=$urlasig;
+                                                                                            $ir_a=$envio;
+                                                                                            $url_asignada2=$urlasig2;
+                                                                                            $url_asignada3=$urlasig3;
+                                                                                            $url_asignada4=$urlasig4;
+                                                                                            $url_asignada5=$urlasig5;
+                                                                                            $url_asignada6=$urlasig6;
+                                                                                            $url_asignada7=$urlasig7;
+                                                                                            $url_asignada8=$urlasig8;
+                                                                                            $url_asignada9=$urlasig9;
+                                                                                            $url_asignada10=$urlasig10;
+                                                                                            $url_asignada11=$urlasig11;
+                                                                                            $url_asignada12=$urlasig12;
+                                                                                            $url_asignada13=$urlasig13;
+                                                                                            $ir_a2=$envio2;
+                                                                                            $ir_a3=$envio3;
+                                                                                            $ir_a4=$envio4;
+                                                                                            $ir_a5=$envio5;
+                                                                                            $ir_a6=$envio6;
+                                                                                            $ir_a7=$envio7;
+                                                                                            $ir_a8=$envio8;
+                                                                                            $ir_a9=$envio9;
+                                                                                            $ir_a10=$envio10;
+                                                                                            $ir_a11=$envio11;
+                                                                                            $ir_a12=$envio12;
+                                                                                            $ir_a13=$envio13;
+                                                                                            echo"<a href='".$url_asignada."'>".$ir_a."<span class='fa arrow'></span></a> 
+                                                                                            <ul class='nav nav-third-level'>
+                                                                                                <li>
+
+                                                                                                    <a href='".$url_asignada2."'>".$ir_a2."</a>
+                                                                                                </li>
+                                                                                                <li>
+
+                                                                                                    <a href='".$url_asignada3."'>".$ir_a3."</a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href='".$url_asignada4."'>".$ir_a4."</a>
+                                                                                                </li>
+                                                                                            </ul>
+
+                                                                                            </li>
+                                                                                            <li>
+
+                                                                                                <a href='".$url_asignada5."'>".$ir_a5."<span class='fa arrow'></span></a> 
+                                                                                                <ul class='nav nav-third-level'>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada6."'>".$ir_a6."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+
+                                                                                                        <a href='".$url_asignada7."'>".$ir_a7."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+
+                                                                                                        <a href='".$url_asignada8."'>".$ir_a8."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada9."'>".$ir_a9."</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href='".$url_asignada10."'>".$ir_a10."<span class='fa arrow'></span></a> 
+                                                                                                <ul class='nav nav-third-level'>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada11."'>".$ir_a11."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada12."'>".$ir_a12."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada13."'>".$ir_a13."</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>";
+                                                                                        }
+									?>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -512,8 +693,6 @@ function ConSoSinS($val, $sentence)
 											else if($cargo==2)
 											{
 												$rcate=$cit->cantidad_citas_user($usuario);
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_pendiente($usuario);
 											}else if($cargo==4){
 												$rcate=$cit->cantidad_cita_pendiente($usuario);
 											}
@@ -530,7 +709,17 @@ function ConSoSinS($val, $sentence)
                         </div>
                         <a href='<?php echo $url1; ?>'>
                             <div class="panel-footer">
-                                <span class="pull-left">Ver Citas Pendientes</span>
+
+                                <?php
+										if ($cargo==1)
+											{
+											$mensaje_mostar=$mensaje1_1;
+											}
+											else if($cargo==2)
+											{$mensaje_mostar=$mensaje1_3;
+                                                                                        };
+									?>
+                                <span class="pull-left"><?php echo $mensaje_mostar; ?></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -553,8 +742,6 @@ function ConSoSinS($val, $sentence)
 											else if($cargo==2)
 											{
 												$rcate=$cit->cantidad_cita_asignada();	
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											}else if($cargo==4){
 												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
@@ -572,7 +759,18 @@ function ConSoSinS($val, $sentence)
                         </div>
                         <a href='<?php echo $url2; ?>'>
                             <div class="panel-footer">
-                                <span class="pull-left">Ver Asignaciones</span>
+
+                                <?php
+										if ($cargo==1)
+											{
+											$mensaje_mostar2=$mensaje1_1;
+											}
+											else if($cargo==2)
+											{
+                                                                                            $mensaje_mostar2=$mensaje2_3;
+                                                                                        };
+									?>
+                                <span class="pull-left"><?php echo $mensaje_mostar2; ?></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -594,8 +792,6 @@ function ConSoSinS($val, $sentence)
 											else if($cargo==2)
 											{
 												$rcate=$cit->cantidad_or();	
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											}else if($cargo==4){
 												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
