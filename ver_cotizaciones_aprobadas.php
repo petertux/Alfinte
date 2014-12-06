@@ -1,3 +1,46 @@
+<?php
+
+include('libreria/motor.php');
+require_once("clases/sesion.class.php");
+//$login=new Login();
+   $sesion = new Sesion();
+   $usuario = $sesion->get("usuario");
+   if( $usuario == false )  {
+      header("Location: login.php");
+   }  else  {
+
+   
+   $cit=new cita();
+$art=new articulo();
+$materiales=new materia();
+	$cargo=$cit->sabercargo($usuario);
+
+	
+function fechainteligente($timestamp) 
+{
+	if (!is_int($timestamp)) 
+	{
+		$timestamp=strtotime($timestamp, 0);
+	}
+	$diff = time() - $timestamp;
+	if ($diff <= 0) return 'Ahora';
+	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
+	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
+	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' d�a(s)');
+	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' a�o(s)');
+}
+
+
+function ConSoSinS($val, $sentence) 
+{
+	if ($val > 1) return $val.str_replace(array('(s)','(es)'),array('s','es'), $sentence); 
+	else return $val.str_replace('(s)', '', $sentence);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +52,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Sistema de Inventario</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,8 +60,14 @@
     <!-- MetisMenu CSS -->
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
+
     <!-- Custom CSS -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -45,7 +94,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="index.php">Alfinte S.A de CV</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -54,46 +103,34 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
+
+					
+					
+					
                     <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
+						<?php
+					$com=$cit->mostrar_mensaje($usuario);
+						foreach($com as $co){
+							$hace=fechainteligente($co['fecha_creacion']);
+							echo"<li>
+									<a href='ver_citas.php?id_cita=".$co['id_cita']."'>
+										<div>
+											<strong>{$co['nombre']}</strong>
+											<span class='pull-right text-muted'>
+											<em>.$hace.</em>
+											</span>
+										</div>
+										<div> Ha recibido un nuevo mensaje de cita</div>
+									</a>
+								</li>
+								 <li class='divider'></li>";
+						
+						};
+					?>
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
+                                <strong>Leer Todos</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -110,7 +147,7 @@
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Task 1</strong>
+                                        <strong>Tareas 1</strong>
                                         <span class="pull-right text-muted">40% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -126,7 +163,7 @@
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Task 2</strong>
+                                        <strong>Tarea 2</strong>
                                         <span class="pull-right text-muted">20% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -142,7 +179,7 @@
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Task 3</strong>
+                                        <strong>Tarea 3</strong>
                                         <span class="pull-right text-muted">60% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -158,7 +195,7 @@
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Task 4</strong>
+                                        <strong>Tarea 4</strong>
                                         <span class="pull-right text-muted">80% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
@@ -172,7 +209,7 @@
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">
-                                <strong>See All Tasks</strong>
+                                <strong>Ver Todas las Tareas</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -184,7 +221,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts">
+					<ul class="dropdown-menu dropdown-alerts">
                         <li>
                             <a href="#">
                                 <div>
@@ -245,12 +282,12 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> <?php echo $sesion->get("usuario"); ?> Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -262,82 +299,99 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                            <!-- /input-group -->
+
+                        <li>
+                            <a class="active" href="index.php"><i class="fa fa-dashboard fa-fw"></i> Panel de Control</a>
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                            <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i> Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Flot Charts</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a class="active" href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="panels-wells.html">Panels and Wells</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Notifications</a>
-                                </li>
-                                <li>
-                                    <a href="typography.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                               <li>
+                                    <a href="index.php">Cita <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="ver_categoria.php">Crear Cita</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="ver_categoria.php">Confirmar Cita</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+								<li>
+                                    <a href="ver_cita.php">Asignaciones</a>
+                                </li>
+								<li>
+                                    <a href="cotizacion.php">Cotizaciones</a>
+                                </li>
+                                <li>
+                                    <a href="facturas.php">Facturas</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<li>
+                            <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i>Taller<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="orden_trabajo.php">Orden de Trabajo</a>
+                                </li>
+								<li>
+                                    <a href="orden_trabajo.php">Consultar Orden de Trabajo</a>
+                                </li>
+								<li>
+                                    <a href="solicitar_materiales.php">Materiales</a>
+                                </li>
+								<li>
+                                    <a href="instalaciones.php">Instalaciones</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="index.php"><i class="fa fa-sitemap fa-fw"></i>Inventario<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="ver_categoria.php">Consultar Articulos</a>
+                                </li>
+                                <li>
+                                    <a href="ver_materia.php">Consultar Materiales</a>
+                                </li>
+								<li>
+                                    <a href="index.php">Ajustes <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="ver_ajuste_materiales.php">Ajustes de Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="ver_ajuste_articulos.php">Ajustes de Articulos</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+								<li>
+                                    <a href="index.php">Traslados <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="ver_traslado_materiales.php">Traslados Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="ver_traslado_articulos.php">Traslados Articulos</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                                <li>
+                                    <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Verificar Existencia</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Ubicaciones</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sucursales</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -346,16 +400,30 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="index.php"><i class="fa fa-files-o fa-fw"></i> Administrar<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="blank.html">Blank Page</a>
+                                    <a href="#">Mantenimiento Sucursales</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="#">Mantenimiento Bodegas </a>
+                                </li>
+								<li>
+                                    <a href="#">Mantemiento Paises <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Mantenimiento Ciudades</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Mantenimiento Provincias</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
+                        </li>
+						 <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -367,56 +435,51 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Recibo Provisional</h1>
+                    <h1 class="page-header">Mostrar Materiales</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-            <form role="form">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Datos del Recibo
+                            Muestra los materiales
                         </div>
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                     <div class="form-group input-group">
-                                            <label>Cotizacion:</label>
-                                            <input id="id_cot" type="text" class="form-control">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Cliente:</label>
-                                            <input class="form-control">
-                                        </div>                                          
-                                         <div class="form-group">
-                                            <label>Fecha Recibo:</label>
-                                            <input id="fecha_rec" class="form-control">
-                                        </div>
-                                         <div class="form-group">
-                                            <label>Monto:</label>
-                                            <input id="monto" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Observacion:</label>
-                                            <textarea id="observacion" class="form-control" rows="3"></textarea>
-                                        </div>
-                                         <button type="button"  onclick="realizaProceso();return false;"class="btn btn-primary">Guardar</button>
-                                         <button type="button" class="btn btn-warning">Limpiar</button>
-                                 </div>                                        
-                                <!-- /.col-lg-6 (nested) -->                                     
-                                </form>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Fecha Creacion</th>
+                                            <th>Numero de Cita</th>
+                                            <th>Nombre Cliente</th>
+                                            <th>Estado</th>
+                                            <th>Opcion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+					<?php
+					$rmat=$cit->mostrar_cot_aprobada($usuario);
+					foreach($rmat as $ci){
+					echo "
+					<tr>
+					<td>{$ci['id_cotizacion']}</td>
+					<td>{$ci['fecha_creacion']}</td>
+					<td>{$ci['id_cita']}</td>
+					<td>{$ci['nombre']}</td>
+					<td>{$ci['estado']}</td>
+					<td><a href='recibo.php?id=".$ci['id_cotizacion']."'>Crear Recibo</a></td>
+					</tr>";	
+					}
+					?>
+                                    </tbody>
+                                </table>
                             </div>
-                            <!-- /.row (nested) -->
-                             <div class="row">
-                                <div id="resultado">
-                                </div>
-                              </div>
+                            <!-- /.table-responsive -->
+
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -424,11 +487,12 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
+
     </div>
     <!-- /#wrapper -->
+
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
 
@@ -438,57 +502,23 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
+    <!-- DataTables JavaScript -->
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 
-
-   	<script>
-
-	function realizaProceso(){
-       var parametros = {
-	            "fecha_recibo" : $("#fecha_rec").val(),
-                "id_cotizacion" : $("#id_cot").val(),
-                "monto" : $("#monto").val(),
-                "descripcion" : $("#observacion").val(),
-                "accion" : "crear"
-	        };
-	        $.ajax({
-                data:  parametros,
-	                url:   'Acc_Recibo.php',
-	                type:  'post',
-                beforeSend: function () {
-	                        $("#resultado").html("Procesando, espere por favor...");
-	                },
-	                success:  function (response) {
-                        $("#resultado").html(response);
-	                }
-	        });
-		var parametros2 = {
-			//aqui tengo que enviar a postear la orden de trabajo.
-			id_trabajo_tipo = 1;
-			materiales_adicionales="Materiales Adicionales";
-			observacion="Observaciones";
-			id_trabajo_estado=1;
-			id_tipo_cortina=1;
-			id_tipo_documento=1;
-			id_cotizacion=1;
-			id_cliente=1;
-			id_empleado=1;
-		};
-		$.ajax({
-		data:parametros2,
-		url: 'insertar_orden_trabajo.php',
-		type: 'POST',
-		beforeSend: function(){
-			$("#resultado").html("Procesando, espere por favor..");
-		},
-			success: function(response){
-				$("#resultado").html(response);
-			}
-		});
-	}
-	</script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable();
+    });
+    </script>
 
 </body>
 
 </html>
+<?php
+};
+?>

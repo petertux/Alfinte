@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-11-2014 a las 04:06:13
+-- Tiempo de generación: 02-12-2014 a las 00:18:07
 -- Versión del servidor: 5.5.20
 -- Versión de PHP: 5.3.9
 
@@ -377,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `primer_nombre`, `primer_apellido`, `direccion`, `telefono`, `nit`) VALUES
-('100411', 'Pedro', 'Sanchez', 'Sabana', '456468', '654226'),
+('1', 'Pedro', 'Sanchez', 'Sabana', '456468', '654226'),
 ('3', 'a', 'a', 'a', 'a', '00000000001'),
 ('4', 'a', 'a', 'a', 'a', '00000000001'),
 ('5', 'a', 'a', 'a', 'a', '00000000001'),
@@ -620,7 +620,7 @@ CREATE TABLE IF NOT EXISTS `factura` (
 --
 
 INSERT INTO `factura` (`id_factura`, `fecha_factura`, `fecha_creacion`, `direccion_factura`, `direccion_instalacion`, `nit`, `ncr`, `giro`, `sub_total`, `descuento`, `monto_descuento`, `total`, `fa_estado`, `id_cliente`, `id_tipo_doc`, `id_orden`, `id_forma_pago`) VALUES
-(1, '2014-11-25', '2014-11-25', 'direccion', 'otra direccion', '345677', '899', '2345234', 200, 0, 0, 200, 3, 3, 1, 1, 1);
+(1, '2014-11-25', '2014-11-25', 'direccion', 'Jardines de la Sabana SDA 2 Casa #35 Pol 1-C', '345677', '899', '2345234', 200, 0, 0, 200, 3, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -640,6 +640,16 @@ CREATE TABLE IF NOT EXISTS `factura_detalle` (
   `id_articulo` int(11) NOT NULL,
   PRIMARY KEY (`id_detalle_factura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `factura_detalle`
+--
+
+INSERT INTO `factura_detalle` (`id_detalle_factura`, `medidas`, `sentido`, `cubres`, `cantidad`, `precio`, `total`, `id_factura`, `id_articulo`) VALUES
+(1, '10', 'Verticales', '10', 1, 7, 7, 1, 1),
+(2, '10', 'Horizontal', '10', 1, 8, 8, 1, 2),
+(3, '2', 'Horizontal', '3', 1, 6, 6, 1, 3),
+(4, '10', 'Vertical', '10', 1, 8, 8, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -712,7 +722,7 @@ CREATE TABLE IF NOT EXISTS `log_usuario` (
   `hora_ingreso` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `hora_fin` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id_usuario_log`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=71 ;
 
 --
 -- Volcado de datos para la tabla `log_usuario`
@@ -787,7 +797,8 @@ INSERT INTO `log_usuario` (`id_usuario_log`, `id_usuario`, `usuario`, `fecha_ing
 (66, 1, 'admin', '2014-11-18 00:00:00', '2014-11-18 23:14:33', '2014-11-18 23:14:33'),
 (67, 1, 'admin', '2014-11-18 00:00:00', '2014-11-18 23:59:29', '2014-11-18 23:59:29'),
 (68, 1, 'admin', '2014-11-18 00:00:00', '2014-11-19 00:11:52', '2014-11-19 00:11:52'),
-(69, 1, 'admin', '2014-11-22 00:00:00', '2014-11-22 10:19:04', '2014-11-22 10:19:04');
+(69, 1, 'admin', '2014-11-22 00:00:00', '2014-11-22 10:19:04', '2014-11-22 10:19:04'),
+(70, 1, 'admin', '2014-12-01 00:00:00', '2014-12-01 23:31:32', '2014-12-01 23:31:32');
 
 -- --------------------------------------------------------
 

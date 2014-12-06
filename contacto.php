@@ -56,6 +56,7 @@
                            $cit->comentario=$cuerpo;
 
                            $result=$cit->agregar();
+						   $result2=$cit->agregarnotificaciones();
                            if($result>0){
                               $result = '<div class="result_ok">Email enviado correctamente <img src="http://web.tursos.com/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley"> </div>';
                                $cit->Upsecqnos();
