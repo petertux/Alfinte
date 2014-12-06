@@ -112,35 +112,5 @@
              return $array;
         }
 		
-		public function mostrar_bodega(){
-        $query="SELECT `descripcion`,
-                        `id_bodega`
-						FROM `bodega`
-						WHERE `estado` = 'A'
-						ORDER BY `descripcion` ASC
-						LIMIT 0 , 30";
-        $rs=mysql_query($query);
-        $array=array();
-        while($fila=mysql_fetch_assoc($rs)){
-          $array[]=$fila;
-        }
-             return $array;
-        }
-		
-		public function mostrar_movimiento(){
-        $query="SELECT `descripcion`,
-                        `id_movimiento`
-						FROM `tipo_movimiento`
-						WHERE `estado` = 'A'
-						ORDER BY `descripcion` ASC
-						LIMIT 0 , 30";
-        $rs=mysql_query($query);
-        $array=array();
-        while($fila=mysql_fetch_assoc($rs)){
-          $array[]=$fila;
-        }
-             return $array;
-        }
-		
 }
 ?>

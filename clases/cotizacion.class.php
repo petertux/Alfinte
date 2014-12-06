@@ -1,19 +1,17 @@
 <?php
-    class cita{
-
-    public $id_cita;
+    class cotizacion{
+    public $id_cotizacion;
+    public $resumen;
     public $fecha_creacion;
-    public $fecha_programada;
-    public $hora;
-    public $nombre;
-    public $apellido;
-    public $email;
-    public $direccion;
-    public $telefono;
-    public $id_canal;
-    public $id_estado;
-    public $comentario;
-	public $id_empleado;
+    public $monto_descuento;
+    public $total;
+    public $subtotal;
+    public $porcentaje_anticipo;
+    public $dia_validez;
+    public $porcentaje_descuento;
+    public $id_tiempo_entrega;
+    public $id_cotizacion_estado;
+    public $id_cita;
 
 
      public function agregar(){
@@ -65,20 +63,7 @@
 		}
 		 
 		public function mostrar(){
-        $query="SELECT cita.`id_cita`,
-						`fecha_creacion`,
-						`nombre`,
-						`telefono`,
-						`direccion`,
-						`email`,
-						canal.`descripcion`,
-						cita_estado.`valor`,
-						`comentario`
-						FROM `cita`
-						INNER JOIN  `canal` ON `cita`.id_canal = `canal`.id_canal
-						INNER JOIN  `cita_estado` ON `cita`.id_estado = `cita_estado`.id_citaest 
-						where id_empleado=4 ad id_estado=1
-						";
+        $query="SELECT cotizacion.`id_cotizacion`, `resumen`, `total`, cotizacion_estado.`descripcion` FROM `cotizacion` INNER JOIN `cotizacion_estado` ON `cotizacion`.id_cotizacion_estado= `cotizacion_estado`.id_estado where id_cita=1";
         $rs=mysql_query($query);
         $array=array();
         while($fila=mysql_fetch_assoc($rs)){
@@ -221,7 +206,7 @@
 		}
 		//Cantidad de registros asignados por usuario(taller)
 		public function cantidad_or_user($user){
-		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO,usuario
+		$query="SELECT count(id_orden) as numeroOr from orden_trabajo,usuario
 				where orden_trabajo.id_empleado= usuario.id_empleado
 				and usuario.usuario='".$user."'";
 		$rs=mysql_query($query);
@@ -233,7 +218,7 @@
 		}
 		
 		public function cantidad_or(){
-		$query="SELECT count(id_orden) as numeroOr from ORDEN_TRABAJO where id_trabajo_estado= 1";
+		$query="SELECT count(id_orden) as numeroOr from orden_trabajo where id_trabajo_estado= 1";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -244,7 +229,7 @@
 		
 		//Se necesitaba saber las cantidades de ordenes de trabajo hay
 		public function cantidad_ins(){
-		$query="SELECT count(id_orden) as numeroIns from ORDEN_TRABAJO where id_trabajo_estado= 3";
+		$query="SELECT count(id_orden) as numeroIns from orden_trabajo where id_trabajo_estado= 3";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
@@ -417,6 +402,15 @@ public function mostrar_numero_cita_penditente2(){
 				$result=mysql_query($query) or die ("Problema con query de Insertar");
 			return $result;
 		}
+                public function mostrar_cotizacion(){
+        $query="SELECT COUNT(id_cotizacion) as numeroCot from cotizacion where id_cotizacion_estado=1";
+        $rs=mysql_query($query);
+        $array=array();
+        while($fila=mysql_fetch_assoc($rs)){
+          $array[]=$fila;
+        }
+             return $array;
+        }
 	/*************************************************************************/
 		
 }

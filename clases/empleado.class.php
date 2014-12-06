@@ -235,5 +235,21 @@
              return $array;
         }
 		
+		        public function mostrar_citasAsi(){
+				$query="SELECT `empleado`.`id_empleado`,
+				concat(`empleado`.`nombre`,' ',`empleado`.`apellido`) as nombre,
+				`empleado`.`telefono`,
+				COUNT(`cita`.`id_cita`) as cita 
+				FROM (`empleado` INNER JOIN `cita` on `cita`.`id_empleado`=`empleado`.`id_empleado`)WHERE empleado.`id_cargo`=3
+				GROUP BY `empleado`.`id_empleado`
+				";
+			$rs=mysql_query($query);
+			$array=array();
+			while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+			}
+			return $array;
+			}
+		
 }
 ?>

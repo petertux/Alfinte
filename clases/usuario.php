@@ -85,16 +85,5 @@ class usuario{
 
              return $num;
         }
-		
-		public function notificaciones(){
-			$query="select * from notificaciones";
-			$rs=mysql_query($query);
-        $array=array();
-        while($fila=mysql_fetch_assoc($rs)){
-          $array[]=$fila;
-        }
-             return $array;
-        }
-		
 }
 ?>
