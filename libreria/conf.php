@@ -2,7 +2,7 @@
 $confi=array();
 $confi['server']='localhost';
 $confi['usuario']='root';
-$confi['pass']='';
+$confi['pass']='usbw';
 $confi['base']='bdatos';//Es un ejemplo
 
 
