@@ -402,7 +402,7 @@ function ConSoSinS($val, $sentence)
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/Alfinte/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -641,7 +641,7 @@ function ConSoSinS($val, $sentence)
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Telefono</label>
-                                                            <input class="form-control" type="number"name="telefono" required="Ingrese el telefono" placeholder="7xxx-xxx o 2xxx-xxxx" >
+                                                            <input class="form-control" type="text"name="telefono" required="Ingrese el telefono"  >
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Email</label>
