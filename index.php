@@ -45,8 +45,8 @@ $materiales=new materia();
                 $urlasig9="Modulo_Ventas/consultar_orden_trabajo.php";
                 $urlasig10="index.php";
                 $urlasig11="Modulo_Ventas/crear_cotizacion.php";
-                $urlasig12="Modulo_Ventas/crear_recibo_provisional.php";
-                $urlasig13="Modulo_Ventas/crear_factura.php";
+                $urlasig12="Modulo_Ventas/recibo.php";
+                $urlasig13="facturas.php";
                 $envio2="Crear Cita";
                 $envio3="Confrmar Cita";
                 $envio4="Cancelar Cita";
@@ -58,7 +58,7 @@ $materiales=new materia();
                 $envio10="Procesos";
                 $envio11="Crear Cotizacion";
                 $envio12="Crear Recibo Provisional";
-                $envio13="Crear Factura";
+                $envio13="Factura";
 	}
 	else if($cargo==2)
 	{
@@ -82,8 +82,8 @@ $materiales=new materia();
                 $urlasig9="Modulo_Ventas/consultar_orden_trabajo.php";
                 $urlasig10="index.php";
                 $urlasig11="Modulo_Ventas/crear_cotizacion.php";
-                $urlasig12="Modulo_Ventas/crear_recibo_provisional.php";
-                $urlasig13="Modulo_Ventas/crear_factura.php";
+                $urlasig12="recibo.php";
+                $urlasig13="facturas.php";
                 $envio2="Crear Cita";
                 $envio3="Confrmar Cita";
                 $envio4="Cancelar Cita";
@@ -95,7 +95,7 @@ $materiales=new materia();
                 $envio10="Procesos";
                 $envio11="Crear Cotizacion";
                 $envio12="Crear Recibo Provisional";
-                $envio13="Crear Factura";
+                $envio13="Factura";
 	}else if($cargo==4)
 	{
 		$mensaje1="Instalaciones Creadas";
