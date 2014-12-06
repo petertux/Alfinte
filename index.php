@@ -766,8 +766,13 @@ function ConSoSinS($val, $sentence)
 											}
 											else if($cargo==2)
 											{
-                                                                                            $mensaje_mostar2=$mensaje2_3;
-                                                                                        };
+                                                $mensaje_mostar2=$mensaje2_3;
+                                            }
+											else if($cargo==4)
+											{
+                                                $mensaje_mostar2=$mensaje2_3;
+                                                                                        }
+											;
 									?>
                                 <span class="pull-left"><?php echo $mensaje_mostar2; ?></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
