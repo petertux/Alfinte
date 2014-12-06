@@ -280,7 +280,9 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 INSERT INTO `cargo` (`id_cargo`, `valor`) VALUES
 (1, 'Administra'),
 (2, 'Supervisor'),
-(3, 'Vendedor');
+(3, 'Vendedor'),
+(4, 'SupTaller'),
+(5, 'Tecnico');
 
 -- --------------------------------------------------------
 
@@ -586,8 +588,10 @@ CREATE TABLE IF NOT EXISTS `empleado` (
 INSERT INTO `empleado` (`id_empleado`, `nombre`, `apellido`, `telefono`, `fecha_creacion`, `id_cargo`, `codigo_emp`) VALUES
 (1, 'Pedro', 'Sanchez', '76386841', '2014-09-03 00:00:00', 1, 'SD100411'),
 (2, 'Daysi', 'Najera', '61425952', '2014-09-03 00:00:00', 3, 'nm100312'),
-(3, 'Jorge', 'Luna', '22151684', '2014-09-03 00:00:00', 2, 'JL101010');
-
+(3, 'Jorge', 'Luna', '22151684', '2014-09-03 00:00:00', 3, 'JL101010'),
+(4, 'Josue', 'Lainez', '2222-2222', '2014-10-18 19:15:33', 4, 'XX000000'),
+(5, 'Tecnico1', 'Juan', '3333-3333', '2014-10-21 12:10:53', 5, 'WW800888'),
+(6, 'Tecnico2', 'Jose', '4444-4444', '2014-10-20 12:11:13', 5, 'YY0909090');
 -- --------------------------------------------------------
 
 --
@@ -708,6 +712,12 @@ CREATE TABLE IF NOT EXISTS `instalacion` (
   UNIQUE KEY `id_factura` (`id_factura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+INSERT INTO `instalacion` (`id_instalacion`, `estado`, `fecha_creacion`, `fecha_instalacion`, `id_factura`, `id_empleado`) VALUES
+(1, 'f', '2014-10-17', '2014-10-22', 1, 6),
+(2, 'p', '2014-10-17', '2014-10-22', 2, 0),
+(3, 'a', '2014-10-08', NULL, 3, 5),
+(4, 'p', '2014-10-10', NULL, 4, 0);
 -- --------------------------------------------------------
 
 --
@@ -1273,7 +1283,8 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `servicio`, `usuario`, `clave_temp`, `clave_def`, `fecha_registro`, `fecha_modificacion`, `fecha_utl_pwd`, `descripcion`, `estado`, `fecha_utl_ing`, `id_empleado`) VALUES
 (1, 1, 'admin', 'admin', 'admin', '2014-08-27 18:28:53', '2014-08-27 18:28:53', '0000-00-00 00:00:00', 'admin', 'A', '0000-00-00 00:00:00', 1),
 (2, 1, 'admin2', 'admin2', 'admin2', '2014-08-27 18:36:14', '2014-08-27 18:36:14', '0000-00-00 00:00:00', 'admin2', 'A', '0000-00-00 00:00:00', 1),
-(3, 1, 'ventas1', 'ventas1', 'ventas1', '2014-10-01 00:00:00', '2014-10-01 00:00:00', '2014-10-01 00:00:00', 'Vendedor 1', 'A', '2014-10-01 00:00:00', 3);
+(3, 1, 'ventas1', 'ventas1', 'ventas1', '2014-10-01 00:00:00', '2014-10-01 00:00:00', '2014-10-01 00:00:00', 'Vendedor 1', 'A', '2014-10-01 00:00:00', 3),
+(4, 1, 'taller', 'taller', 'taller', '2014-10-18 19:12:29', '2014-10-18 19:12:35', '2014-10-18 19:12:43', 'Jefe Taller', 'A', '2014-10-18 19:13:08', 4);
 
 -- --------------------------------------------------------
 
