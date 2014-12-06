@@ -17,16 +17,16 @@ $materiales=new materia();
 	if ($cargo==1)
 	{
 		$mensaje1="Nuevos Pedidos";
+                $mensaje1_1="Ver citas pendientes";
 		$mensaje2="Total Asignadas";
 		$mensaje3="Nuevas Ordenes";
 		$mensaje4="Instalaciones";
 		$url1="modulo_ventas_supervisor.php";
 		$url2="citas_asignadas_vendedores.php";
-		$url4="instalaciones_ver.php";
 	}
 	else if($cargo==2)
 	{
-			$mensaje1="Citas Pendientes";
+		$mensaje1="Citas Pendientes";
                 $mensaje1_3="Ver Citas";
 		$mensaje2="Citas Confirmadas";
                 $mensaje2_3="Ver Citas Confirmadas";
@@ -60,15 +60,7 @@ $materiales=new materia();
                 $envio11="Crear Cotizacion";
                 $envio12="Crear Recibo Provisional";
                 $envio13="Crear Factura";
-	}else if($cargo==4)
-	{
-		$mensaje1="Instalaciones Creadas";
-		$mensaje2="Instalaciones Asignadas";
-		$mensaje3="Instalaciones Finalizadas";
-		$url1="instalaciones_ver.php";
-		$url2="instalaciones_asignadas.php";
-		$url3="instalaciones_finalizadas.php";
-		$mensaje4="Instalaciones Finalizadas";
+                
 	}
 	
 function fechainteligente($timestamp) 
@@ -149,7 +141,7 @@ function ConSoSinS($val, $sentence)
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Alfinte S.A de CV</a>
+                <a class="navbar-brand" href="index.html">Alfinte S.A de CV</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -185,7 +177,10 @@ function ConSoSinS($val, $sentence)
                         <li class="divider"></li>
                         <li>
                             <a class="text-center" href="#">
-                                <strong>Leer Todos</strong>
+                                <strong><?php 
+                                
+                                
+                                ?></strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -339,8 +334,8 @@ function ConSoSinS($val, $sentence)
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> <?php echo $sesion->get("usuario"); ?> Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>Cambiar Contraseña</a></li>
+                        <li><a href="manuales/manuales.php"><i class="fa fa-gear fa-fw"></i> Ayuda</a></li>
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
@@ -362,26 +357,86 @@ function ConSoSinS($val, $sentence)
                             <a href="index.php"><i class="fa fa-bar-chart-o fa-fw"></i> Ventas<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="index.php">Cita <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="ver_categoria.php">Crear Cita</a>
-                                        </li>
-                                        <li>
-                                            <a href="ver_categoria.php">Confirmar Cita</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-								<li>
-                                    <a href="ver_cita.php">Asignaciones</a>
-                                </li>
-								<li>
-                                    <a href="cotizacion.php">Cotizaciones</a>
-                                </li>
-                                <li>
-                                    <a href="facturas.php">Facturas</a>
-                                </li>
+                                   <?php
+										if ($cargo==1)
+											{
+											$url_asignada=$urlasig;
+                                                                                        $ir_a=$envio;
+											}
+											else if($cargo==2)
+											{
+                                                                                            $url_asignada=$urlasig;
+                                                                                            $ir_a=$envio;
+                                                                                            $url_asignada2=$urlasig2;
+                                                                                            $url_asignada3=$urlasig3;
+                                                                                            $url_asignada4=$urlasig4;
+                                                                                            $url_asignada5=$urlasig5;
+                                                                                            $url_asignada6=$urlasig6;
+                                                                                            $url_asignada7=$urlasig7;
+                                                                                            $url_asignada8=$urlasig8;
+                                                                                            $url_asignada9=$urlasig9;
+                                                                                            $url_asignada10=$urlasig10;
+                                                                                            $url_asignada11=$urlasig11;
+                                                                                            $url_asignada12=$urlasig12;
+                                                                                            $url_asignada13=$urlasig13;
+                                                                                            $ir_a2=$envio2;
+                                                                                            $ir_a3=$envio3;
+                                                                                            $ir_a4=$envio4;
+                                                                                            $ir_a5=$envio5;
+                                                                                            $ir_a6=$envio6;
+                                                                                            $ir_a7=$envio7;
+                                                                                            $ir_a8=$envio8;
+                                                                                            $ir_a9=$envio9;
+                                                                                            $ir_a10=$envio10;
+                                                                                            $ir_a11=$envio11;
+                                                                                            $ir_a12=$envio12;
+                                                                                            $ir_a13=$envio13;
+                                                                                            echo"<a href='".$url_asignada."'>".$ir_a."<span class='fa arrow'></span></a> 
+                                                                                            <ul class='nav nav-third-level'>
+                                                                                                <li>
+                                                                                                    <a href='".$url_asignada2."'>".$ir_a2."</a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href='".$url_asignada3."'>".$ir_a3."</a>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <a href='".$url_asignada4."'>".$ir_a4."</a>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href='".$url_asignada5."'>".$ir_a5."<span class='fa arrow'></span></a> 
+                                                                                                <ul class='nav nav-third-level'>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada6."'>".$ir_a6."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada7."'>".$ir_a7."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada8."'>".$ir_a8."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada9."'>".$ir_a9."</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <a href='".$url_asignada10."'>".$ir_a10."<span class='fa arrow'></span></a> 
+                                                                                                <ul class='nav nav-third-level'>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada11."'>".$ir_a11."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada12."'>".$ir_a12."</a>
+                                                                                                    </li>
+                                                                                                    <li>
+                                                                                                        <a href='".$url_asignada13."'>".$ir_a13."</a>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </li>";
+                                                                                        }
+									?>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -409,6 +464,22 @@ function ConSoSinS($val, $sentence)
                                 <li>
                                     <a href="ver_categoria.php">Consultar Articulos</a>
                                 </li>
+								<li>
+                            <a href="ver_categoria.php">Categoria de Articulos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+							<?php
+									$rcate=$materiales->mostrar_categoria();
+									foreach($rcate as $ci){
+									echo "
+										<li>
+											<a href='".$ci['url']."?id_categoria=".$ci['id_categoria']."'>".$ci['descripcion']."</a>
+
+										</li>";
+									}
+							?>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                                 <li>
                                     <a href="ver_materia.php">Consultar Materiales</a>
                                 </li>
@@ -416,10 +487,10 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Ajustes <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_ajuste_materiales.php">Ajustes de Materiales</a>
+                                            <a href="ver_categoria.php">Ajustes de Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="ver_ajuste_articulos.php">Ajustes de Articulos</a>
+                                            <a href="ver_categoria.php">Ajustes de Articulos</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -428,10 +499,10 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Traslados <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_traslado_materiales.php">Traslados Materiales</a>
+                                            <a href="ver_categoria.php">Traslados Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="ver_traslado_articulos.php">Traslados Articulos</a>
+                                            <a href="ver_categoria.php">Traslados Articulos</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -440,13 +511,13 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_verificar_existencia.php">Verificar Existencia</a>
+                                            <a href="ver_categoria.php">Verificar Existencia</a>
                                         </li>
                                         <li>
-                                            <a href="#">Ubicaciones</a>
+                                            <a href="ver_categoria.php">Ubicaciones</a>
                                         </li>
                                         <li>
-                                            <a href="#">Sucursales</a>
+                                            <a href="ver_categoria.php">Sucursales</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -458,19 +529,19 @@ function ConSoSinS($val, $sentence)
                             <a href="index.php"><i class="fa fa-files-o fa-fw"></i> Administrar<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Mantenimiento Sucursales</a>
+                                    <a href="index.php">Mantenimiento Sucursales</a>
                                 </li>
                                 <li>
-                                    <a href="#">Mantenimiento Bodegas </a>
+                                    <a href="index.php">Mantenimiento Bodegas </a>
                                 </li>
 								<li>
-                                    <a href="#">Mantemiento Paises <span class="fa arrow"></span></a>
+                                    <a href="index.php">Mantemiento Paises <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Mantenimiento Ciudades</a>
+                                            <a href="ver_categoria.php">Mantenimiento Ciudades</a>
                                         </li>
                                         <li>
-                                            <a href="#">Mantenimiento Provincias</a>
+                                            <a href="ver_categoria.php">Mantenimiento Provincias</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -511,13 +582,8 @@ function ConSoSinS($val, $sentence)
 											}
 											else if($cargo==2)
 											{
-												$rcate=$cit->cantidad_citas_user($usuario);
-											}else if($cargo==3){
 												$rcate=$cit->cantidad_cita_pendiente($usuario);
-											}else if($cargo==4){
-												$rcate=$cit->cantidad_cita_pendiente($usuario);
-											}
-											;
+											};
 											foreach($rcate as $ci){
 											$numero=$ci['numeroCita'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
@@ -530,7 +596,16 @@ function ConSoSinS($val, $sentence)
                         </div>
                         <a href='<?php echo $url1; ?>'>
                             <div class="panel-footer">
-                                <span class="pull-left">Ver Citas Pendientes</span>
+                                <?php
+										if ($cargo==1)
+											{
+											$mensaje_mostar=$mensaje1_1;
+											}
+											else if($cargo==2)
+											{$mensaje_mostar=$mensaje1_3;
+                                                                                        };
+									?>
+                                <span class="pull-left"><?php echo $mensaje_mostar; ?></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -552,13 +627,8 @@ function ConSoSinS($val, $sentence)
 											}
 											else if($cargo==2)
 											{
-												$rcate=$cit->cantidad_cita_asignada();	
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
-											}else if($cargo==4){
 												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
-											
 										
 											foreach($rcate as $ci){
 											$numero=$ci['numeroAsi'];
@@ -572,7 +642,17 @@ function ConSoSinS($val, $sentence)
                         </div>
                         <a href='<?php echo $url2; ?>'>
                             <div class="panel-footer">
-                                <span class="pull-left">Ver Asignaciones</span>
+                                <?php
+										if ($cargo==1)
+											{
+											$mensaje_mostar2=$mensaje1_1;
+											}
+											else if($cargo==2)
+											{
+                                                                                            $mensaje_mostar2=$mensaje2_3;
+                                                                                        };
+									?>
+                                <span class="pull-left"><?php echo $mensaje_mostar2; ?></span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -593,11 +673,7 @@ function ConSoSinS($val, $sentence)
 											}
 											else if($cargo==2)
 											{
-												$rcate=$cit->cantidad_or();	
-											}else if($cargo==3){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
-											}else if($cargo==4){
-												$rcate=$cit->cantidad_cita_confirmada($usuario);
+                                                                                            $rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
 										
 										$rcate=$cit->cantidad_or_user($usuario);
@@ -641,7 +717,7 @@ function ConSoSinS($val, $sentence)
                                 </div>
                             </div>
                         </div>
-                       <a href='<?php echo $url4; ?>'>
+                        <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
