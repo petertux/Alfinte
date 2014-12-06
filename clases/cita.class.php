@@ -188,7 +188,7 @@ echo $query;
 		
 				//Cantidad de registros cita pendiente por usuario(vendedor)
 		public function cantidad_cita_pendiente($user){
-		$query="SELECT count(id_cita) as numeroCita from cita,usuario cita.id_empleado=usuario.id_empleado and usuario.usuario='".$user."' and cita.id_estado=1";
+		$query="SELECT count(id_cita) as numeroCita from cita,usuario where cita.id_empleado=usuario.id_empleado and usuario.usuario='".$user."' and cita.id_estado=1";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
