@@ -290,7 +290,7 @@ echo $query;
 						//Cantidad de citas Asignadas a usuario(vendedor)
 		public function cantidad_cita_asignada(){
 		$query="SELECT count(id_cita) as numeroAsi from cita, empleado
-				where cita.id_estado=1 and cita.id_empleado=empleado.id_empleado and empleado.id_cargo=3;
+				where cita.id_estado=1 and cita.id_empleado=empleado.id_empleado and empleado.id_cargo=3";
 		$rs=mysql_query($query);
 		$array=array();
 		while($fila=mysql_fetch_assoc($rs)){
