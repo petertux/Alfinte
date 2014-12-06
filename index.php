@@ -48,6 +48,7 @@ $materiales=new materia();
 		$url1="instalaciones_ver.php";
 		$url2="instalaciones_asignadas.php";
 		$url3="instalaciones_finalizadas.php";
+		$mensaje4="Instalaciones Finalizadas";
 	}
 	
 function fechainteligente($timestamp) 
@@ -493,7 +494,10 @@ function ConSoSinS($val, $sentence)
 												$rcate=$cit->cantidad_citas_user($usuario);
 											}else if($cargo==3){
 												$rcate=$cit->cantidad_cita_pendiente($usuario);
-											};
+											}else if($cargo==4){
+												$rcate=$cit->cantidad_cita_pendiente($usuario);
+											}
+											;
 											foreach($rcate as $ci){
 											$numero=$ci['numeroCita'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
@@ -531,7 +535,10 @@ function ConSoSinS($val, $sentence)
 												$rcate=$cit->cantidad_cita_asignada();	
 											}else if($cargo==3){
 												$rcate=$cit->cantidad_cita_confirmada($usuario);
+											}else if($cargo==4){
+												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
+											
 										
 											foreach($rcate as $ci){
 											$numero=$ci['numeroAsi'];
@@ -568,6 +575,8 @@ function ConSoSinS($val, $sentence)
 											{
 												$rcate=$cit->cantidad_or();	
 											}else if($cargo==3){
+												$rcate=$cit->cantidad_cita_confirmada($usuario);
+											}else if($cargo==4){
 												$rcate=$cit->cantidad_cita_confirmada($usuario);
 											};
 										
