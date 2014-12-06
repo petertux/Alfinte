@@ -403,8 +403,12 @@ function ConSoSinS($val, $sentence)
                                 <li>
                                     <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="#">Verificar Existencia</a>
+                                       <li>
+                                            <a href="ver_verificar_existencia.php">Verificar Existencia</a>
+                                        </li>
+										<li>
+                                            <a href="ver_solicitar_material.php">Solicitar Material</a>
+
                                         </li>
                                         <li>
                                             <a href="#">Ubicaciones</a>

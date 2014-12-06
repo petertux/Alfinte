@@ -113,7 +113,7 @@ function ConSoSinS($val, $sentence)
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Alfinte S.A de CV</a>
+                <a class="navbar-brand" href="index.php">Alfinte S.A de CV</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -404,7 +404,7 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Verificar Existencia</a>
+                                            <a href="ver_verificar_existencia.php">Verificar Existencia</a>
                                         </li>
                                         <li>
                                             <a href="#">Ubicaciones</a>

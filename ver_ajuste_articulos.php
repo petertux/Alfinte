@@ -90,15 +90,7 @@ function ConSoSinS($val, $sentence)
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
-	
-	<!-- Custom -->
-	<script type="text/javascript" src="js/jquery.js"></script>
-	
-	
-	
-	
-	
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -381,22 +373,6 @@ function ConSoSinS($val, $sentence)
                                 <li>
                                     <a href="ver_categoria.php">Consultar Articulos</a>
                                 </li>
-								<li>
-                            <a href="ver_categoria.php">Categoria de Articulos<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-							<?php
-									$rcate=$materiales->mostrar_categoria();
-									foreach($rcate as $ci){
-									echo "
-										<li>
-											<a href='".$ci['url']."?id_categoria=".$ci['id_categoria']."'>".$ci['descripcion']."</a>
-
-										</li>";
-									}
-							?>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
                                 <li>
                                     <a href="ver_materia.php">Consultar Materiales</a>
                                 </li>
@@ -404,10 +380,10 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Ajustes <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_categoria.php">Ajustes de Materiales</a>
+                                            <a href="ver_ajuste_materiales.php">Ajustes de Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Ajustes de Articulos</a>
+                                            <a href="ver_ajuste_articulos.php">Ajustes de Articulos</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -416,10 +392,10 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Traslados <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_categoria.php">Traslados Materiales</a>
+                                            <a href="ver_traslado_materiales.php">Traslados Materiales</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Traslados Articulos</a>
+                                            <a href="ver_traslado_articulos.php">Traslados Articulos</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -428,13 +404,16 @@ function ConSoSinS($val, $sentence)
                                     <a href="index.php">Solicitar Materiales <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_categoria.php">Verificar Existencia</a>
+                                            <a href="ver_verificar_existencia.php">Verificar Existencia</a>
+                                        </li>
+										<li>
+                                            <a href="ver_solicitar_material.php">Solicitar Material</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Ubicaciones</a>
+                                            <a href="#">Ubicaciones</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Sucursales</a>
+                                            <a href="#">Sucursales</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -446,19 +425,19 @@ function ConSoSinS($val, $sentence)
                             <a href="index.php"><i class="fa fa-files-o fa-fw"></i> Administrar<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="index.php">Mantenimiento Sucursales</a>
+                                    <a href="#">Mantenimiento Sucursales</a>
                                 </li>
                                 <li>
-                                    <a href="index.php">Mantenimiento Bodegas </a>
+                                    <a href="#">Mantenimiento Bodegas </a>
                                 </li>
 								<li>
-                                    <a href="index.php">Mantemiento Paises <span class="fa arrow"></span></a>
+                                    <a href="#">Mantemiento Paises <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="ver_categoria.php">Mantenimiento Ciudades</a>
+                                            <a href="#">Mantenimiento Ciudades</a>
                                         </li>
                                         <li>
-                                            <a href="ver_categoria.php">Mantenimiento Provincias</a>
+                                            <a href="#">Mantenimiento Provincias</a>
                                         </li>
                                     </ul>
                                     <!-- /.nav-third-level -->
@@ -478,7 +457,7 @@ function ConSoSinS($val, $sentence)
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="page-header">Traslado entre Bodegas </h2>
+                    <h2 class="page-header">Ajuste de Materiales </h2>
                 </div>
                 <!-- /.col-lg-12 -->
                 <div class="row ">
@@ -494,7 +473,7 @@ function ConSoSinS($val, $sentence)
 					<div class="col-lg-8">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
-								Informacion del Traslado
+								Informacion del Ajuste
 							</div>
 
 							<div class="panel-body">
@@ -559,7 +538,7 @@ function ConSoSinS($val, $sentence)
 					<div class="col-lg-10">
 						<div class="panel panel-green">
 								<div class="panel-heading">
-									Traslado
+									Ajuste
 								</div>
 								<div class="panel-body">
 									<div class="col-xs-4">

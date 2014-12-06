@@ -46,9 +46,9 @@ function fechainteligente($timestamp)
 	else if ($diff < 60) return "hace ".ConSoSinS(floor($diff), ' segundo(s)');
 	else if ($diff < 60*60) return "hace ".ConSoSinS(floor($diff/60), ' minuto(s)');
 	else if ($diff < 60*60*24) return "hace ".ConSoSinS(floor($diff/(60*60)), ' hora(s)');
-	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' d�a(s)');
+	else if ($diff < 60*60*24*30) return "hace ".ConSoSinS(floor($diff/(60*60*24)), ' día(s)');
 	else if ($diff < 60*60*24*30*12) return "hace ".ConSoSinS(floor($diff/(60*60*24*30)), ' mes(es)');
-	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' a�o(s)');
+	else return "hace ".ConSoSinS(floor($diff/(60*60*24*30*12)), ' año(s)');
 }
 
 
@@ -453,248 +453,441 @@ function ConSoSinS($val, $sentence)
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+		
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-11">
-                    <h1 class="page-header">Muestra Los Articulos</h1>
+                <div class="col-lg-12">
+                    <h2 class="page-header">Ajuste de Materiales </h2>
                 </div>
                 <!-- /.col-lg-12 -->
+                <div class="row ">
+                    <div class="col-md-4"></div>
+                     <div class="col-md-4 col-md-offset-4"><button type="button" class="btn btn-primary" id="enableBtn">Nuevo Movimiento</button></div>
+                </div>
             </div>
+
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-11">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Muestra los Articulos
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            
-										<div class="row">
-										<?php
-										$id_articulo=$_GET['id_articulo'];
-										//$id_articulo=1;
-										$articulo = $art->imagen_dato($id_articulo);
-                                        $ubica = $art->ubicacion_articulo($id_articulo);
-										foreach($articulo as $at){
-										echo "	<div class='media'>
-													<a class='pull-left' href='#'>
-														<img class='media-object' src='".$at['imagen']."' alt='...'>
-													</a>
-													<div class='media-body'>
-														<h4 class='media-heading'>{$at['descripcion']}</h4>
-                                                        <p>Categoria: {$at['categoria']}</p>
-														<p>Precio:$ {$at['precio']}.00</p>
-                                                        <p>Cantidad Stock: {$at['cant_disponible']} Unidades</p>
-                                                        <p>Disponible en la WEB:<b> {$at['disponible_web']}</b></p>
-                                                        <p>Ubicaciones Disponibles:</p>
-                                                          <div class='col-lg-5'>
-                                                            <ul class='list-group'>
+               <form role="form"  >
 
-                                                        ";
-                                                         foreach($ubica as $ubi){
-                                                           echo "
-                                                                <li class='list-group-item'>
-                                                                <span class='badge'>{$ubi['cant_disponible']}</span>
-                                                                    <b>{$ubi['descripcion']}</b>
-                                                                </li>";
-                                                         }
-                                                        "
-                                                            </ul>
-                                                        </div>
-													</div>
-												</div>";
-										}
-										?>
-											</div>
-                            </div>
-                           
+					<div class="col-lg-8">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								Informacion del Ajuste
+							</div>
 
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
+							<div class="panel-body">
+								<div class="col-xs-6">
+										<div class="form-group">
+											<label>Fecha</label>
+											 <input type="text" id="input_campo_date" class="form-control"/>
+										</div>
+										<div class="form-group">
+											<label>Tipo Movimiento</label>
+												<select class="form-control" id="tipo">
+														<option value="">Seleccione</option>
+													<?php  $moV=$materiales->mostrar_movimiento();
+															foreach($moV as $cat){
+															echo "
+																	<option value='".$cat['id_movimiento']."'>".$cat['descripcion']."</option>";
+																	};
+													?>
+												</select>
+										</div>
 
-            </div>
-            <div class="row">
-                <div class="col-lg-11">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Materiales Utilizados
-                        </div>
-                        <!-- .panel-heading -->
-                        <div class="panel-body">
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Materiales</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseFour" class="panel-collapse collapse ">
-                                        <div class="panel-body">
-                                          <div class="col-lg-6">
-                                                  <div class="panel panel-default">
-                                                      <div class="panel-heading">
-                                                          Materiales Utilizados
-                                                      </div>
-                                                      <!-- /.panel-heading -->
-                                                      <div class="panel-body">
-                                                          <div class="table-responsive">
-                                                              <table class="table table-striped table-bordered table-hover">
-                                                                  <thead>
-                                                                      <tr>
-                                                                          <th>#</th>
-                                                                          <th>Materiales</th>
-                                                                          <th>Materiales</th>
-                                                                          <th>Materiales</th>
-                                                                      </tr>
-                                                                  </thead>
-                                                                  <tbody>
-                                                                      <tr>
-                                                                          <td>1</td>
-                                                                          <td>Tijera</td>
-                                                                          <td>Tela</td>
-                                                                          <td>3 Metros</td>
-                                                                      </tr>
-                                                                  </tbody>
-                                                              </table>
-                                                          </div>
-                                                          <!-- /.table-responsive -->
-                                                      </div>
-                                                      <!-- /.panel-body -->
-                                                  </div>
-                                                  <!-- /.panel -->
-                                              </div>
+								</div>
+
+
+								<div class="col-xs-6">
+										<div class="form-group">
+											<label>Bodega Origen</label>
+												<select class="form-control" id="bodegaO">
+														<option value="">Seleccione</option>
+													<?php  $boO=$materiales->mostrar_bodega();
+															foreach($boO as $cat){
+															echo "
+																	<option value='".$cat['id_bodega']."'>".$cat['descripcion']."</option>";
+																	};
+													?>
+												</select>
+										</div>
+										<div class="form-group">
+											<label>Bodega Destino</label>
+											<select class="form-control" id="bodegaD">
+														<option value="">Seleccione</option>
+													<?php  $bodD=$materiales->mostrar_bodega();
+															foreach($bodD as $cat){
+															echo "
+																	<option value='".$cat['id_bodega']."'>".$cat['descripcion']."</option>";
+																	};
+													?>
+												</select>
+
+										</div>
+								</div>
+								<div class="col-lg-8">
+										<div class="form-group">
+                                            <label>Comentarios</label>
+                                            <textarea class="form-control" rows="2" id="coment"></textarea>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- .panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                  <!-- /.col-lg-12 -->
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-10">
+						<div class="panel panel-green">
+								<div class="panel-heading">
+									Ajuste
+								</div>
+								<div class="panel-body">
+									<div class="col-xs-4">
+										<div class="form-group">
+                                            <label>Materiales</label>
+											<select class="form-control" onchange="load(this.value)">
+												<option value="">Seleccione</option>
+											<?php  $categoria=$art->mostrar_categoria();
+													foreach($categoria as $cat){
+													echo "
+															<option value='".$cat['id_categoria']."'>".$cat['descripcion']."</option>";
+															};
+											?>
+                                            </select>
+                                        </div>
+									</div>
+
+									<div class="col-xs-4">
+										<div class="form-group">
+											 <input class="form-control" placeholder="Enter text" type="text" id="articulo_nombre" onkeyup="loadXMLDoc()" >
+										</div>
+										<!-- Aqui esta el DIV en el cual se va a cargar la pagina de cotizacion_articulo-->
+										<div id="myDiv"></div>
+											<p></p>
+											<button  id="btnagregar" type="submit" class="btn btn-primary">Agregar </button>
+                                     </div>
+									
+									<div class="col-lg-12">
+										<div class="panel-body">
+											<!-- aqui va la tabla creada con js -->
+											<div id="tablecontent"></div>
+										</div>
+									</div>
+									<div class="col-lg-12">
+									<input type="button" href="javascript:;" onclick="guardarTodo();" value="Guardar" class="btn btn-primary"/>
+									<br>
+									<span id="resultado"></span>
+									</div>
+										
+								</div>
+								
+								<div class="panel-footer">
+									Panel Footer
+								</div>
+						</div>
+						<!-- /.col-lg-4 -->
+						
+					</div>
+					
+               </form>
+              
+               
              </div>
-            <div class="row">
-                <div class="col-lg-11">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Movimientos del Articulo
-                        </div>
-                        <!-- .panel-heading -->
-                        <div class="panel-body">
-                            <div class="panel-group" id="accordion">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Collapsible Group Item #1</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse ">
-                                        <div class="panel-body">
-                                          <div class="col-lg-6">
-                                                  <div class="panel panel-default">
-                                                      <div class="panel-heading">
-                                                          Movimientos de Articulo en Metrocentro
-                                                      </div>
-                                                      <!-- /.panel-heading -->
-                                                      <div class="panel-body">
-                                                          <div class="table-responsive">
-                                                              <table class="table table-striped table-bordered table-hover">
-                                                                  <thead>
-                                                                      <tr>
-                                                                          <th>#</th>
-                                                                          <th>First Name</th>
-                                                                          <th>Last Name</th>
-                                                                          <th>Username</th>
-                                                                      </tr>
-                                                                  </thead>
-                                                                  <tbody>
-                                                                      <tr>
-                                                                          <td>1</td>
-                                                                          <td>Mark</td>
-                                                                          <td>Otto</td>
-                                                                          <td>@mdo</td>
-                                                                      </tr>
-                                                                  </tbody>
-                                                              </table>
-                                                          </div>
-                                                          <!-- /.table-responsive -->
-                                                      </div>
-                                                      <!-- /.panel-body -->
-                                                  </div>
-                                                  <!-- /.panel -->
-                                              </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Collapsible Group Item #2</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Collapsible Group Item #3</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- .panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-		</div>
+        </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery Version 1.11.0 -->
     <script src="js/jquery-1.11.0.js"></script>
+		<!-- Ajax Customizado"-->
+	<script type="text/javascript">
+	jQuery(document).ready(function($) {
+			$("#buscar").attr("disabled", "disabled");
+			$("#input_campo_date").attr("disabled", "disabled");
+			$("#tipo").attr("disabled", "disabled");
+			$("#bodegaO").attr("disabled", "disabled");
+			$("#bodegaD").attr("disabled", "disabled");
+			$("#direccion").attr("disabled", "disabled");
+			$("#coment").attr("disabled", "disabled");
 
+	$("#enableBtn").click(function() {
+						$("#clearBtn").removeAttr("disabled");
+						$("#buscar").removeAttr("disabled");
+						$("#input_campo_date").removeAttr("disabled");
+						$("#tipo").removeAttr("disabled");
+						$("#bodegaO").removeAttr("disabled");
+						$("#bodegaD").removeAttr("disabled");
+						$("#direccion").removeAttr("disabled");
+						$("#coment").removeAttr("disabled");
+			});
+	$(function() {
+			
+			//Array para dar formato en español
+			$.datepicker.regional['es'] =
+			{
+			closeText: 'Cerrar',
+			prevText: 'Previo',
+			nextText: 'Próximo',
+			
+			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+			'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+			monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+			'Jul','Ago','Sep','Oct','Nov','Dic'],
+			monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
+			dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+			dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sáb'],
+			dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+			dateFormat: 'dd/mm/yy', firstDay: 0,
+			initStatus: 'Selecciona la fecha', isRTL: false};
+			$.datepicker.setDefaults($.datepicker.regional['es']);
+			
+			//miDate: fecha de comienzo D=días | M=mes | Y=año
+			//maxDate: fecha tope D=días | M=mes | Y=año
+			$( "#datepicker" ).datepicker({ minDate: "-1D", maxDate: "+1M +10D" });
+			});
+			
+			
+			
+		
+		}); // ready()	
+		</script>
+		
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- DataTables JavaScript -->
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
+	
+	<!-- DataTables JavaScript -->
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
+	
+	<!-- Ajax Customizado"-->
+	<script src="js/ajax.js"></script>
+	<script src="js/edit_table/editablegrid.js"></script>
+	<script src="js/edit_table/editablegrid_charts.js"></script>
+	<script src="js/edit_table/editablegrid_renderers.js"></script>
+	<script src="js/edit_table/editablegrid_editors.js"></script>
+	<script src="js/edit_table/editablegrid_utils.js"></script>
+	<script src="js/edit_table/editablegrid_validators.js"></script>
+	<script>
+		var $myDiv, $btnAgregar;
+	var editableGrid; //variable con el editableGrid
+	
+	function agregarCotizacion(valorselec){
+		
+		$.ajax({
+			type: "GET",
+			url: "ajuste_articulo.php",
+			data: { 'q' : valorselec, 'json': "1" },
+			success: function(data){
+				//console.log(data);
+				agregarTabla(data);
+			},
+			dataType: "json"
+		});
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
+	}
+
+	function agregarTabla(datonuevo){
+		var data = [];
+		
+		datagrid = editableGrid.data;
+		for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+			fila =  datagrid[i];
+			jfila = { "id": fila.columns[0], "values": {
+				"id_articulo": fila.columns[0],
+				"descripcion": fila.columns[1],
+				"cantidad": fila.columns[2],
+				"ancho": fila.columns[3],
+				"largo": fila.columns[4],
+				"alto": fila.columns[5],
+				"precio": fila.columns[6]
+				}
+			};
+			data.push(jfila);
+		}
+		
+		//console.log(fila);
+		//console.log(data.length);
+		
+		nuevafila = { "id": datonuevo.id_articulo, "values": {
+				"id_articulo": datonuevo.id_articulo,
+				"descripcion": datonuevo.descripcion,
+				"cantidad": 1,
+				"ancho": 0,				
+				"largo": 0,
+				"alto": 0,
+				"precio": datonuevo.precio
+			}
+		};
+		
+		data.push(nuevafila);
+		
+		//console.log(data);
+		//editableGrid.data = data;
+		editableGrid.load({"metadata": getMetaTable(), "data": data});
+		editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+	}
+	
+	function guardarTodo(){
+	var data = [];
+		
+		datagrid = editableGrid.data;
+		for(i = 0; i < datagrid.length; i++){ //obtener antes los valores del editable grid.
+			fila =  datagrid[i];
+			/*jfila = { "id": fila.columns[0], "values": {
+				"id_articulo": fila.columns[0],
+				"cantidad": fila.columns[1],
+				"ancho": fila.columns[2],
+				"largo": fila.columns[3],
+				"volumen": fila.columns[4],
+				"area": fila.columns[5],
+				"precio": fila.columns[6],
+				"total": fila.columns[7]
+				}*/
+				//alert(fila.columns[0]);
+				guardarDetalle(fila.columns[0],fila.columns[2],fila.columns[3],fila.columns[4],fila.columns[5],fila.columns[6]);
+			};
+			//data.push(jfila);
+			
+		guardarEncabezado();
+	
+	}
+	
+	function guardarEncabezado(){
+	//llamada a un ajax que son los valores fijos 
+	/*nombre= $('#nombre').val();
+	telefono=$('#telefono').val();
+	apellido=$('#apellido').val();
+	direccion=$('#direccion').val();
+	coment=$('#coment').val();
+	diaval=$('#diaval').val();
+	timeen=$('#timeen').val();
+	comment2=$('#comment2').val();
+	id_cita=$('#id_cita').val();
+	porcentaje_an=$('#porcentaje_an').val();
+	porcentaje_des=$('#porcentaje_des').val();*/
+	//alert(nombre);
+		
+		var parametros = {
+               /* "nombre" :   nombre,
+                "apellido" : apellido,
+				"telefono" : telefono,
+				"direccion": direccion,
+				"coment":   coment,
+				"diaval":	diaval,
+				"timeen":	timeen,
+				"comment2": comment2,
+				"id_cita": id_cita,
+				"porcentaje_an": porcentaje_an,
+				"porcentaje_des": porcentaje_des*/
+				
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'insertar_encabezado.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+						alert("Ingresado Correctamente");
+                },
+				error: function(response){
+					alert("error");
+				}
+        });
+	
+	}
+	
+	function guardarDetalle(id_articulo,cantidad,ancho,largo,alto,precio){
+	//alert(id_articulo,cantidad,ancho,largo,volumen,area,precio,total);
+	var parametros = {
+                "id_articulo" : id_articulo,
+                "cantidad" : cantidad,
+				"ancho" : ancho,
+				"largo" : largo,
+				"alto"	: alto,
+				"precio" : precio
+			
+				
+        };
+        $.ajax({
+                data:  parametros,
+                url:   'insertar_detalle_traslado.php',
+                type:  'post',
+                beforeSend: function () {
+                        $("#resultado").html("Procesando, espere por favor...");
+                },
+                success:  function (response) {
+                        $("#resultado").html(response);
+                }
+        });
+
+	
+	}
+	
+	
+	function getMetaTable(){
+		var metadata = [];
+        metadata.push({name: "id_articulo", label: "Cod. Articulo", datatype: "integer", editable: false});
+        metadata.push({name: "descripcion", label: "Articulos", datatype: "string", editable: false});
+        metadata.push({name: "cantidad", label: "Cantidad", datatype: "integer", editable: true});
+		metadata.push({name: "ancho", label: "Ancho", datatype: "double", editable: true});
+		metadata.push({name: "largo", label: "Largo", datatype: "double", editable: true});
+		metadata.push({name: "alto", label: "Alto", datatype: "double", editable: true});
+		metadata.push({name: "precio", label: "Precio", datatype: "double", editable: false});
+		return metadata;
+	}
+	
+	function crearTabla() {
+        editableGrid = new EditableGrid("Tabla");
+        editableGrid.load({"metadata": getMetaTable(), "data": []});
+        editableGrid.renderGrid("tablecontent", "table table-hover table-bordered table-condensed");
+    }
+	
     $(document).ready(function() {
         $('#dataTables-example').dataTable();
+		
+		$btnAgregar = $("button#btnagregar");
+		$myDiv = $("div#myDiv");
+		
+		crearTabla();
+		
+		$btnAgregar.click(function(){
+			//alert("esta es una alerta de prueba");
+			valorselec = $myDiv.find("select option:selected").val();
+			if(valorselec == undefined) return false;
+			
+			agregarCotizacion(valorselec);
+			
+			//alert(valorselec);
+			return false;
+		});
     });
-    </script>
-
+	</script>
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>-->
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script src="js/ui.datepicker-es-MX.js"></script>
+	<script>
+		$(function() {
+		$.datepicker.setDefaults($.datepicker.regional['es-MX']);
+		$('#input_campo_date').datepicker({
+							'setDate': '25/02/2013'
+							, altField: '#fecha_texto'
+							, altFormat: "DD, d 'de' MM 'de' yy"
+						});
+		});
+	</script>
+	
 </body>
 
 </html>
