@@ -52,7 +52,7 @@ function Footer(){
 function LoadData($file)
 {
     // Leer las líneas del fichero
-    $id="1";
+    $id=$_GET['id_factura'];
     $data = array();
     $fac = new ccfactura;
     $data= $fac->detalle($id);
@@ -64,7 +64,7 @@ function CreateData($header, $data)
 {
 
     $fac = new ccfactura;
-    $arrfac = $fac->encabezado("1");
+    $arrfac = $fac->encabezado($_GET['id_factura']);
 	  foreach($arrfac as $ci){
 		$id_factura=$ci['Id_Factura'];
 		$cliente=$ci['cliente'];
