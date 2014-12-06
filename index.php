@@ -20,6 +20,9 @@ $materiales=new materia();
 		$mensaje2="Total Asignadas";
 		$mensaje3="Nuevas Ordenes";
 		$mensaje4="Instalaciones";
+		$url1="modulo_ventas_supervisor.php";
+		$url2="citas_asignadas_vendedores.php";
+		$url4="instalaciones_ver.php";
 	}
 	else if($cargo==2)
 	{
@@ -27,12 +30,24 @@ $materiales=new materia();
 		$mensaje2="Asignadas";
 		$mensaje3="Nuevas Ordenes";
 		$mensaje4="Instalaciones";
+		$url1="modulo_ventas.php";
+		$url2="citas_asignadas_vendedores.php";
 	}else if($cargo==3){
 		$mensaje1="Citas Pendientes";
 		$mensaje2="Citas Confirmadas";
 		$mensaje3="Cotizacion Pendientes";
 		$mensaje4="Recibos Provicionales";
+		$url1="modulo_ventas.php";
+		$url2="confirmar_cita.php";
 	
+	}else if($cargo==4)
+	{
+		$mensaje1="Instalaciones Creadas";
+		$mensaje2="Instalaciones Asignadas";
+		$mensaje3="Instalaciones Finalizadas";
+		$url1="instalaciones_ver.php";
+		$url2="instalaciones_asignadas.php";
+		$url3="instalaciones_finalizadas.php";
 	}
 	
 function fechainteligente($timestamp) 
@@ -489,7 +504,7 @@ function ConSoSinS($val, $sentence)
                                 </div>
                             </div>
                         </div>
-                        <a href="ver_cita.php">
+                        <a href='<?php echo $url1; ?>'>
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Citas Pendientes</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -528,7 +543,7 @@ function ConSoSinS($val, $sentence)
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href='<?php echo $url2; ?>'>
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Asignaciones</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -597,7 +612,7 @@ function ConSoSinS($val, $sentence)
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                       <a href='<?php echo $url4; ?>'>
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
