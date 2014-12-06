@@ -695,8 +695,7 @@ function ConSoSinS($val, $sentence)
 												$rcate=$cit->cantidad_citas_user($usuario);
 											}else if($cargo==4){
 												$rcate=$cit->cantidad_cita_pendiente($usuario);
-											}
-											;
+											};
 											foreach($rcate as $ci){
 											$numero=$ci['numeroCita'];
 											//echo"<div class='huge'>{$ci['numeroCita']}<div>";
