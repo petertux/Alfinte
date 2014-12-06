@@ -463,6 +463,29 @@
                         $("#resultado").html(response);
 	                }
 	        });
+		var parametros2 = {
+			//aqui tengo que enviar a postear la orden de trabajo.
+			id_trabajo_tipo = 1;
+			materiales_adicionales="Materiales Adicionales";
+			observacion="Observaciones";
+			id_trabajo_estado=1;
+			id_tipo_cortina=1;
+			id_tipo_documento=1;
+			id_cotizacion=1;
+			id_cliente=1;
+			id_empleado=1;
+		};
+		$.ajax({
+		data:parametros2,
+		url: 'insertar_orden_trabajo.php',
+		type: 'POST',
+		beforeSend: function(){
+			$("#resultado").html("Procesando, espere por favor..");
+		},
+			success: function(response){
+				$("#resultado").html(response);
+			}
+		});
 	}
 	</script>
 

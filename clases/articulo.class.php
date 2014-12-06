@@ -425,6 +425,54 @@
         }
              return $array;
         }
+		/************************************************/
+		public function verificar_existencias($id_articulo){
+			$query="select cant_disponible
+					from articulo_exi
+					where id_articulo=".$id_articulo ."
+					and id_ubicacion=1";
+			$rs=mysql_query($query);
+			$array=array();
+			while($fila=mysql_fetch_assoc($rs)){
+			$array[]=$fila;
+			}
+             return $array;
+		}
+		
+		public function insertar_notificaciones(){
+		$query="INSERT INTO notificacion VALUES ('{$this->id_empleado}',
+                                        '{$this->descripcion}',
+                                        '{$this->estado}',
+										'{$this->fecha_creacion}')";
+     $result=mysql_query($query) or die ("Problemas con el insert");
+     return $result;
+    }
+	
+		public function actualizar_articulo_existencia($id_articulo,$cant,$id_ubicacion){
+		$query="UPDATE articulo_exi
+				set cant_disponible=".$cant."
+				where id_articulo=".$id_articulo."
+				and id_ubicacion=".$id_ubicacion;
+     $result=mysql_query($query) or die ("Problemas con el update");
+     return $result;
+    }
+	public function insertar_orden_trabajo(){
+		$query="INSERT INTO orden_trabajo VALUES ('{$this->id_orden}',
+                                        '{$this->fecha_orden}',
+                                        '{$this->id_trabajo_tipo}',
+										'{$this->materiales_adicionales}',
+										'{$this->observaciones}',
+										'{$this->fecha_creacion}',
+										'{$this->id_trabajo_estado}',
+										'{$this->id_tipo_cortina}',
+										'{$this->id_tipo_documento}',
+										'{$this->id_cotizacion}',
+										'{$this->id_cliente}',
+										'{$this->id_empleado}')";
+     $result=mysql_query($query) or die ("Problemas con el insert");
+     return $result;
+    }
+	
 
 }
 ?>
