@@ -11,6 +11,7 @@ include('clases/empleado.class.php');
 include('clases/inventario.class.php');
 include('clases/factura.class.php');
 include('clases/recibo.class.php');
+include('clases/instalaciones.class.php');
 //include('clases/search.php');
 
 //include('clases/include-pagina-restringida.php');
